@@ -13,11 +13,14 @@ export const {
 } = createStitches({
   theme: {
     colors: {
-      main: "radial-gradient(at center center,#161C2F 0%, #000000 100%);",
+      main: "#242C48",
       branch: "#008AA8",
       red: "#C93535",
       white:'#fff',
-      green: '#3EA270'
+      green: '#3EA270',
+      blue:"#4289A6",
+      'green-400':'#3FA16F',
+   
     },
   },
 });

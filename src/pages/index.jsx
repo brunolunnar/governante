@@ -1,26 +1,35 @@
 import React from "react";
-import { useUser } from "@auth0/nextjs-auth0/client";
-import { useRouter } from "next/router";
-import Image from 'next/image';
-import LogoGov from '@/assets/img/logo-governante-academy.png';
+import Image from "next/image";
+import LogoGov from "@/assets/img/logo-governante-academy.png";
 import { LoginContainer } from "@/styles/pages/login";
+import { getSession, signIn } from "next-auth/react";
 
 function Index() {
-  const router = useRouter();
-  const handleLogin = () => {
-    return router.push("/api/auth/login");
-  };
-  const { user, error, isLoading } = useUser();
-
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>{error.message}</div>;
-
   return (
     <LoginContainer>
       <Image src={LogoGov} alt={"Logotipo da governante academy"}></Image>
-      <button onClick={handleLogin}>Fazer login com <b>Google</b></button>
+      <button onClick={() => signIn("google")}>
+        Fazer login com <b>Google</b>
+      </button>
     </LoginContainer>
   );
 }
+
+export const getServerSideProps = async (context) => {
+  const session = await getSession(context);
+  if (session) {
+    return {
+      redirect: {
+        destination: "/home",
+        permanent: false,
+      },
+    };
+  }
+  return {
+    props: {
+      session,
+    },
+  };
+};
 
 export default Index;

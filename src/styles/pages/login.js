@@ -30,13 +30,13 @@ export const LoginContainer = styled("section", {
   "@media(min-width:1024px)": {
     fontSize: 25,
     img: {
-      width: "50%",
+      width: "38%",
       marginBottom:'50px'
     },
     button: {
       borderRadius: 54,
-      height: "108px",
-      width: " 487px",
+      height: "87px",
+      width: " 423px",
     },
   },
 });

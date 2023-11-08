@@ -1,7 +1,7 @@
 import Header from "@/components/header";
-import Image from "next/image";
-import UploadImage from "@/assets/img/upload-cloud.png";
+import { UploadBox } from "@/components/uploadBox";
 import { CadastroCursoContainer } from "@/styles/pages/cursos/cadastro";
+
 
 function CadastroCurso() {
   return (
@@ -12,18 +12,7 @@ function CadastroCurso() {
           Cadastro de <b>Curso</b>
         </h1>
         <form>
-          <div className="upload-box">
-            <div className="capa-box">
-              <label id="capa">
-                <Image src={UploadImage}></Image>
-              </label>
-              <input type="file" id="capa" />
-            </div>
-            <div className="drive-box">
-              <label id="drive">Buscar no Drive</label>
-              <input type="file" id="drive" />
-            </div>
-          </div>
+        <UploadBox/>
 
           <input type="text" placeholder="Nome do Curso" />
           <textarea placeholder="Descrição"></textarea>
