@@ -22,6 +22,7 @@ export const globalStyle = globalCss({
     color: "white",
     margin: "0 auto",
     maxWidth: "1400px",
+    fontWeight:"normal",
   },
   input: {
     color: "white",
