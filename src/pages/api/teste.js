@@ -1,11 +1,11 @@
 import { paginateIndex } from "@/utils/connections";
 
 export default async function Teste(req, res) {
-  // let {email} = req.body
+  let {email} = req.body
   let user = await paginateIndex({
     key: process.env.FAUNA_MAIN_KEY,
     index: "users_by_email",
-    matchValue: "thomas@lunnar.team",
+    matchValue: email,
     dataOnly: true,
   });
   let tenantId = user[0].tenants[0];
@@ -19,7 +19,7 @@ export default async function Teste(req, res) {
   let dbTenant = await paginateIndex({
     key: keyTenant,
     index: "users_by_email",
-    matchValue:'thomas@lunnar.team',
+    matchValue:email,
     dataRefOnly:true
   });
 
