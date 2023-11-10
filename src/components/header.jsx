@@ -28,7 +28,7 @@ function Header() {
       </div>
       <Image className="logo" src={Logo} alt="Logotipo da empresa"></Image>
 
- <NavMenu />
+ {/* <NavMenu /> */}
     </HeaderContainer>
   );
 }

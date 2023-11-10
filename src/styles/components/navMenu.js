@@ -9,6 +9,9 @@ export const NavMenuContainer = styled("div", {
   justifyContent: "space-evenly",
   padding: "15px",
   width: "37%",
+  position:"absolute",
+  top:0,
+  left:0,
   ".logo-box": {
     display: "flex",
     alignItems: "center",

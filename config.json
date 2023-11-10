@@ -1,0 +1,21 @@
+{
+    "api" : {
+        "api_key" : "GOOGLE API KEY HERE",
+        "client_id" : "759422105899-1k2vemtkjgmc74aodvf7rqj3j3doe9ao.apps.googleusercontent.com",
+        "client_secret" : "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",
+        "scopes" : "https://www.googleapis.com/auth/drive.metadata.readonly"
+    },
+    "directory" : {    
+        "team_drive" : "TEAM DRIVE ID HERE",
+        "target_folder" : "PARENT FOLDER ID HERE"
+    },
+    "components" : {
+        "HeaderImage" : {
+            "homepage_url" : "http://MYDOMAIN.COM",
+            "logo_url" : "https://LINKTOLOGO.png",
+            "logo_alt" : "MY CUSTOM GOOGLE DRIVE DIRECTORY",
+            "logo_width" : "300px",
+            "logo_color" : "#5b777d"
+        }
+    }
+}

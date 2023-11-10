@@ -46,5 +46,6 @@ export const globalStyle = globalCss({
   },
   button: {
     cursor: "pointer",
+    fontFamily:"'Montserrat', sans-serif",
   },
 });
