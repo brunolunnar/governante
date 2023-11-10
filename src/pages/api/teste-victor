@@ -6,45 +6,54 @@ const corsOptions = {
   methods: ["GET", "POST"],
 };
 export default async function handler(req, res) {
-  cors(corsOptions)(req, res, async () => {
-    try {
-      let { email, validarTenant } = req.body;
-      if (validarTenant) {
-        try {
-          let user = await paginateIndex({
-            key: process.env.FAUNA_MAIN_KEY,
-            index: "users_by_email",
-            matchValue: email,
-            dataOnly: true,
-          });
-
-          let tenantId = user[0].tenants[0];
-          let tenant = await paginateIndex({
-            key: process.env.FAUNA_MAIN_KEY,
-            index: "tenants_by_id",
-            matchValue: tenantId,
-            dataOnly: true,
-          });
-
-          let keyTenant = tenant[0].key;
-          let dbTenant = await paginateIndex({
-            key: keyTenant,
-            index: "users_by_email",
-            matchValue: email,
-            dataRefOnly: true,
-          });
-          return res.status(200).send({ tenantValido: true });
-        } catch (error) {
-          return res.status(200).send({ tenantValido: false });
-        }
-      }
-    } catch (e) {
-      console.log(e.message);
-      console.log("erro em teste 2");
-      return res.status(200).send({
-        response:
-          "dbTenant teste erro! ( erro na lógida da API, a conexão deu sucesso!)",
-      });
+  function handleResposta() {
+    let dadosUsuario = dbTenant[0] ?? []
+    let resposta = {
+      tenantValido: !dadosUsuario,
+      dadosUsuario: dadosUsuario
     }
+    console.log(resposta)
+    console.log("resposta")
+    return res.status(200).send(resposta);
+  }
+  cors(corsOptions)(req, res, async () => {
+    let { email, validarTenant, pegarDados } = req.body;
+    try {
+      let user = await paginateIndex({
+        key: process.env.FAUNA_MAIN_KEY,
+        index: "users_by_email",
+        matchValue: email,
+        dataOnly: true,
+      });
+      let tenantId = user[0].tenants[0];
+      let tenant = await paginateIndex({
+        key: process.env.FAUNA_MAIN_KEY,
+        index: "tenants_by_id",
+        matchValue: tenantId,
+        dataOnly: true,
+      });
+
+      let keyTenant = tenant[0].key;
+      let dbTenant = await paginateIndex({
+        key: keyTenant,
+        index: "users_by_email",
+        matchValue: email,
+        dataRefOnly: true,
+      });
+      handleResposta()
+    } catch (e) {
+      return res.status(400)
+    }
+
+
+    // if (validarTenant) {
+    //   try {
+
+    //     return res.status(200).send({ tenantValido: true });
+    //   } catch (error) {
+    //     return res.status(200).send({ tenantValido: false });
+    //   }
+    // }
+
   });
 }
