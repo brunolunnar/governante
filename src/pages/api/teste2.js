@@ -6,7 +6,8 @@ const corsOptions = {
 export default async function handler(req, res) {
   cors(corsOptions)(req, res, async () => {
     try {
-      let { email } = req.body;
+      // let { email } = req.body;
+      let email = "bruno@lunnar.team"
       let user = await paginateIndex({
         key: process.env.FAUNA_MAIN_KEY,
         index: 'users_by_email',
