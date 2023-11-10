@@ -34,10 +34,16 @@ export const getServerSideProps = async (context) => {
       email: userEmail,
       retonarDados: true,
     });
-    console.log(apiResponse.data);
     const response = apiResponse.data.tenantValido;
-    console.log(response, "aksjdhksjahdsk");
-
+  
+    if(!response){
+      alert("email invalido ")
+      return {
+        props: {
+          session: null,
+        },
+      };
+    }
     return {
       redirect: {
         destination: "/home",

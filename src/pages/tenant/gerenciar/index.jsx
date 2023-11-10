@@ -3,7 +3,12 @@ import Header from "@/components/header";
 import Image from "next/image";
 import { UploadBox } from "@/components/uploadBox";
 import { GerenciarTenantsContainer } from "@/styles/pages/tenants/gerenciar";
+import { useState } from "react";
 export const GerenciarTenant = () => {
+  const[isOpen, setIsOpen] = useState(false)
+  const toggleAccordion = ()=>{
+    return setIsOpen(!isOpen)
+  }
   return (
     <>
       <Header />
@@ -17,29 +22,31 @@ export const GerenciarTenant = () => {
           <input type="text" placeholder="Colaboradores" />
           <input type="text" placeholder="Faturamento" />
           {/* AQUI VAI O ACORDION */}
-          <div className="acordion">
-            <div className="add-box">
-              <button className="add-btn">Adicionar Colaborador +</button>
-            </div>
-            {/* AQUI VAI O SUB ACORDION CASO SEJA ADCIONADO */}
-            <div>Colaborador 1</div>
-            <div className="colaborador-form">
-              <input type="text" placeholder="Cargo" />
-              <input type="text" placeholder="E-mail" />
-              <input
-                type="text"
-                placeholder="
-                CPF"
-              />
-              <textarea placeholder="Descrição"></textarea>
-              <label htmlFor="foto">Foto</label>
-              <input type="file" id="foto" />
-              <UploadBox></UploadBox>
-              <div className="save-box">
-                <button className="save-btn">Salvar Colaborador</button>
-              </div>
-            </div>
+          <div className="accordion">
+      <div className="add-box">
+        <button className="add-btn" onClick={(e)=>{
+          e.preventDefault()
+          toggleAccordion()
+        }}>
+          {isOpen ? 'Fechar Adicionar Colaborador' : 'Adicionar Colaborador +'}
+        </button>
+      </div>
+
+      {isOpen && (
+        <div className="colaborador-form">
+          <input type="text" placeholder="Cargo" />
+          <input type="text" placeholder="E-mail" />
+          <input type="text" placeholder="CPF" />
+          <textarea placeholder="Descrição"></textarea>
+          <label htmlFor="foto">Foto</label>
+          <input type="file" id="foto" />
+          <UploadBox></UploadBox>
+          <div className="save-box">
+            <button className="save-btn">Salvar Colaborador</button>
           </div>
+        </div>
+      )}
+    </div>
           <button className="submit-btn">Salvar</button>
         </form>
       </GerenciarTenantsContainer>

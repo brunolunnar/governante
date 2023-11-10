@@ -8,17 +8,15 @@ const corsOptions = {
 
 export default async function handler(req, res) {
   function retornarResposta({ res, resposta, status }) {
-    status = status ?? 200
-    return res.status(200).send(resposta)
+    status = status ?? 200;
+    return res.status(200).send(resposta);
   }
   cors(corsOptions)(req, res, async () => {
-
-    let resposta = { tenantValido: false }
+    let resposta = { tenantValido: false };
     try {
-
       let { email, retornarDados } = req.body;
 
-      if (!email) return retornarResposta({ res, resposta, status: 400 })
+      if (!email) return retornarResposta({ res, resposta, status: 400 });
 
       let user = await paginateIndex({
         key: process.env.FAUNA_MAIN_KEY,
@@ -26,10 +24,10 @@ export default async function handler(req, res) {
         matchValue: email,
         dataOnly: true,
       });
-      if (!user) return retornarResposta({ res, resposta, status: 400 })
+      if (!user) return retornarResposta({ res, resposta, status: 400 });
 
       let tenantId = user[0].tenants[0];
-      if (!tenantId) return retornarResposta({ res, resposta, status: 400 })
+      if (!tenantId) return retornarResposta({ res, resposta, status: 400 });
 
       let tenant = await paginateIndex({
         key: process.env.FAUNA_MAIN_KEY,
@@ -37,11 +35,10 @@ export default async function handler(req, res) {
         matchValue: tenantId,
         dataOnly: true,
       });
-      if (!tenant) return retornarResposta({ res, resposta, status: 400 })
-
+      if (!tenant) return retornarResposta({ res, resposta, status: 400 });
 
       let keyTenant = tenant[0].key;
-      if (!keyTenant) return retornarResposta({ res, resposta, status: 400 })
+      if (!keyTenant) return retornarResposta({ res, resposta, status: 400 });
 
       let dbTenant = await paginateIndex({
         key: keyTenant,
@@ -49,16 +46,16 @@ export default async function handler(req, res) {
         matchValue: email,
         dataRefOnly: true,
       });
-      if (!dbTenant) return retornarResposta({ res, resposta, status: 400 })
+      if (!dbTenant) return retornarResposta({ res, resposta, status: 400 });
 
-      resposta = { ...resposta, tenantValido: !!dbTenant[0] }
-      let dadosUsuario = dbTenant[0] ?? []
+      resposta = { ...resposta, tenantValido: !!dbTenant[0] };
+      let dadosUsuario = dbTenant[0] ?? [];
       if (retornarDados) {
-        resposta = { ...resposta, dadosUsuario }
+        resposta = { ...resposta, dadosUsuario };
       }
-      return retornarResposta({ res, resposta })
+      return retornarResposta({ res, resposta });
     } catch (e) {
-      return retornarResposta({ res, resposta, status: 400 })
+      return retornarResposta({ res, resposta, status: 400 });
     }
   });
 }
