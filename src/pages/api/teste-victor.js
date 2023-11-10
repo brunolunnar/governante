@@ -51,7 +51,7 @@ export default async function handler(req, res) {
       });
       if (!dbTenant) return retornarResposta({ res, resposta, status: 400 })
 
-      resposta = { ...resposta, tenantValido: dbTenant[0] ?? [] }
+      resposta = { ...resposta, tenantValido: !!dbTenant[0] }
       let dadosUsuario = dbTenant[0] ?? []
       if (retornarDados) {
         resposta = { ...resposta, dadosUsuario }
