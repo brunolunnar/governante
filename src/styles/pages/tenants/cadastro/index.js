@@ -38,14 +38,5 @@ export const TenantCadastroContainer = styled('main',{
       "input::placeholder": {
         color: "$white",
       },
-      '.acordion .add-box':{
-        display:'flex',
-        alignItems:'center',
-        flexDirection:'column'
-      },
-      '.colaborador-form':{
-        display:'flex',
-        alignItems:'center',
-        flexDirection:'column'
-      },
+
 })

@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import LogoGov from "@/assets/img/logo-governante-academy.png";
 import { LoginContainer } from "@/styles/pages/login";
-import { getSession, signIn } from "next-auth/react";
+import { getSession, useSession,signIn } from "next-auth/react";
 
 function Index() {
   return (
@@ -17,7 +17,9 @@ function Index() {
 
 export const getServerSideProps = async (context) => {
   const session = await getSession(context);
+
   if (session) {
+  
     return {
       redirect: {
         destination: "/home",

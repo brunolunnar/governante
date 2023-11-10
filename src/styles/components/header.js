@@ -1,7 +1,9 @@
 import { styled } from "..";
 
 export const HeaderContainer = styled('header',{
-
+    '#menu':{
+        background:"$blue"
+    },
     display:'flex',
     justifyContent:'space-between',
     alignItems:'center',

@@ -2,14 +2,18 @@ import Image from "next/image";
 import Menu from "@/assets/img/menu-hamburger.png";
 import Logo from "@/assets/img/logo.png";
 import { HeaderContainer } from "@/styles/components/header";
+import NavMenu from "./navMenu";
+import { useState } from "react";
 
 function Header() {
+
   return (
     <HeaderContainer>
       <Image
-        className="menu"
+        className="menu-btn"
         src={Menu}
         alt="botão para clicar e acessar o menu"
+
       ></Image>
       <div className="header-box">
         <a>
@@ -23,7 +27,10 @@ function Header() {
         </a>
       </div>
       <Image className="logo" src={Logo} alt="Logotipo da empresa"></Image>
+
+ <NavMenu />
     </HeaderContainer>
   );
 }
+
 export default Header;

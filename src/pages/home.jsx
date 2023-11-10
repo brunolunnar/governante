@@ -7,6 +7,8 @@ import { HomePageContainer } from "@/styles/pages/home";
 
 function Home() {
   const { data: session } = useSession();
+
+  console.log(session)
   return (
     <>
       <Header />
