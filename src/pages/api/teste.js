@@ -1,17 +1,14 @@
 import Cors from 'cors';
-import initMiddleware from '@/lib/init-middleware';
 import { paginateIndex } from '@/utils/connections';
 
-const cors = initMiddleware(
-  Cors({
-    origin:'*',
-    methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE'],
-  })
-);
+// Configuração do middleware CORS
+const corsMiddleware = Cors({
+  methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE'],
+});
 
 export default async function Teste(req, res) {
   // Execute o middleware CORS antes de processar a solicitação
-  await cors(req, res);
+  await corsMiddleware(req, res);
 
   let { email } = req.body;
   let user = await paginateIndex({
