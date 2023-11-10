@@ -3,6 +3,7 @@ import { paginateIndex } from '@/utils/connections';
 
 // Configuração do middleware CORS
 const corsMiddleware = Cors({
+  origin:'*',
   methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE'],
 });
 
