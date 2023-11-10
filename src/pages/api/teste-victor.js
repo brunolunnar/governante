@@ -6,16 +6,7 @@ const corsOptions = {
   methods: ["GET", "POST"],
 };
 export default async function handler(req, res) {
-  function handleResposta() {
-    let dadosUsuario = dbTenant[0] ?? []
-    let resposta = {
-      tenantValido: !dadosUsuario,
-      dadosUsuario: dadosUsuario
-    }
-    console.log(resposta)
-    console.log("resposta")
-    return res.status(200).send(resposta);
-  }
+
   cors(corsOptions)(req, res, async () => {
     let { email, validarTenant, pegarDados } = req.body;
     try {
@@ -40,7 +31,14 @@ export default async function handler(req, res) {
         matchValue: email,
         dataRefOnly: true,
       });
-      handleResposta()
+      let dadosUsuario = dbTenant[0] ?? []
+      let resposta = {
+        tenantValido: !dadosUsuario,
+        dadosUsuario: dadosUsuario
+      }
+      console.log(resposta)
+      console.log("resposta")
+      return res.status(200).send(resposta);
     } catch (e) {
       return res.status(400)
     }
