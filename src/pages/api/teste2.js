@@ -1,3 +1,5 @@
+import { paginateIndex } from '@/utils/connections';
+
 const cors = require('cors');
 const corsOptions = {
   origin: '*',
@@ -8,6 +10,7 @@ export default async function handler(req, res) {
     try {
       // let { email } = req.body;
       let email = "bruno@lunnar.team"
+      console.log('REQ BODY', req.body)
       let user = await paginateIndex({
         key: process.env.FAUNA_MAIN_KEY,
         index: 'users_by_email',
