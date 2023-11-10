@@ -2,7 +2,8 @@ import React from "react";
 import Image from "next/image";
 import LogoGov from "@/assets/img/logo-governante-academy.png";
 import { LoginContainer } from "@/styles/pages/login";
-import { getSession, useSession,signIn } from "next-auth/react";
+import { getSession, useSession, signIn } from "next-auth/react";
+import api from "@/services/api";
 
 function Index() {
   return (
@@ -18,20 +19,39 @@ function Index() {
 export const getServerSideProps = async (context) => {
   const session = await getSession(context);
 
-  if (session) {
-  
+  if (!session) {
+    return {
+      props: {
+        session: null,
+      },
+    };
+  }
+
+  const userEmail = session.user.email;
+
+  try {
+    const apiResponse = await api.post("/api/conectarDb", {
+      email: userEmail,
+      retonarDados: true,
+    });
+    console.log(apiResponse.data);
+    const response = apiResponse.data.tenantValido;
+    console.log(response, "aksjdhksjahdsk");
+
     return {
       redirect: {
         destination: "/home",
         permanent: false,
       },
     };
+  } catch (error) {
+    console.error("Erro ao processar a requisição para a API:", error);
+    return {
+      props: {
+        session: null,
+      },
+    };
   }
-  return {
-    props: {
-      session,
-    },
-  };
 };
 
 export default Index;
