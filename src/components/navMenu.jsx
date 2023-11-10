@@ -3,7 +3,8 @@ import Image from "next/image";
 import { NavMenuContainer } from "@/styles/components/navMenu";
 
 export const NavMenu = () => {
-  
+
+
   return (
     <NavMenuContainer id="menu">
       <div className="logo-box">

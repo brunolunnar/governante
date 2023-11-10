@@ -37,8 +37,10 @@ function CadastroCurso() {
           <input
             id="access"
             type="text"
-            placeholder="Módulos (Salve para Liberar essa opção)"
+            placeholder="acesso ao curso"
+            
           />
+          <div>Módulos(Salve para liberar essa opção)</div>
           <button className="confirm-btn">Salvar Curso</button>
         </form>
       </CadastroCursoContainer>

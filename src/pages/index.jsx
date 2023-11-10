@@ -35,9 +35,9 @@ export const getServerSideProps = async (context) => {
       retonarDados: true,
     });
     const response = apiResponse.data.tenantValido;
-  
-    if(!response){
-      alert("email invalido ")
+
+    if (!response) {
+      alert("email invalido ");
       return {
         props: {
           session: null,
