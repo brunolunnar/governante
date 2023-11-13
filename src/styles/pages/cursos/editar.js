@@ -24,14 +24,22 @@ export const EditarContainer = styled('section',{
     input:{
         background:'$main',
         border:'2px $white ridge',
-        padding:'10px',
-        borderRadius:'2rem'
+        padding:'14px',
+        borderRadius:'2rem',
+        fontSize:'1.3rem'
+    },
+    'input::placeholder':{
+      color:'white',
+
     },
     textarea:{
         background:"$main",
         border:'2px $white ridge',
         padding:'10px',
         borderRadius:'14px'
+      },
+      "textarea::placeholder":{
+        color:'white'
       },
       ".trilha": {
         display: "flex",

@@ -4,10 +4,11 @@ import Image from "next/image";
 import Perfil from "@/assets/img/foto-tumb.png";
 import Card from "@/assets/img/trilhas-de-consultoria.png";
 import { HomePageContainer } from "@/styles/pages/home";
+import { useRouter } from "next/router";
 
 function Home() {
   const { data: session } = useSession();
-console.log(session)
+
   return (
     <>
       <Header />

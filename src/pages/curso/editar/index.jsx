@@ -3,6 +3,8 @@ import TrilhaImg from "@/assets/img/trilhas-de-consultoria.png";
 import { UploadBox } from "@/components/uploadBox";
 import Header from "@/components/header";
 import { EditarContainer } from "@/styles/pages/cursos/editar";
+import { Input } from "@/components/input";
+
 export const EditarCurso = () => {
   return (
     <>
@@ -14,11 +16,13 @@ export const EditarCurso = () => {
             <Image src={TrilhaImg}></Image>
           </div>
           <input type="text" placeholder="Nome do Curso" />
+
           <textarea placeholder="Descrição"></textarea>
           <div className="trilha-box">
             <p>Trilha</p>
             <label htmlFor="prof">Profissional</label>
             <input type="checkbox" id="prof" />
+
             <label htmlFor="estrategia">Estratégia</label>
             <input type="checkbox" id="estrategia" />
           </div>

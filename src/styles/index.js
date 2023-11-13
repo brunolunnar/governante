@@ -22,5 +22,8 @@ export const {
       'green-400':'#3FA16F',
    
     },
+    fonts:{
+      montserrat:'Montserrat'
+    }
   },
 });

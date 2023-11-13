@@ -4,6 +4,8 @@ import Menu from "@/assets/img/menu-hamburger.png";
 import Logo from "@/assets/img/logo.png";
 import { HeaderContainer } from "@/styles/components/header";
 import NavMenu from "./navMenu";
+import { useRouter } from "next/router";
+import Link from "next/link"
 
 
 function Header() {
@@ -11,6 +13,10 @@ function Header() {
   const toggleMenu = () => {
     setIsMenuVisible(!isMenuVisible);
   };
+  const router = useRouter()
+  const handleRouter = ()=>{
+    return router.push('/curso/cadastro')
+  }
 
   const closeMenuOnOutsideClick = (e) => {
     if (
@@ -39,9 +45,9 @@ function Header() {
         onClick={toggleMenu}
       ></Image>
       <div className="header-box">
-        <a>
+        <Link href={'/curso/cadastro'}> 
           Meus <b>Cursos</b>
-        </a>
+        </Link>
         <a>
           Meu <b>Time</b>
         </a>

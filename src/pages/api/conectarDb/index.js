@@ -2,8 +2,8 @@ import { paginateIndex } from "@/utils/connections";
 
 const cors = require("cors");
 const corsOptions = {
-  origin: "*",
-  methods: ["GET", "POST"],
+  origin: "http://localhost:3000",
+  methods: ["GET", "POST","OPTIONS"],
 };
 
 export default async function handler(req, res) {
