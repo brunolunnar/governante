@@ -7,7 +7,7 @@ import { HomePageContainer } from "@/styles/pages/home";
 
 function Home() {
   const { data: session } = useSession();
-
+console.log(session)
   return (
     <>
       <Header />
@@ -111,7 +111,7 @@ function Home() {
           </li>
         </ul>
 
-        <button onClick={() => signOut()}>Sair</button>
+        <button onClick={() => signOut("google")}>Sair</button>
       </HomePageContainer>
     </>
   );

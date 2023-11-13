@@ -16,6 +16,7 @@ export const UploadBox = () => {
       showUploadFolders: true,
       supportDrives: true,
       multiselect: true,
+      setOrigin:'http://localhost:3000',
       // customViews: customViewsArray, // custom view
       callbackFunction: (data) => {
         if (data.action === 'cancel') {
