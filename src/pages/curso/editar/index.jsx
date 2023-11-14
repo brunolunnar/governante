@@ -4,6 +4,7 @@ import { UploadBox } from "@/components/uploadBox";
 import Header from "@/components/header";
 import { EditarContainer } from "@/styles/pages/cursos/editar";
 import { Input } from "@/components/input";
+import { ModuleBox } from "@/components/module-box/Module";
 
 export const EditarCurso = () => {
   return (
@@ -17,7 +18,7 @@ export const EditarCurso = () => {
           </div>
           <input type="text" placeholder="Nome do Curso" />
 
-          <textarea placeholder="Descrição"></textarea>
+          <textarea placeholder="Descrição"/>
           <div className="trilha-box">
             <p>Trilha</p>
             <label htmlFor="prof">Profissional</label>
@@ -28,23 +29,7 @@ export const EditarCurso = () => {
           </div>
           <label htmlFor="access">Acesso ao Curso</label>
           <input type="text" id="access" />
-          <input type="text" placeholder="Módulos" />
-          <div className="add-modulo">
-            <button className="select-btn">Adicionar Módulo +</button>
-            <input type="text" placeholder="Módulo 01" />
-          </div>
-          <div className="add-aula">
-            <button className="select-btn">Adicionar Aula +</button>
-            <input type="text" placeholder="Aula 01" />
-            <div className="aula-container">
-              <textarea placeholder="Descrição"></textarea>
-              <span>Vídeo</span>
-              <UploadBox></UploadBox>
-              <span>Anexo</span>
-              <UploadBox></UploadBox>
-              <button className="confirm-btn">Salvar Aula</button>
-            </div>
-          </div>
+          <ModuleBox />
         </form>
       </EditarContainer>
     </>

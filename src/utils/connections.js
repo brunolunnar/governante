@@ -241,10 +241,12 @@ export const getUserInfo = async ({ email, pageSize }) => {
     return perms
 }
 
-export const deleteByRef = async ({ email, pageSize, collection, ref, returnInfo }) => {
-    const tenantKey = await validarTenantUsuario({ email, pageSize, getKey: true })
+export const deleteByRef = async ({ key, email, pageSize, collection, ref, returnInfo }) => {
+    if (!key) {
+        key = await validarTenantUsuario({ email, pageSize, getKey: true })
+    }
     let q = query
-    let fauna = tenantKey
+    let fauna = key
     if (typeof fauna === "string") {
         fauna = new Client({
             secret: fauna,
@@ -256,7 +258,5 @@ export const deleteByRef = async ({ email, pageSize, collection, ref, returnInfo
 
     retorno = returnInfo === "data" ? deleteRef.data : returnInfo === "ref" ? deleteRef.ref.id : deleteRef
     return retorno;
-
 }
-
 
