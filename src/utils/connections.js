@@ -140,7 +140,8 @@ export const createData = async ({ key, collection, data, returnInfo }) => {
             q.Create(
                 q.Collection(collection),
                 {
-                    data: { ...data }
+                    data: { ...data, modulos: [] }
+                   
                 },
             )
         )
