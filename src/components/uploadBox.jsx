@@ -1,8 +1,8 @@
-import UploadContainer from '../styles/components/uploadBox'
+
 import Image from "next/image";
 import UploadImage from "../assets/img/upload-cloud.png";
 
-
+import { UploadContainer } from "@/styles/components/uploadBox";
 
 
 
@@ -34,3 +34,4 @@ const UploadBox = ({ handleOpenPicker }) => {
   );
 };
 
+export default UploadBox

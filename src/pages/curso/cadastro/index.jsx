@@ -1,9 +1,10 @@
-import Header from "../../../components/header";
-import CadastroCursoContainer from "../../../styles/pages/cursos/cadastro";
+import Header from "@/components/header";
+import { CadastroCursoContainer } from "@/styles/pages/cursos/cadastro";
 import useDrivePicker from "react-google-drive-picker";
 import React, { useState } from "react";
-import Lock from "../../../assets/img/lock.png";
+import Lock from "@/assets/img/lock.png"
 import Image from "next/image";
+
 
 
 
@@ -49,7 +50,7 @@ export default function CadastroCurso() {
           Cadastro de <b>Curso</b>
         </h1>
         <form>
-          {/* <UploadBox handleOpenPicker={handleOpenPicker} /> */}
+     
 
           <input type="text" placeholder="Nome do Curso" />
           <textarea placeholder="Descrição"></textarea>
