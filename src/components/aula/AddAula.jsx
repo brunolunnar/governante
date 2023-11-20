@@ -1,8 +1,8 @@
 import { useState } from "react";
-// import { UploadBox } from "../uploadBox";
 import React from 'react';
+import UploadAula from "../Upload/UploadAula";
 
-export const AdicionarAula = () => {
+export const AdicionarAula = ({handleOpenPicker}) => {
   const [numAulas, setNumAulas] = useState(1);
 
   const adicionarAula = (e) => {
@@ -23,10 +23,10 @@ export const AdicionarAula = () => {
             <textarea placeholder="Descrição"></textarea>
 
             <span>Vídeo</span>
-            {/* <UploadBox></UploadBox> */}
+            <UploadAula handleOpenPicker={handleOpenPicker}></UploadAula>
 
             <span>Anexo</span>
-            {/* <UploadBox></UploadBox> */}
+            <UploadAula handleOpenPicker={handleOpenPicker}></UploadAula>
             <div className="button-box">
               <button className="confirm-btn">Salvar Aula</button>
             </div>

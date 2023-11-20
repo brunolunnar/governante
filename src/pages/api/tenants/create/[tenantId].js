@@ -5,19 +5,18 @@ const client = new Client({ secret: process.env.FAUNA_MAIN_KEY });
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
-    const { tenantId } = req.query; // Extrai o ID do tenant da URL
+    const { tenantId } = req.query; 
     const novoColaborador = {
       ...req.body,
-      colaboradorId: uuidv4(), // Adiciona o colaboradorId ao objeto
-    }; // Dados do novo colaborador a ser adicionado
+      colaboradorId: uuidv4(),
+    }; 
 
     try {
-      // Obtém o tenant existente
+
       const tenant = await client.query(
         query.Get(query.Ref(query.Collection("tenants"), tenantId))
       );
 
-      // Adiciona o novo colaborador ao array "colaboradores_cadastrados"
       const response = await client.query(
         query.Update(query.Ref(query.Collection("tenants"), tenantId), {
           data: {

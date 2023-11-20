@@ -4,9 +4,7 @@ const client = new Client({
   secret: process.env.FAUNA_MAIN_KEY,
 });
 
-
 export default async function handler(req, res) {
-
   if (req.method !== "GET") {
     return res.status(405).json({ message: "Método não permitido" }).end();
   }
@@ -17,6 +15,7 @@ export default async function handler(req, res) {
     const response = await client.query(
       query.Get(query.Ref(query.Collection("modulos"), id))
     );
+
     const modulo = {
       id: response.ref.id,
       ...response.data,

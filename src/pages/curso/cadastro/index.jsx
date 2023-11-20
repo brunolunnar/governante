@@ -1,11 +1,13 @@
 import Header from "../../../components/header";
-
 import CadastroCursoContainer from "../../../styles/pages/cursos/cadastro";
 import useDrivePicker from "react-google-drive-picker";
 import React, { useState } from "react";
 import Lock from "../../../assets/img/lock.png";
 import Image from "next/image";
-function CadastroCurso() {
+
+
+
+export default function CadastroCurso() {
   const [openPicker, authResponse] = useDrivePicker();
   const [videoUrlDrive, setVideoUrlDrive] = useState("");
 
@@ -16,7 +18,7 @@ function CadastroCurso() {
         "759422105899-28m1on4lrvdold5uk4g5tlhkeh6b5fkg.apps.googleusercontent.com",
       developerKey: "AIzaSyDWw3b7z9PFneSaT6eCNk8wfJbik-yRgHY",
       viewId: "DOCS",
-      // token: token, // pass oauth token in case you already have one
+
       showUploadView: true,
       showUploadFolders: true,
       supportDrives: true,
@@ -82,4 +84,3 @@ function CadastroCurso() {
   );
 }
 
-export default CadastroCurso;
