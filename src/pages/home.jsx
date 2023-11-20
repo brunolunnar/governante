@@ -1,9 +1,9 @@
-import Header from "@/components/header";
+import Header from "../components/header";
 import { signOut, useSession, getSession } from "next-auth/react";
 import Image from "next/image";
-import Perfil from "@/assets/img/foto-tumb.png";
-import Card from "@/assets/img/trilhas-de-consultoria.png";
-import { HomePageContainer } from "@/styles/pages/home";
+import Perfil from "../assets/img/foto-tumb.png";
+import Card from "../assets/img/trilhas-de-consultoria.png";
+import { HomePageContainer } from "../styles/pages/home";
 import { useRouter } from "next/router";
 
 function Home() {

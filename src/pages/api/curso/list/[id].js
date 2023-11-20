@@ -10,7 +10,7 @@ const faunaClient = new Client({
 
 export default async (req, res) => {
   if (req.method === "GET") {
-    const userId = req.query.id; // Obtém o ID do parâmetro da URL
+    const userId = req.query.id; 
 
     try {
       const response = await faunaClient.query(

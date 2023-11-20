@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import Menu from "@/assets/img/menu-hamburger.png";
-import Logo from "@/assets/img/logo.png";
-import { HeaderContainer } from "@/styles/components/header";
+import Menu from "../assets/img/menu-hamburger.png";
+import Logo from "../assets/img/logo.png";
+import { HeaderContainer } from "../styles/components/header";
 import NavMenu from "./navMenu";
 import { useRouter } from "next/router";
 import Link from "next/link"

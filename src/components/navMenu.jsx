@@ -1,6 +1,6 @@
-import Logo from "@/assets/img/logo.png";
+import Logo from "../assets/img/logo.png";
 import Image from "next/image";
-import { NavMenuContainer } from "@/styles/components/navMenu";
+import { NavMenuContainer } from "../styles/components/navMenu";
 
 export const NavMenu = () => {
 

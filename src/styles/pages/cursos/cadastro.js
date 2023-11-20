@@ -25,7 +25,7 @@ export const CadastroCursoContainer = styled("section", {
     borderRadius: "34px",
     padding: "20px",
     fontSize: "26px",
-    marginBottom:'2rem'
+    marginBottom: "2rem",
   },
   ".trilha": {
     display: "flex",
@@ -47,7 +47,7 @@ export const CadastroCursoContainer = styled("section", {
     boxShadow: "0 0 0 0",
     outline: 0,
   },
-  
+
   "textarea:focus": {
     boxShadow: "0 0 0 0",
     outline: 0,
@@ -66,29 +66,25 @@ export const CadastroCursoContainer = styled("section", {
     color: "$white",
     fontFamily: "$montserrat",
   },
-'.block':{
-  border:'1px solid gray',
-  display:'flex',
-  alignItems:'center',
-  justifyContent:'space-between',
-  padding:'14px',
-  borderRadius:'34px',
-  color:"gray",
-
-
-},
-'input[type=radio], input[type=checkbox] ': {
-  border: 0,
-  width: '25px',
-  height: '30px',
-  'verticalAlign': 'middle',
-  color:'$green'
-},
-'input:checked':{
-  'backgroundColor': 'red',
-  width: '25px',
-  height: '25px',
-},
-
-
+  ".block": {
+    border: "1px solid gray",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: "14px",
+    borderRadius: "34px",
+    color: "gray",
+  },
+  "input[type=radio], input[type=checkbox] ": {
+    border: 0,
+    width: "25px",
+    height: "30px",
+    verticalAlign: "middle",
+    color: "$green",
+  },
+  "input:checked": {
+    backgroundColor: "red",
+    width: "25px",
+    height: "25px",
+  },
 });

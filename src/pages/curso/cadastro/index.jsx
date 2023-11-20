@@ -1,13 +1,13 @@
-import Header from "@/components/header";
-import { UploadBox } from "@/components/uploadBox";
-import { CadastroCursoContainer } from "@/styles/pages/cursos/cadastro";
+import Header from "../../../components/header";
+
+import CadastroCursoContainer from "../../../styles/pages/cursos/cadastro";
 import useDrivePicker from "react-google-drive-picker";
-import { useState } from "react";
-import Lock from '@/assets/img/lock.png';
-import Image from 'next/image'
+import React, { useState } from "react";
+import Lock from "../../../assets/img/lock.png";
+import Image from "next/image";
 function CadastroCurso() {
   const [openPicker, authResponse] = useDrivePicker();
-  const [videoUrlDrive, setVideoUrlDrive ] = useState("")
+  const [videoUrlDrive, setVideoUrlDrive] = useState("");
 
   // const customViewsArray = [new google.picker.DocsView()]; // custom view
   const handleOpenPicker = () => {
@@ -30,16 +30,14 @@ function CadastroCurso() {
         if (data.docs && data.docs.length > 0) {
           //aqui para capturar o url do video
           console.log(data.docs[0].url);
-          setVideoUrlDrive(data.docs[0].url)
+          setVideoUrlDrive(data.docs[0].url);
         } else {
           console.error("O array data.docs está vazio ou indefinido.");
         }
-       
       },
-      
     });
 
-    console.log('video:', videoUrlDrive)
+    console.log("video:", videoUrlDrive);
   };
   return (
     <>
@@ -49,7 +47,7 @@ function CadastroCurso() {
           Cadastro de <b>Curso</b>
         </h1>
         <form>
-          <UploadBox handleOpenPicker={handleOpenPicker} />
+          {/* <UploadBox handleOpenPicker={handleOpenPicker} /> */}
 
           <input type="text" placeholder="Nome do Curso" />
           <textarea placeholder="Descrição"></textarea>
@@ -73,7 +71,10 @@ function CadastroCurso() {
           </div>
           <label htmlFor="access">Acesso ao Curso</label>
           <input id="access" type="text" placeholder="acesso ao curso" />
-          <div className="block">Módulos(Salve para liberar essa opção) <Image src={Lock} alt="imagem de um cadeado"/> </div>
+          <div className="block">
+            Módulos(Salve para liberar essa opção){" "}
+            <Image src={Lock} alt="imagem de um cadeado" />{" "}
+          </div>
           <button className="confirm-btn">Salvar Curso</button>
         </form>
       </CadastroCursoContainer>

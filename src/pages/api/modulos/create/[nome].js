@@ -21,10 +21,9 @@ export default async function handler(req, res) {
       query.Get(query.Match(query.Index("cursos_by_name"), nomeFormatado))
     );
 
-    console.log(result);
+   
     const curso = result.data;
-    console.log("Curso:", curso);
-
+  
     const moduloAdd = await client.query(
       query.Create(query.Collection("modulos"), {
         data: {
@@ -34,9 +33,7 @@ export default async function handler(req, res) {
       })
     );
 
-    console.log("Módulo adicionado:", moduloAdd);
-
-    // Resposta personalizada
+  
     const responseData = {
       ts: moduloAdd.ts,
       data: {

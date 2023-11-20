@@ -1,25 +1,27 @@
-import { UploadBox } from "../uploadBox";
+import { useState } from "react";
+import {AdicionarAula} from "../aula/AddAula"
 
 export const ModuleBox = () => {
+  const [numModulos, setNumModulos] = useState(1);
+
+  const adicionarModulo = (e) => {
+    e.preventDefault();
+    setNumModulos(numModulos + 1);
+  };
+
   return (
     <>
-      <input type="text" placeholder="Módulos" />
-      <div className="add-modulo">
-        <button className="select-btn">Adicionar Módulo +</button>
-        <input type="text" placeholder="Módulo 01" />
-      </div>
-      <div className="add-aula">
-        <button className="select-btn">Adicionar Aula +</button>
-        <input type="text" placeholder="Aula 01" />
-        <div className="aula-container">
-          <textarea placeholder="Descrição"></textarea>
-          <span>Vídeo</span>
-          <UploadBox></UploadBox>
-          <span>Anexo</span>
-          <UploadBox></UploadBox>
-          <button className="confirm-btn">Salvar Aula</button>
+      <button className="select-btn" onClick={adicionarModulo}>
+        Adicionar Módulo +
+      </button>
+      {[...Array(numModulos)].map((_, index) => (
+        <div className="container-modules">
+          <div key={index} className="add-modulo">
+            <input type="text" placeholder={`Módulo ${index + 1}`} />
+            <AdicionarAula />
+          </div>
         </div>
-      </div>
+      ))}
     </>
   );
 };

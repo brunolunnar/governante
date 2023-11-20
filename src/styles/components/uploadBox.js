@@ -5,7 +5,7 @@ export const UploadContainer = styled('div',{
   alignItems: "center",
   border: "2px $white dashed",
   borderRadius: "30px",
-  padding: 20,
+
   "input[type=file]": {
     display: "none",
   },

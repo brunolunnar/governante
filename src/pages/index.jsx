@@ -1,9 +1,9 @@
 import React from "react";
 import Image from "next/image";
-import LogoGov from "@/assets/img/logo-governante-academy.png";
-import { LoginContainer } from "@/styles/pages/login";
+import LogoGov from "../assets/img/logo-governante-academy.png";
+import { LoginContainer } from "../styles/pages/login";
 import { getSession, useSession, signIn } from "next-auth/react";
-import api from "@/services/api";
+import api from "../services/api";
 
 function Index() {
   

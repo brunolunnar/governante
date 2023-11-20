@@ -1,10 +1,10 @@
 import Image from "next/image";
-import TrilhaImg from "@/assets/img/trilhas-de-consultoria.png";
-import { UploadBox } from "@/components/uploadBox";
-import Header from "@/components/header";
-import { EditarContainer } from "@/styles/pages/cursos/editar";
-import { Input } from "@/components/input";
-import { ModuleBox } from "@/components/module-box/Module";
+import TrilhaImg from "../assets/img/trilhas-de-consultoria.png";
+import { UploadBox } from "../components/uploadBox";
+import Header from "../components/header";
+import { EditarContainer } from "../styles/pages/cursos/editar";
+import { Input } from "../components/input";
+import { ModuleBox } from "../components/module-box/Module";
 
 export const EditarCurso = () => {
   return (
@@ -29,8 +29,10 @@ export const EditarCurso = () => {
           </div>
           <label htmlFor="access">Acesso ao Curso</label>
           <input type="text" id="access" />
+          <div className="modules-layout"><h3>Módulos</h3></div>
           <ModuleBox />
         </form>
+        <button className="confirm-curso-btn">Salvar Curso</button>
       </EditarContainer>
     </>
   );

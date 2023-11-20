@@ -1,13 +1,13 @@
-import { UploadContainer } from "@/styles/components/uploadBox";
+import UploadContainer from '../styles/components/uploadBox'
 import Image from "next/image";
-import UploadImage from "@/assets/img/upload-cloud.png";
+import UploadImage from "../assets/img/upload-cloud.png";
 
 
 
 
 
 
-export const UploadBox = ({ handleOpenPicker }) => {
+const UploadBox = ({ handleOpenPicker }) => {
   return (
     <UploadContainer className="upload-box">
       <div className="capa-box">
@@ -33,3 +33,4 @@ export const UploadBox = ({ handleOpenPicker }) => {
     </UploadContainer>
   );
 };
+
