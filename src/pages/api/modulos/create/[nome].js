@@ -10,7 +10,7 @@ export default async function handler(req, res) {
   let { nome } = req.query;
   const { aula, name, descricao } = req.body;
 
-  // Verifica se o nome contém hífens antes de fazer a substituição para exibição
+  
   const nomeFormatado = nome.includes('-') ? nome.replace(/-/g, ' ') : nome;
 
   try {
@@ -26,7 +26,8 @@ export default async function handler(req, res) {
           aula: aula,
           name: name,
           descricao: descricao,
-          aulas: [],  // Inicializa aulas como um array vazio
+          aulas: [], 
+          nomeDoCurso: nome 
         },
       })
     );
@@ -35,10 +36,11 @@ export default async function handler(req, res) {
       ts: moduloAdd.ts,
       data: {
         aula: aula,
-        id: moduloAdd.ref.id,  // Use o ID gerado pelo FaunaDB
+        id: moduloAdd.ref.id, 
         name: name,
         descricao: descricao,
-        aulas: [],  // Inicializa aulas como um array vazio
+        aulas: [],
+        nomeDoCurso: nome  
       },
     };
 

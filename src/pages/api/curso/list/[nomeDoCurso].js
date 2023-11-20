@@ -9,22 +9,29 @@ export default async function handler(req, res) {
   if (req.method !== "GET") {
     return res.status(405).json({ message: "Método não permitido" }).end();
   }
+
+  const { nomeDoCurso } = req.query;
+
   try {
     const response = await client.query(
       query.Map(
-        query.Paginate(query.Documents(query.Collection("modulos"))),
+        query.Paginate(
+          query.Match(query.Index("cursos_by_nome"), nomeDoCurso)
+        ),
         query.Lambda("X", query.Get(query.Var("X")))
       )
     );
+
     const modulos = response.data.map((item) => ({
       id: item.ref.id,
       ...item.data,
     }));
-    res.status(200).json({ data: modulos });
+
+    return res.status(200).json({ data: modulos });
   } catch (error) {
     console.error(error);
-    res.status(500).json({
-      error: "Erro ao buscar módulos.",
-    });
+    return res
+      .status(500)
+      .json({ error: "Erro ao buscar módulos por curso." });
   }
 }
