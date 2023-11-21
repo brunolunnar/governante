@@ -30,6 +30,7 @@ export const CadastroCursoContainer = styled("section", {
   ".trilha": {
     display: "flex",
     justifyContent: "space-between",
+    alignItems:'center'
   },
   input: {
     background: "$main",
@@ -47,7 +48,43 @@ export const CadastroCursoContainer = styled("section", {
     boxShadow: "0 0 0 0",
     outline: 0,
   },
-
+  ".radio": {
+    border: "3px solid #ccc",
+    height: 37,
+    width: '37%',
+    position: "relative",
+    borderRadius:'30px'
+  },
+  ".radio label": {
+    background: "$main",
+    cursor: "pointer",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    whiteSpace: "nowrap",
+    borderRadius:'25px',
+    
+  },
+  ".radio span":{
+    zIndex: "1"
+  },
+  ".radio label input[type=radio]": {
+    all: "unset",
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    borderRadius:'25px',
+    top: 0,
+    left: 0,
+  },
+  ".radio label input[type=radio]:checked": {
+    background: "$green",
+    borderRadius:'25px',
+  },
+  ".radio label input[type=radio]:checked +  span": { color: "$white" },
   "textarea:focus": {
     boxShadow: "0 0 0 0",
     outline: 0,

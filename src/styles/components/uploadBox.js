@@ -38,5 +38,8 @@ export const UploadContainer = styled('div',{
     borderRadius:"30px",
     cursor:'pointer'
   },
+  '.drive-description:hover':{
+    background:"$green"
+  }
 
 })

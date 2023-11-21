@@ -12,6 +12,7 @@ export const NavMenuContainer = styled("div", {
   position:"absolute",
   top:0,
   left:0,
+  zIndex:5,
   ".logo-box": {
     display: "flex",
     alignItems: "center",
