@@ -24,12 +24,20 @@ export const HomePageContainer = styled('section',{
         padding:'15px',
         alignItems:'center'
     },
+    li:{
+        cursor:'pointer',
+        transition: 'linear 0.3s',
+    },
+    'li:hover':{
+        transform: 'scale(1.15)',
+    },
     '.card-box li img':{
         width:'100%',
         height:'100%',
     },
     '.card-box li':{
-        width:'200px'
+        width:'247px',
+        height:'335px',
     },
     '.time-box':{
         display:'flex',

@@ -17,7 +17,7 @@ export default async function handler(req, res) {
           nome: req.body.nome,
           descricao: req.body.descricao,
           img: req.body.img,
-          capa: req.body.capa,
+          video: req.body.video,
         },
       })
     );

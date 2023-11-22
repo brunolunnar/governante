@@ -8,11 +8,10 @@ export const NavMenuContainer = styled("div", {
   alignItems: "flex-end",
   justifyContent: "space-evenly",
   padding: "15px",
-  width: "37%",
+  width: "80%",
   position:"absolute",
   top:0,
   left:0,
-  zIndex:5,
   ".logo-box": {
     display: "flex",
     alignItems: "center",
