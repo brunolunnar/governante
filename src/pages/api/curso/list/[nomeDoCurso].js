@@ -10,7 +10,10 @@ export default async function handler(req, res) {
     return res.status(405).json({ message: "Método não permitido" }).end();
   }
 
-  const { nomeDoCurso } = req.query;
+  let { nomeDoCurso } = req.query;
+
+  // Substitua espaços por hífens
+  nomeDoCurso = nomeDoCurso.replace(/-/g, " ");
 
   try {
     const response = await client.query(

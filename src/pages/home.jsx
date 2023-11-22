@@ -1,16 +1,29 @@
+import { useState, useEffect, useRef } from "react";
 import Header from "../components/header";
 import { signOut, useSession, getSession } from "next-auth/react";
 import Image from "next/image";
 import Perfil from "../assets/img/foto-tumb.png";
-import Card from "../assets/img/trilhas-de-consultoria.png";
 import { HomePageContainer } from "../styles/pages/home";
-import { useRouter } from "next/router";
+import { MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { CustomCard } from "@/styles/components/trilhaCarrosel";
+import { motion } from "framer-motion";
+import { Carrousel } from "@/components/Slider";
+import { Swiper, SwiperSlide } from "swiper/react";
+import {Navigation, Pagination, Scrollbar, Ally} from 'swiper'
+
 
 function Home({ cursos }) {
   const { data: session } = useSession();
+  const carousel = useRef();
+  const [width, setWidth] = useState(0);
+
+  useEffect(() => {
+    setWidth(carousel.current?.scrollWidth - carousel.current?.offsetWidth);
+  }, []);
+
   let curso = cursos.data;
   let FilterProfissional = curso.filter((trilha) => {
     return trilha.category === "Profissional";
@@ -24,14 +37,28 @@ function Home({ cursos }) {
     speed: 500,
     slidesToShow: 3,
     slidesToScroll: 1,
+    arrows: true,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+    ],
   };
 
   return (
     <>
       <Header />
       <HomePageContainer>
-        <h3>Olá {session?.user?.name}</h3>
-        {/* <ul className="history-list">
+        <ul className="history-list">
           <li>
             <Image src={Perfil}></Image>
           </li>
@@ -62,21 +89,14 @@ function Home({ cursos }) {
           <li>
             <Image src={Perfil}></Image>
           </li>
-        </ul> */}
-
-        <h1>Trilha Estratégica</h1>
-        <Slider {...settings}>
-          {FilterEstrategica.map((curso) => (
-       
-              <div className="card" key={curso.id}>
-                <img src={curso.capa} alt={curso.nome} />
-                <p>{curso.nome}</p>
-              </div>
-      
-          ))}
-        </Slider>
-
-        <h1>Meu Time</h1>
+        </ul>
+        <h1>
+          <span>Trilha</span> Estratégica
+        </h1>
+        <Carrousel filter={FilterEstrategica} />
+        <h1>
+          <span>Meu</span> Time
+        </h1>
         <ul className="time-box">
           <li>
             <Image src={Perfil}></Image>
@@ -97,18 +117,10 @@ function Home({ cursos }) {
             <Image src={Perfil}></Image>
           </li>
         </ul>
-        <h1>Trilha Profissional</h1>
-        <ul className="card-box">
-          {FilterProfissional.map((curso) => {
-            return (
-              <li key={curso.id}>
-                <img src={curso.capa} width={300} alt={curso.nome} />
-                <p>{curso.nome}</p>
-              </li>
-            );
-          })}
-        </ul>
-
+        <h1>
+          <span>Trilha</span> Profissional
+        </h1>
+        <Carrousel filter={FilterProfissional} />
         <button onClick={() => signOut("google")}>Sair</button>
       </HomePageContainer>
     </>

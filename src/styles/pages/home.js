@@ -1,14 +1,12 @@
 import { styled } from "..";
 
 export const HomePageContainer = styled('section',{
+  
     '.history-list':{
         display:'flex',
         gap:'1.5rem',
         padding:'15px',
         alignItems:'center'
-    },
-    '.slick-prev':{
-
     },
     '.history-list li img':{
         width:'100%',
@@ -28,11 +26,10 @@ export const HomePageContainer = styled('section',{
         alignItems:'center'
     },
     li:{
-        cursor:'pointer',
         transition: 'linear 0.3s',
     },
     'li:hover':{
-        transform: 'scale(1.15)',
+        transform: 'scale(1.10)',
     },
     '.card-box li img':{
         width:'100%',
@@ -48,20 +45,42 @@ export const HomePageContainer = styled('section',{
         padding:'15px',
         alignItems:'center'
     },
-    '.card':{
-        width:'100px',
-
-    },
-    '.card img':{
-        width:'100%'
-    },
     '.time-box li img':{
         width:'100%',
         height:'100%',
     },
-    '.carrosel-box':{
+    '.inner':{
         display:'flex',
-        gap:'1rem'
+
+    },
+    '.item':{
+        minWidth:'400px',
+        minHeight:'200px',
+        padding:'5px',
+        width: '200px'
+    },
+
+    '.item img ':{
+        width:'100%',
+        height:'90%',
+        borderRadius:'12px',
+        pointerEvents:'none'
+    },
+    '.carousel':{
+
+        overflow:'hidden'
+    },'.container-carousel':{
+        display:'flex',
+        alignItems:'center'
+    },
+    '.svg':{
+        height:'100px',
+        width:'100px',
+        cursor:'pointer'
+    },
+    '.svg svg':{
+        width:'100%',
+        height:"100%"
     }
 
         
