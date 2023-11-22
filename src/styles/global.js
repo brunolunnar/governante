@@ -18,7 +18,7 @@ export const globalStyle = globalCss({
     background: ' rgb(36,44,72)',
     background: 'radial-gradient(circle, rgba(36,44,72,1) 55%, rgba(28,34,54,1) 70%, rgba(18,20,31,1) 90%)',
     height:'100vh',
-    fontFamily: "'Montserrat', sans-serif",
+    fontFamily: 'Montserrat',
     color: "white",
     margin: "0 auto",
     maxWidth: "1400px",

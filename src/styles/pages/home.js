@@ -7,6 +7,9 @@ export const HomePageContainer = styled('section',{
         padding:'15px',
         alignItems:'center'
     },
+    '.slick-prev':{
+
+    },
     '.history-list li img':{
         width:'100%',
         height:'100%',
@@ -45,10 +48,21 @@ export const HomePageContainer = styled('section',{
         padding:'15px',
         alignItems:'center'
     },
+    '.card':{
+        width:'100px',
+
+    },
+    '.card img':{
+        width:'100%'
+    },
     '.time-box li img':{
         width:'100%',
         height:'100%',
     },
+    '.carrosel-box':{
+        display:'flex',
+        gap:'1rem'
+    }
 
         
 })
