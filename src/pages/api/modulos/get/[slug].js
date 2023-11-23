@@ -10,13 +10,13 @@ export default async function handler(req, res) {
     return res.status(405).json({ message: "Método não permitido" }).end();
   }
 
-  const { nomeDoCurso } = req.query;
+  const { slug } = req.query;
 
   try {
     const response = await client.query(
       query.Map(
         query.Paginate(
-          query.Match(query.Index("modulos_by_cursos"), nomeDoCurso)
+          query.Match(query.Index("cursos_by_slug"), slug)
         ),
         query.Lambda("X", query.Get(query.Var("X")))
       )

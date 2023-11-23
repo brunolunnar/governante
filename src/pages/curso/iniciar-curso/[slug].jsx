@@ -63,7 +63,45 @@ export const AulaCurso = ({ curso }) => {
                   <Typography>Conteúdo do submódulo 1.</Typography>
                 </AccordionDetails>
               </Accordion>
-              {/* Adicione mais Accordions conforme necessário */}
+              <Accordion id="box">
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel2a-content"
+                  id="panel2a-header"
+                >
+                  <Typography>Módulo 01</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography>Conteúdo do submódulo 1.</Typography>
+                </AccordionDetails>
+              </Accordion>
+              <Accordion id="box">
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel2a-content"
+                  id="panel2a-header"
+                >
+                  <Typography>Módulo 01</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography>Conteúdo do submódulo 1.</Typography>
+                </AccordionDetails>
+                <AccordionDetails>
+                  <Typography>Conteúdo do submódulo 1.</Typography>
+                </AccordionDetails>
+                <AccordionDetails>
+                  <Typography>Conteúdo do submódulo 1.</Typography>
+                </AccordionDetails>
+                <AccordionDetails>
+                  <Typography>Conteúdo do submódulo 1.</Typography>
+                </AccordionDetails>
+                <AccordionDetails>
+                  <Typography>Conteúdo do submódulo 1.</Typography>
+                </AccordionDetails>
+              </Accordion>
+              
+        
+   
             </AccordionDetails>
           </Accordion>
         </div>

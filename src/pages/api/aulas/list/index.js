@@ -8,26 +8,29 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Consultar todas as aulas
-    const aulas = await client.query(
+    const modulos = await client.query(
       q.Map(
-        q.Paginate(q.Documents(q.Collection('aulas'))),
-        q.Lambda('aulaRef', q.Get(q.Var('aulaRef')))
+        q.Paginate(q.Documents(q.Collection('modulos'))),
+        q.Lambda('moduloRef', q.Get(q.Var('moduloRef')))
       )
     );
 
-    // Formatar os dados para a resposta
-    const aulasFormatadas = aulas.data.map(aula => ({
-      id: aula.ref.id,
-      nome: aula.data.nome,
-      descricao: aula.data.descricao,
-      img: aula.data.img,
-      video: aula.data.video,
+    const modulosFormatados = modulos.data.map(modulo => ({
+      id: modulo.ref.id,
+      name: modulo.data.name,
+      descricao: modulo.data.descricao,
+      aulas: modulo.data.aulas.map(aula => ({
+        nome: aula.nome,
+        descricao: aula.descricao,
+        img: aula.img,
+        video: aula.video,
+        clear: aula.clear,
+      })),
     }));
 
-    res.status(200).json({ data: aulasFormatadas });
+    res.status(200).json({ data: modulosFormatados });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Erro ao obter lista de aulas' });
+    res.status(500).json({ error: 'Erro ao obter lista de módulos e aulas' });
   }
 }

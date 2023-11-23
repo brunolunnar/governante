@@ -1,4 +1,4 @@
-import faunadb from 'faunadb'
+import faunadb from "faunadb";
 const { Client, query } = faunadb;
 const client = new Client({ secret: process.env.FAUNA_MAIN_KEY });
 
@@ -6,19 +6,14 @@ export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).end();
   }
-
-  let { nome } = req.query;
+  let { slug } = req.query;
   const { aula, name, descricao } = req.body;
-
-  
-  const nomeFormatado = nome.includes('-') ? nome.replace(/-/g, ' ') : nome;
-
   try {
     const result = await client.query(
-      query.Get(query.Match(query.Index("cursos_by_name"), nomeFormatado))
+      query.Get(query.Match(query.Index("cursos_by_slug"), slug))
     );
 
-    const curso = result.data;
+    
 
     const moduloAdd = await client.query(
       query.Create(query.Collection("modulos"), {
@@ -26,8 +21,8 @@ export default async function handler(req, res) {
           aula: aula,
           name: name,
           descricao: descricao,
-          aulas: [], 
-          nomeDoCurso: nome 
+          aulas: [],
+          slug: slug,
         },
       })
     );
@@ -36,11 +31,11 @@ export default async function handler(req, res) {
       ts: moduloAdd.ts,
       data: {
         aula: aula,
-        id: moduloAdd.ref.id, 
+        id: moduloAdd.ref.id,
         name: name,
         descricao: descricao,
         aulas: [],
-        nomeDoCurso: nome  
+        slugDoCurso: slug,
       },
     };
 

@@ -18,6 +18,8 @@ export default async function handler(req, res) {
           descricao: req.body.descricao,
           img: req.body.img,
           video: req.body.video,
+          clear:false,
+          idModulo:moduloId
         },
       })
     );
@@ -55,7 +57,9 @@ export default async function handler(req, res) {
           descricao: aula.data.descricao,
           img: aula.data.img,
           video: aula.data.video,
-          clear:false
+          clear:false,
+          idModulo:moduloId
+          
         })),
       },
     };
