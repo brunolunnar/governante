@@ -1,7 +1,7 @@
 import Logo from "@/assets/img/logo.png";
 import Header from "@/components/header";
 import Image from "next/image";
-import { UploadBox } from "@/components/uploadBox";
+
 import { GerenciarTenantsContainer } from "@/styles/pages/tenants/gerenciar";
 import { useState } from "react";
 export const GerenciarTenant = () => {
@@ -40,7 +40,7 @@ export const GerenciarTenant = () => {
           <textarea placeholder="Descrição"></textarea>
           <label htmlFor="foto">Foto</label>
           <input type="file" id="foto" />
-          <UploadBox></UploadBox>
+        
           <div className="save-box">
             <button className="save-btn">Salvar Colaborador</button>
           </div>
