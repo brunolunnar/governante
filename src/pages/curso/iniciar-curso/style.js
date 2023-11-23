@@ -58,3 +58,4 @@ export const AulaInitialContianer = styled('div',{
         justifyContent:'space-between'
     }
 })
+export default AulaInitialContianer
