@@ -47,8 +47,7 @@ export default function CadastroCurso() {
       },
     });
   };
-  // console.log(videoUrlDrive)
-  // console.log('setVideoUrlDrive')
+ 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -61,12 +60,7 @@ export default function CadastroCurso() {
 
   const handleSaveCurso = async (e) => {
     e.preventDefault();
-    const nomeCursoSemEspacos = cursodata.nome
-      .toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .replace(/([^\w]+|\s+)/g, "-")
-      .replace(/(^-+|-+$)/, "");
+ 
 
     try {
       const response = await fetch("/api/curso/create", {
@@ -76,7 +70,6 @@ export default function CadastroCurso() {
         },
         body: JSON.stringify({
           ...cursodata,
-          nome: nomeCursoSemEspacos,
           capa: capa,
         }),
       });

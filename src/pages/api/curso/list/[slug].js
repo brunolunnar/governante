@@ -10,16 +10,15 @@ export default async function handler(req, res) {
     return res.status(405).json({ message: "Método não permitido" }).end();
   }
 
-  let { nomeDoCurso } = req.query;
+  let { slug } = req.query;
 
-  // Substitua espaços por hífens
-  nomeDoCurso = nomeDoCurso.replace(/-/g, " ");
+ 
 
   try {
     const response = await client.query(
       query.Map(
         query.Paginate(
-          query.Match(query.Index("cursos_by_nome"), nomeDoCurso)
+          query.Match(query.Index("cursos_by_slug"), slug)
         ),
         query.Lambda("X", query.Get(query.Var("X")))
       )

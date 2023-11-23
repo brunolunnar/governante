@@ -1,15 +1,51 @@
-import { ConnectionFauna } from "@/services/connection_db";
-import { createData } from "@/utils/connections";
+import { Client, query } from "faunadb";
+import { gerarSlug } from "@/utils/slugGenerator";
 
-export default async function create(req, res) {
-  let data = req.body;
-
-  let create = await createData({
-    key: process.env.FAUNA_MAIN_KEY,
-    collection: "cursos",
-    data: data,
-    returnInfo: "data",
-  });
-
-  return res.json({ data: create });
+if (!process.env.FAUNA_MAIN_KEY) {
+  throw new Error("A variável de ambiente FAUNA_MAIN_KEY não está definida.");
 }
+const faunaClient = new Client({
+  secret: process.env.FAUNA_MAIN_KEY,
+});
+
+export default async (req, res) => {
+  if (req.method === "POST") {
+    try {
+      const {
+        capa,
+        nome,
+        description,
+        category,
+        accessos
+      } = req.body;
+
+      
+    
+      const response = await faunaClient.query(
+        query.Create(
+          query.Collection("cursos"),
+          {
+            data: {
+              capa,
+              nome,
+              description,
+              category,
+              accessos,
+              modulos:[],
+              publicado:true,
+              slug: gerarSlug(nome)
+            }
+          
+          }
+        )
+      );
+
+      res.status(200).json({ data:response.data });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Ocorreu um erro ao criar o curso." });
+    }
+  } else {
+    res.status(405).json({ error: "Método não permitido" });
+  }
+};

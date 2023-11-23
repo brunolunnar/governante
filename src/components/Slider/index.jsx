@@ -39,7 +39,7 @@ export const Carrousel = ({ filter }) => {
             <motion.div
               className="item"
               key={curso.id}
-              onClick={() => handleRouter(curso.nome)}
+              onClick={() => handleRouter(curso.slug)}
             >
               <img src={curso.capa} alt={curso.nome} />
             </motion.div>
