@@ -7,7 +7,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Método não permitido' });
   }
 
-  const { moduloId } = req.query;
+  const { slug } = req.query;
 
   try {
     // Adicionar a aula
@@ -19,18 +19,18 @@ export default async function handler(req, res) {
           img: req.body.img,
           video: req.body.video,
           clear:false,
-          idModulo:moduloId
+          slug:slug
         },
       })
     );
 
     // Adicionar a referência da aula ao módulo
     const moduloAtualizado = await client.query(
-      q.Update(q.Ref(q.Collection('modulos'), moduloId), {
+      q.Update(q.Ref(q.Collection('modulos'), slug), {
         data: {
           aulas: q.Append(
             q.Select(['ref'], aulaAdicionada),
-            q.Select(['data', 'aulas'], q.Get(q.Ref(q.Collection('modulos'), moduloId)))
+            q.Select(['data', 'aulas'], q.Get(q.Ref(q.Collection('modulos'), slug)))
           ),
         },
       })
@@ -58,7 +58,7 @@ export default async function handler(req, res) {
           img: aula.data.img,
           video: aula.data.video,
           clear:false,
-          idModulo:moduloId
+          slug:slug
           
         })),
       },

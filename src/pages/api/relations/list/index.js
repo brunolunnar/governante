@@ -16,33 +16,46 @@ async function getAllDocuments(collectionName) {
     )
   );
 
-  return response.data.map((item) => item.data); 
+  return response.data.map((item) => item.data);
 }
 
 export default async (req, res) => {
   try {
     const cursoData = await getAllDocuments("cursos");
-    const ModulosData = await getAllDocuments("modulos");
+    const modulosData = await getAllDocuments("modulos");
     const aulasData = await getAllDocuments("aulas");
+    console.log(cursoData)
+    const formatado = cursoData.map((curso) => {
+      // Todos os módulos, independentemente de terem aulas ou não
+      const todosModulos = modulosData.filter((modulo) => modulo.slug === curso.slug);
 
-    const idModulo = ModulosData.filter((slug)=>{
-        return slug.slug
-    })
-  
-    const formatado = cursoData.map((curso) => ({
-      capa: curso.capa,
-      nome:curso.nome,
-      description:curso.description,
-      category:curso.category,
-      accessos:curso.accessos,
-      publicado:curso.publicado,
-      slug:curso.slug,
-      
+      // Mapear todos os módulos
+      const modulosComAulas = todosModulos.map((modulo) => {
+        // Filtrar aulas com base no idModulo do módulo correspondente
+        const aulasFiltradas = aulasData.filter((aula) => aula.idModulo === modulo.id);
+          console.log(modulo)
+        return {
+          id: modulo.id,  // Adicionando o campo "id"
+          nome: modulo.nome,  // Suponho que o nome seja uma propriedade do módulo
+          description: modulo.description,  // Suponho que a description seja uma propriedade do módulo
+          aulas: aulasFiltradas,
+          slug: modulo.slug,
+        };
+      });
 
-    }));
-    console.log(idModulo)
+      return {
+        capa: curso.capa,
+        nome: curso.nome,
+        description: curso.description,
+        category: curso.category,
+        accessos: curso.accessos,
+        publicado: curso.publicado,
+        slug: curso.slug,
+        modulos: modulosComAulas,
+      };
+    });
 
-    res.status(200).json({ data: aulasData });
+    res.status(200).json({ data: formatado });
   } catch (error) {
     console.error("Ocorreu um erro ao recuperar e combinar os dados:", error);
     res
