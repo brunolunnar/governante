@@ -2,26 +2,13 @@ import faunadb from "faunadb";
 const { Client, query } = faunadb;
 const client = new Client({ secret: process.env.FAUNA_MAIN_KEY });
 import { gerarSlug } from "@/utils/slugGenerator";
-
-// function gerarRef() {
-    
-//     let quantiaNumeros = 5
-  
-//     let numerosAleatorios = '';
-//         for (let i = 0; i < quantiaNumeros; i++) {
-//       numerosAleatorios += Math.floor(Math.random() * 10);
-//     }
-//     return numerosAleatorios
-    
-//   }
-    
   
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).end();
   }
   let { slug } = req.query;
-  const {  titulo_modulo, description } = req.body;
+  const {  titulo_modulo, descricao } = req.body;
 
 
 
@@ -37,7 +24,7 @@ export default async function handler(req, res) {
         data: {
          
           titulo_modulo: titulo_modulo,
-          description: description,
+          descricao: descricao,
           aulas: [],
           slugModulo: gerarSlug(titulo_modulo),
           slugCurso:slug
@@ -58,7 +45,7 @@ export default async function handler(req, res) {
       data: {
         id: moduloAdd.ref.id,
         titulo_modulo: titulo_modulo,
-        description: description,
+        descricao: descricao,
         aulas: [],
         slugModulo: gerarSlug(titulo_modulo),
         slugCurso:slug

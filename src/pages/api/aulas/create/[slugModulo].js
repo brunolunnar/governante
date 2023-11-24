@@ -23,7 +23,7 @@ export default async function handler(req, res) {
           descricao: req.body.descricao,
           img: req.body.img,
           video: req.body.video,
-          clear: false,
+          concluido: false,
           moduloRef: moduloResult.ref.id,
           slugModulo:slugModulo
         },
@@ -60,7 +60,7 @@ export default async function handler(req, res) {
           descricao: aula.data.descricao,
           img: aula.data.img,
           video: aula.data.video,
-          clear: false,
+          concluido: false,
           moduloRef: moduloResult.ref.id,
           slugModulo:slugModulo
         })),

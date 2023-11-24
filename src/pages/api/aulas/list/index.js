@@ -17,14 +17,14 @@ export default async function handler(req, res) {
 
     const modulosFormatados = modulos.data.map(modulo => ({
       id: modulo.ref.id,
-      name: modulo.data.name,
+      nome: modulo.data.nome,
       descricao: modulo.data.descricao,
       aulas: modulo.data.aulas.map(aula => ({
         nome: aula.nome,
         descricao: aula.descricao,
         img: aula.img,
         video: aula.video,
-        clear: aula.clear,
+        concluido: aula.concluido,
       })),
     }));
 

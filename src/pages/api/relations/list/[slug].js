@@ -47,7 +47,7 @@ export default async function handler(req, res) {
       return {
         id: modulo.id,
         titulo_modulo: modulo.titulo_modulo,
-        description: modulo.description,
+        descricao: modulo.descricao,
         aulas: aulasFiltradas,
         slugModulo: modulo.slugModulo,
       };
@@ -56,8 +56,8 @@ export default async function handler(req, res) {
     const cursoFormatado = {
       capa: cursoSelecionado.capa,
       nome: cursoSelecionado.nome,
-      description: cursoSelecionado.description,
-      category: cursoSelecionado.category,
+      descricao: cursoSelecionado.descricao,
+      categoria: cursoSelecionado.categoria,
       accessos: cursoSelecionado.accessos,
       publicado: cursoSelecionado.publicado,
       slug: cursoSelecionado.slug,

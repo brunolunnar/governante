@@ -14,8 +14,8 @@ export default async (req, res) => {
       const {
         capa,
         nome,
-        description,
-        category,
+        descricao,
+        categoria,
         accessos
       } = req.body;
 
@@ -28,8 +28,8 @@ export default async (req, res) => {
             data: {
               capa,
               nome,
-              description,
-              category,
+              descricao,
+              categoria,
               accessos,
               modulos:[],
               publicado:true,

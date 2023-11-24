@@ -41,7 +41,7 @@ export default async (req, res) => {
         return {
           id: modulo.id,
           titulo_modulo: modulo.titulo_modulo,
-          description: modulo.description,
+          descricao: modulo.descricao,
           aulas: aulasFiltradas,
           slugModulo: modulo.slugModulo,
         };
@@ -50,8 +50,8 @@ export default async (req, res) => {
       return {
         capa: curso.capa,
         nome: curso.nome,
-        description: curso.description,
-        category: curso.category,
+        descricao: curso.descricao,
+        categoria: curso.categoria,
         accessos: curso.accessos,
         publicado: curso.publicado,
         slug: curso.slug,
