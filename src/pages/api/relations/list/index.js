@@ -24,22 +24,23 @@ export default async (req, res) => {
     const cursoData = await getAllDocuments("cursos");
     const modulosData = await getAllDocuments("modulos");
     const aulasData = await getAllDocuments("aulas");
-    console.log(cursoData)
+    console.log(modulosData)
     const formatado = cursoData.map((curso) => {
-      // Todos os módulos, independentemente de terem aulas ou não
+   
       const todosModulos = modulosData.filter((modulo) => modulo.slug === curso.slug);
 
-      // Mapear todos os módulos
+    
+  
       const modulosComAulas = todosModulos.map((modulo) => {
-        // Filtrar aulas com base no idModulo do módulo correspondente
-        const aulasFiltradas = aulasData.filter((aula) => aula.idModulo === modulo.id);
-          console.log(modulo)
+        
+        const aulasFiltradas = aulasData.filter((aula) => aula.slugModulo === modulo.moduloRef);
+          console.log(aula)
         return {
-          id: modulo.id,  // Adicionando o campo "id"
-          nome: modulo.nome,  // Suponho que o nome seja uma propriedade do módulo
-          description: modulo.description,  // Suponho que a description seja uma propriedade do módulo
+          id: modulo.id,  
+          titulo_modulo: modulo.titulo_modulo, 
+          description: modulo.description, 
           aulas: aulasFiltradas,
-          slug: modulo.slug,
+          slugModulo: modulo.slugModulo,
         };
       });
 

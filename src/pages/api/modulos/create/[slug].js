@@ -1,18 +1,19 @@
 import faunadb from "faunadb";
 const { Client, query } = faunadb;
 const client = new Client({ secret: process.env.FAUNA_MAIN_KEY });
+import { gerarSlug } from "@/utils/slugGenerator";
 
-function gerarRef() {
+// function gerarRef() {
     
-    let quantiaNumeros = 5
+//     let quantiaNumeros = 5
   
-    let numerosAleatorios = '';
-        for (let i = 0; i < quantiaNumeros; i++) {
-      numerosAleatorios += Math.floor(Math.random() * 10);
-    }
-    return numerosAleatorios
+//     let numerosAleatorios = '';
+//         for (let i = 0; i < quantiaNumeros; i++) {
+//       numerosAleatorios += Math.floor(Math.random() * 10);
+//     }
+//     return numerosAleatorios
     
-  }
+//   }
     
   
 export default async function handler(req, res) {
@@ -20,7 +21,7 @@ export default async function handler(req, res) {
     return res.status(405).end();
   }
   let { slug } = req.query;
-  const {  nome, description } = req.body;
+  const {  titulo_modulo, description } = req.body;
 
 
 
@@ -35,17 +36,16 @@ export default async function handler(req, res) {
       query.Create(query.Collection("modulos"), {
         data: {
          
-          nome: nome,
+          titulo_modulo: titulo_modulo,
           description: description,
           aulas: [],
-          slug: slug,
-          ref:gerarRef()
+          slugModulo: gerarSlug(titulo_modulo)
         },
       })
     );
 
     // Adicionar a referência do módulo ao array "modulos" no curso correspondente
-    const cursoAtualizado = await client.query(
+   await client.query(
       query.Update(query.Ref(query.Collection("cursos"), cursoResult.ref.id), {
         data: {
           modulos: query.Append(moduloAdd.ref, cursoResult.data.modulos),
@@ -58,11 +58,11 @@ export default async function handler(req, res) {
       data: {
  
         id: moduloAdd.ref.id,
-        name: nome,
+        titulo_modulo: titulo_modulo,
         description: description,
         aulas: [],
-        slugDoCurso: slug,
-        ref:gerarRef()
+        slugModulo: gerarSlug(titulo_modulo)
+    
       },
     };
 
