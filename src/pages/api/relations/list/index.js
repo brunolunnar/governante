@@ -15,8 +15,8 @@ async function getAllDocuments(collectionName) {
       query.Lambda("X", query.Get(query.Var("X")))
     )
   );
-
   return response.data.map((item) => item.data);
+
 }
 
 export default async (req, res) => {
@@ -24,21 +24,24 @@ export default async (req, res) => {
     const cursoData = await getAllDocuments("cursos");
     const modulosData = await getAllDocuments("modulos");
     const aulasData = await getAllDocuments("aulas");
-    console.log(modulosData)
-    const formatado = cursoData.map((curso) => {
-   
-      const todosModulos = modulosData.filter((modulo) => modulo.slug === curso.slug);
 
-    
-  
+    const formatado = cursoData.map((curso) => {
+
+      const todosModulos = modulosData.filter(
+        (modulo) => {
+          return modulo.slugCurso === curso.slug}
+
+      );
+
       const modulosComAulas = todosModulos.map((modulo) => {
-        
-        const aulasFiltradas = aulasData.filter((aula) => aula.slugModulo === modulo.moduloRef);
-          console.log(aula)
+        const aulasFiltradas = aulasData.filter(
+          (aula) => aula.slugModulo === modulo.slugModulo
+        );
+      
         return {
-          id: modulo.id,  
-          titulo_modulo: modulo.titulo_modulo, 
-          description: modulo.description, 
+          id: modulo.id,
+          titulo_modulo: modulo.titulo_modulo,
+          description: modulo.description,
           aulas: aulasFiltradas,
           slugModulo: modulo.slugModulo,
         };

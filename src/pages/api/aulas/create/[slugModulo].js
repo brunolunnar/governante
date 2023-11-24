@@ -1,13 +1,4 @@
-// Este trecho deve ser executado apenas uma vez fora da função do manipulador
-// para criar o índice 'modulos_by_slug'
 import { query as q, Client } from "faunadb";
-q.CreateIndex({
-  name: "modulos_by_slug",
-  source: q.Collection("modulos"),
-  terms: [{ field: ["data", "slugModulo"] }], // Altere para o campo correto em sua coleção
-  unique: true,
-});
-
 
 const client = new Client({ secret: process.env.FAUNA_MAIN_KEY });
 
@@ -16,14 +7,14 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Método não permitido" });
   }
 
-  const { slugModulo } = req.query; // Altere para o campo correto no corpo da sua requisição
-
+  const { slugModulo } = req.query; 
+  
   try {
-    // Agora, dentro da função do manipulador, você só busca o módulo pelo slug
     const moduloResult = await client.query(
       q.Get(q.Match(q.Index("modulos_by_slug"), slugModulo))
-    );
+      );
 
+  
     // Adicionar a aula
     const aulaAdicionada = await client.query(
       q.Create(q.Collection("aulas"), {
@@ -33,10 +24,11 @@ export default async function handler(req, res) {
           img: req.body.img,
           video: req.body.video,
           clear: false,
-          moduloRef: q.Ref(q.Collection("modulos"), moduloResult.ref.id), // Associar aula ao módulo usando a referência do módulo
+          moduloRef: moduloResult.ref.id,
+          slugModulo:slugModulo
         },
       })
-    );
+      );
 
     // Adicionar a referência da aula ao módulo
     const moduloAtualizado = await client.query(
@@ -69,7 +61,8 @@ export default async function handler(req, res) {
           img: aula.data.img,
           video: aula.data.video,
           clear: false,
-          moduloRef: slugModulo,
+          moduloRef: moduloResult.ref.id,
+          slugModulo:slugModulo
         })),
       },
     };

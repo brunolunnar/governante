@@ -39,16 +39,16 @@ export default async function handler(req, res) {
           titulo_modulo: titulo_modulo,
           description: description,
           aulas: [],
-          slugModulo: gerarSlug(titulo_modulo)
+          slugModulo: gerarSlug(titulo_modulo),
+          slugCurso:slug
         },
       })
     );
 
-    // Adicionar a referência do módulo ao array "modulos" no curso correspondente
    await client.query(
       query.Update(query.Ref(query.Collection("cursos"), cursoResult.ref.id), {
         data: {
-          modulos: query.Append(moduloAdd.ref, cursoResult.data.modulos),
+          modulos: query.Append(moduloAdd.ref.id, cursoResult.data.modulos),
         },
       })
     );
@@ -56,15 +56,15 @@ export default async function handler(req, res) {
     const responseData = {
       ts: moduloAdd.ts,
       data: {
- 
         id: moduloAdd.ref.id,
         titulo_modulo: titulo_modulo,
         description: description,
         aulas: [],
-        slugModulo: gerarSlug(titulo_modulo)
-    
+        slugModulo: gerarSlug(titulo_modulo),
+        slugCurso:slug
       },
     };
+    
 
     res
       .status(200)
