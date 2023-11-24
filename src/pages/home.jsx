@@ -26,10 +26,10 @@ function Home({ cursos }) {
 
   let curso = cursos.data;
   let FilterProfissional = curso.filter((trilha) => {
-    return trilha.category === "Profissional";
+    return trilha.categoria === "Profissional";
   });
   let FilterEstrategica = curso.filter((trilha) => {
-    return trilha.category === "Estratégica";
+    return trilha.categoria === "Estratégica";
   });
 
   const settings = {

@@ -13,24 +13,22 @@ export default async function handler(req, res) {
     const moduloResult = await client.query(
       q.Get(q.Match(q.Index("modulos_by_slug"), slugModulo))
       );
-
+     
   
-    // Adicionar a aula
+    
     const aulaAdicionada = await client.query(
       q.Create(q.Collection("aulas"), {
         data: {
-          nome: req.body.nome,
+          titulo_aula: req.body.titulo_aula,
           descricao: req.body.descricao,
-          img: req.body.img,
           video: req.body.video,
-          concluido: false,
           moduloRef: moduloResult.ref.id,
           slugModulo:slugModulo
         },
       })
       );
 
-    // Adicionar a referência da aula ao módulo
+
     const moduloAtualizado = await client.query(
       q.Update(moduloResult.ref, {
         data: {
@@ -42,7 +40,7 @@ export default async function handler(req, res) {
       })
     );
 
-    // Obter os dados formatados do módulo com as aulas
+    
     const aulasCompletas = await client.query(
       q.Map(
         moduloAtualizado.data.aulas,
@@ -56,11 +54,10 @@ export default async function handler(req, res) {
         titulo_modulo: moduloAtualizado.data.titulo_modulo,
         descricao: moduloAtualizado.data.descricao,
         aulas: aulasCompletas.map((aula) => ({
-          nome: aula.data.nome,
+          titulo_aula: aula.data.titulo_aula,
           descricao: aula.data.descricao,
           img: aula.data.img,
           video: aula.data.video,
-          concluido: false,
           moduloRef: moduloResult.ref.id,
           slugModulo:slugModulo
         })),

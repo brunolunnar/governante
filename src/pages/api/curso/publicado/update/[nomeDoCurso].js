@@ -9,7 +9,7 @@ export default async (req, res) => {
     const { nomeDoCurso } = req.query;
 
     try {
-      // Consulta para encontrar o curso com base no nome
+
       const response = await faunaClient.query(
         query.Get(query.Match(query.Index("cursos_by_name"), nomeDoCurso))
       );
@@ -17,7 +17,6 @@ export default async (req, res) => {
       const cursoRef = response.ref;
       const cursoData = response.data;
 
-      // Atualiza o campo "publicado" para true
       const updatedCurso = await faunaClient.query(
         query.Update(cursoRef, {
           data: { ...cursoData, publicado: true },

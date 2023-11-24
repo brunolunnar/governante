@@ -13,12 +13,12 @@ export default async function handler(req, res) {
 
 
   try {
-    // Encontrar o curso pelo slug
+
     const cursoResult = await client.query(
       query.Get(query.Match(query.Index("cursos_by_slug"), slug))
     );
 
-    // Adicionar o módulo à coleção "modulos"
+  
     const moduloAdd = await client.query(
       query.Create(query.Collection("modulos"), {
         data: {

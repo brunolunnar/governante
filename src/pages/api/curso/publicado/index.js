@@ -23,7 +23,6 @@ export default async (req, res) => {
         ...item.data,
       }));
 
-      // Filtra apenas os cursos que estão publicados (publicado === true)
       const cursosPublicados = cursos.filter((curso) => curso.publicado);
 
       res.status(200).json({ data: cursosPublicados });

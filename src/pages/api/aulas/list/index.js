@@ -24,7 +24,7 @@ export default async function handler(req, res) {
         descricao: aula.descricao,
         img: aula.img,
         video: aula.video,
-        concluido: aula.concluido,
+ 
       })),
     }));
 
