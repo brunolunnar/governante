@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import LogoGov from "../assets/img/logo-governante-academy.png";
 import { LoginContainer } from "../styles/pages/login";
-import { getSession, useSession, signIn } from "next-auth/react";
+import { getSession, useSession, signIn , signOut} from "next-auth/react";
 import api from "../services/api";
 
 function Index() {
@@ -38,7 +38,10 @@ export const getServerSideProps = async (context) => {
     const response = apiResponse.data.tenantValido;
 
     if (!response) {
-      alert("email invalido ");
+      alert("email invalido");
+      
+      await signOut({ callbackUrl: "/" });
+
       return {
         props: {
           session: null,
