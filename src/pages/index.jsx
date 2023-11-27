@@ -40,7 +40,20 @@ export const getServerSideProps = async (context) => {
     if (!response) {
       alert("email invalido");
       
-      await signOut({ callbackUrl: "/" });
+      const data = await signOut({ redirect: false, callbackUrl: 'https://www.youtube.com/' });
+
+      if (!data?.error) {
+        // Successfully signed out
+        // You can perform additional actions if needed
+        console.log('User signed out successfully');
+  
+        // Redirect to YouTube front page
+        router.push('https://www.youtube.com/');
+      } else {
+        // Handle sign-out error
+        console.error('Error signing out:', data.error);
+        router.push('https://www.google.com/');
+      }
 
       return {
         props: {
