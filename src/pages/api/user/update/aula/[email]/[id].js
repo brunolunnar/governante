@@ -10,7 +10,7 @@ export default async function handler(req, res) {
   const { email, id } = req.query;
 
   try {
-    // Buscar o objeto de email usando o índice "user_by_curso"
+
     const userCursoResult = await client.query(
       q.Get(q.Match(q.Index("user_by_curso"), email))
     );
@@ -22,7 +22,7 @@ export default async function handler(req, res) {
     const userCursoRef = q.Select(["ref"], userCursoResult);
     const userCursoData = q.Select(["data"], userCursoResult);
 
-    // Atualizar o campo "clear" na lista de aulas na coleção user_curso
+
     const userCursoResponse = await client.query(
       q.Update(userCursoRef, {
         data: {

@@ -32,33 +32,13 @@ function Home({ cursos }) {
     return trilha.categoria === "Estratégica";
   });
 
-  const settings = {
-    infinite: true,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    arrows: true,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 2,
-        },
-      },
-      {
-        breakpoint: 768,
-        settings: {
-          slidesToShow: 1,
-        },
-      },
-    ],
-  };
+
 
   return (
     <>
       <Header />
       <HomePageContainer>
-        <ul className="history-list">
+        {/* <ul className="history-list">
           <li>
             <Image src={Perfil}></Image>
           </li>
@@ -89,12 +69,12 @@ function Home({ cursos }) {
           <li>
             <Image src={Perfil}></Image>
           </li>
-        </ul>
+        </ul> */}
         <h1>
           <span>Trilha</span> Estratégica
         </h1>
         <Carrousel filter={FilterEstrategica} />
-        <h1>
+        {/* <h1>
           <span>Meu</span> Time
         </h1>
         <ul className="time-box">
@@ -116,7 +96,7 @@ function Home({ cursos }) {
           <li>
             <Image src={Perfil}></Image>
           </li>
-        </ul>
+        </ul> */}
         <h1>
           <span>Trilha</span> Profissional
         </h1>
@@ -129,7 +109,7 @@ function Home({ cursos }) {
 export const getServerSideProps = async (context) => {
   const session = await getSession(context);
   const response = await fetch(
-    "https://governante.vercel.app/api/curso/publicado"
+    "https://governante.app/api/curso/publicado"
   );
   if (!response.ok) {
     console.error(`Erro ao obter dados da API: ${response.statusText}`);
