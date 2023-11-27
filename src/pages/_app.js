@@ -1,6 +1,7 @@
 import { globalStyle } from "../styles/global";
 import { SessionProvider } from "next-auth/react";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 globalStyle();
 

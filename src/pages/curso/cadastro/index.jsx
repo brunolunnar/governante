@@ -7,6 +7,8 @@ import Image from "next/image";
 import UploadBox from "@/components/uploadBox";
 import { useRouter } from "next/router";
 import UploadCadastro from "@/components/Upload/UploadCadastro";
+import { toast } from 'react-toastify';
+
 
 export default function CadastroCurso() {
   const [openPicker, authResponse] = useDrivePicker();
@@ -18,6 +20,7 @@ export default function CadastroCurso() {
     trilha: "",
     acessoCurso: "",
     capa: "",
+    slug:""
   });
 
   const handleOpenPicker = () => {
@@ -60,7 +63,10 @@ export default function CadastroCurso() {
 
   const handleSaveCurso = async (e) => {
     e.preventDefault();
- 
+    if (!cursodata.nome || !cursodata.descricao || !cursodata.trilha || !cursodata.acessoCurso) {
+      toast.error('Por favor, preencha todos os campos.');
+      return;
+    }
 
     try {
       const response = await fetch("/api/curso/create", {
@@ -70,14 +76,15 @@ export default function CadastroCurso() {
         },
         body: JSON.stringify({
           ...cursodata,
-          capa: capa,
+
         }),
       });
 
       if (response.ok) {
         console.log("Curso criado com sucesso!");
-
-        router.push(`/curso/editar/${nomeCursoSemEspacos}`);
+        console.log(cursodata)
+s
+        router.push(`/curso/editar/${slug}`);
       } else {
         console.error("Erro ao salvar o curso.");
       }
@@ -93,7 +100,7 @@ export default function CadastroCurso() {
           Cadastro de <b>Curso</b>
         </h1>
         <form onSubmit={handleSaveCurso}>
-          <UploadCadastro handleOpenPicker={handleOpenPicker} />
+          {/* <UploadCadastro handleOpenPicker={handleOpenPicker} /> */}
           <input
             type="text"
             placeholder="Nome do Curso"
