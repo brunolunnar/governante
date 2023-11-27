@@ -54,6 +54,7 @@ export default async function handler(req, res) {
         titulo_modulo: moduloAtualizado.data.titulo_modulo,
         descricao: moduloAtualizado.data.descricao,
         aulas: aulasCompletas.map((aula) => ({
+          id:moduloAtualizado.ref.id,
           titulo_aula: aula.data.titulo_aula,
           descricao: aula.data.descricao,
           img: aula.data.img,
