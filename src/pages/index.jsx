@@ -10,7 +10,7 @@ function Index() {
   return (
     <LoginContainer>
       <Image src={LogoGov} alt={"Logotipo da governante academy"}></Image>
-      <button onClick={() => signIn("google")}>
+      <button onClick={(e) => {signIn("google")}}>
         Fazer login com <b>Google</b>
       </button>
     </LoginContainer>

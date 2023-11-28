@@ -1,12 +1,10 @@
-// Pasta: components/AppContainer.js
 import React, { useState, useEffect } from "react";
 import { signOut } from "next-auth/react";
 import api from "../../services/api";
 import { useRouter } from "next/router";
 
-const AppContainer = ({ props, children }) => {
+const AppContainer = ({ session, children }) => {
     const router = useRouter();
-    const [session, setSession] = useState(props?.session ?? null); // Pega as informações da session do usuário, que eu recebo de props
     const paginasLiberadas = ["/", "/rota-exemplo"] // Páginas não precisam de autenticação com o nosso banco de dados/google ("/" libera a página de login, necessário!)
     // "Valido" verifica se rota é automaticamente liberada, se não for, retorna falso e verifica validação do usuário
     const [necessitaLogin, setNecessitaLogin] = useState(!(paginasLiberadas.includes(router.asPath.replace("/", "").includes("/") ? "/" + router.asPath.replace("/", "").split("/")[0] : router.asPath)))
