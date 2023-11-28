@@ -9,38 +9,29 @@ const faunaClient = new Client({
 });
 
 export default async (req, res) => {
+
+  if (!req.query.email) {
+    res.status(400).json({ error: "O parâmetro 'email' é obrigatório." });
+    return;
+  }
+
   if (req.method === "POST") {
     try {
-      const {
-        capa,
-        nome,
-        descricao,
-        categoria,
-        accessos
-      } = req.body;
-
-      
-    
       const response = await faunaClient.query(
         query.Create(
-          query.Collection("cursos"),
+          query.Collection("user_cursos"),
           {
             data: {
-              capa,
-              nome,
-              descricao,
-              categoria,
-              accessos,
-              modulos:[],
-              publicado:true,
-              slug: gerarSlug(nome)
-            }
-          
+              owner:req.query.email,
+              cursos: [],
+              modulos: [],
+              aulas: [],
+            },
           }
         )
       );
 
-      res.status(200).json({ data:response.data });
+      res.status(200).json({ data: response.data });
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: "Ocorreu um erro ao criar o curso." });

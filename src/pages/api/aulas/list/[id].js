@@ -10,12 +10,12 @@ export default async function handler(req, res) {
   const { id } = req.query;
 
   try {
-    // Consultar a aula pelo ID
+
     const aula = await client.query(
       q.Get(q.Ref(q.Collection('aulas'), id))
     );
 
-    // Formatar os dados para a resposta
+
     const aulaFormatada = {
       id: aula.ref.id,
       nome: aula.data.nome,

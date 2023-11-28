@@ -6,12 +6,10 @@ import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Header from "@/components/header";
 
-export const AulaCurso = ({ curso }) => {
-  console.log(curso && curso.data, "data curso");
 
-  console.log(curso.data, "data curso");
-  const data = curso.data[0];
-  console.log(data);
+export const AulaCurso = ({ curso }) => {
+  const data = curso.data;
+  const emptyClasses = {};
   return (
     <>
       <Header></Header>
@@ -24,84 +22,55 @@ export const AulaCurso = ({ curso }) => {
           src="https://www.youtube.com/embed/vkDMs4BcbNU?si=aKvq-YzlJyEjEbTR"
           title="YouTube video player"
           frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen
         ></iframe>
-        <div className="acordion-box">
+
+        
+        <div className="acordions-box">
           <Accordion id="box">
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
               aria-controls="panel1a-content"
               id="panel1a-header"
             >
-              <Typography>Descrição</Typography>
+              <p className="acordion-title">Descrição</p>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography>{data.description}</Typography>
+              <p className="acordion-text">{data.descricao}</p>
             </AccordionDetails>
           </Accordion>
-          <Accordion id="box">
+
+          <Accordion id="box" classes={emptyClasses}>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
               aria-controls="panel1a-content"
               id="panel1a-header"
-              className="module-acordion"
             >
-              <Typography>Módulos</Typography>
+              <p className="acordion-title">Módulos</p>
             </AccordionSummary>
-            <AccordionDetails>
-              {/* Conteúdo do primeiro Accordion */}
-              <Accordion id="box">
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel2a-content"
-                  id="panel2a-header"
-                >
-                  <Typography>Módulo 01</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Typography>Conteúdo do submódulo 1.</Typography>
-                </AccordionDetails>
-              </Accordion>
-              <Accordion id="box">
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel2a-content"
-                  id="panel2a-header"
-                >
-                  <Typography>Módulo 01</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Typography>Conteúdo do submódulo 1.</Typography>
-                </AccordionDetails>
-              </Accordion>
-              <Accordion id="box">
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel2a-content"
-                  id="panel2a-header"
-                >
-                  <Typography>Módulo 01</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Typography>Conteúdo do submódulo 1.</Typography>
-                </AccordionDetails>
-                <AccordionDetails>
-                  <Typography>Conteúdo do submódulo 1.</Typography>
-                </AccordionDetails>
-                <AccordionDetails>
-                  <Typography>Conteúdo do submódulo 1.</Typography>
-                </AccordionDetails>
-                <AccordionDetails>
-                  <Typography>Conteúdo do submódulo 1.</Typography>
-                </AccordionDetails>
-                <AccordionDetails>
-                  <Typography>Conteúdo do submódulo 1.</Typography>
-                </AccordionDetails>
-              </Accordion>
-              
-        
-   
+            <AccordionDetails classes={emptyClasses}>
+              {data.modulos.map((modulo) => (
+                <Accordion key={modulo.slugModulo}>
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls={`panel-${modulo.slugModulo}-content`}
+                  >
+                    <Typography>{modulo.titulo_modulo}</Typography>
+                  </AccordionSummary>
+                  <div className="acordion-aula-box">
+                    {modulo.aulas.map((aula) => (
+                      <Accordion
+                        id="aula-box"
+                        key={aula.slugAula}
+                        className="acordion-togle"
+                      >
+                        <Typography className="conteudo-acordion">
+                          {aula.titulo_aula}
+                        </Typography>
+                      </Accordion>
+                    ))}
+                  </div>
+                </Accordion>
+              ))}
             </AccordionDetails>
           </Accordion>
         </div>
@@ -112,11 +81,10 @@ export const AulaCurso = ({ curso }) => {
 };
 export const getServerSideProps = async (context) => {
   const { query } = context;
-console.log(query.slug)
+
   const response = await fetch(
-    `https://governante.vercel.app/api/curso/list/${query.slug}`
+    `https://governante.vercel.app/api/relations/list/${query.slug}`
   );
-console.log("RESPONSE ", response)
   const data = await response.json();
 
   return {

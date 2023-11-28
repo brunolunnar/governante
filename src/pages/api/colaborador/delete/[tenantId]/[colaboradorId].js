@@ -7,17 +7,16 @@ export default async function handler(req, res) {
     const { tenantId, colaboradorId } = req.query;
 
     try {
-      // Obtém o tenant existente
+
       const tenantRef = query.Ref(query.Collection("tenants"), tenantId);
       const tenant = await client.query(query.Get(tenantRef));
 
-      // Obtém o array de colaboradores cadastrados
+
       const colaboradores = query.Select(
         ["data", "colaboradores_cadastrados", "data"],
         tenant
       );
-
-      // Remove o colaborador pelo colaboradorId
+      
       const updatedColaboradores = query.Filter(
         (colaborador) =>
           query.Not(
@@ -28,7 +27,7 @@ export default async function handler(req, res) {
           ),
         colaboradores
       );
-      // Atualiza o tenant com o array de colaboradores atualizado
+
       const response = await client.query(
         query.Update(tenantRef, {
           data: {
