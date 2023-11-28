@@ -10,6 +10,8 @@ import UploadCadastro from "@/components/Upload/UploadCadastro";
 import { ref, uploadBytesResumable } from "firebase/storage";
 import { storage } from "@/utils/firebase";
 import Upload from "@/components/Upload/Upload";
+import { toast } from 'react-toastify';
+
 
 export default function CadastroCurso() {
   const [openPicker, authResponse] = useDrivePicker();
@@ -27,6 +29,7 @@ export default function CadastroCurso() {
     trilha: "",
     acessoCurso: "",
     capa: "",
+    slug:""
   });
 
   // const handleOpenPicker = () => {
@@ -85,6 +88,7 @@ export default function CadastroCurso() {
 
   const handleSaveCurso = async (e) => {
     e.preventDefault();
+ 
 
     try {
       const response = await fetch("/api/curso/create", {
@@ -94,14 +98,15 @@ export default function CadastroCurso() {
         },
         body: JSON.stringify({
           ...cursodata,
-          capa: capa,
+
         }),
       });
 
       if (response.ok) {
         console.log("Curso criado com sucesso!");
-
-        router.push(`/curso/editar/${nomeCursoSemEspacos}`);
+        console.log(cursodata)
+s
+        router.push(`/curso/editar/${slug}`);
       } else {
         console.error("Erro ao salvar o curso.");
       }
@@ -118,7 +123,7 @@ export default function CadastroCurso() {
           Cadastro de <b>Curso</b>
         </h1>
         <form onSubmit={handleSaveCurso}>
-          <UploadCadastro handleClick={handleClick} />
+          <UploadCadastro handleOpenPicker={handleOpenPicker} />
           <input
             type="text"
             placeholder="Nome do Curso"
