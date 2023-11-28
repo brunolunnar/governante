@@ -1,16 +1,15 @@
 import React, { useState, useRef } from "react";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { storage } from "@/utils/firebase"
-
+import { storage } from "@/utils/firebase";
 import { Loading } from "@/components/loading";
-
-
 
 function Upload() {
   const [imageFile, setImageFile] = useState();
   const [downloadURL, setDownloadURL] = useState("");
   const [isUploading, setIsUploading] = useState(false);
   const [selectedFileName, setSelectedFileName] = useState("");
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [fileURL, setFileURL] = useState("");
   const inputRef = useRef(null);
 
   const handleSelectFile = (files) => {
@@ -18,14 +17,12 @@ function Upload() {
       setImageFile(files[0]);
       setSelectedFileName(files[0].name);
     } else {
-      console.log(
-        "Tamanho do arquivo muito grande ou nenhum arquivo selecionado"
-      );
+      console.log("Tamanho do arquivo muito grande ou nenhum arquivo selecionado");
     }
   };
 
   const handleUploadFile = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (imageFile) {
       const name = imageFile.name;
       const storageRef = ref(storage, `gs://governante-9cb91.appspot.com/videos/${name}`);
@@ -36,9 +33,9 @@ function Upload() {
       uploadTask.on(
         "state_changed",
         (snapshot) => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           console.log(`Progresso do upload: ${progress}%`);
+          setUploadProgress(progress);
         },
         (error) => {
           console.error(error);
@@ -49,7 +46,11 @@ function Upload() {
           setDownloadURL(url);
           setIsUploading(false);
           setImageFile(null);
-          setSelectedFileName(""); // Limpar o nome do arquivo selecionado
+          setSelectedFileName("");
+          setUploadProgress(0);
+          
+          // Atualiza o estado com o URL do arquivo após o upload ser concluído
+          setFileURL(url);
         }
       );
     } else {
@@ -60,7 +61,8 @@ function Upload() {
   const handleRemoveFile = () => {
     setImageFile(undefined);
     setDownloadURL("");
-    setSelectedFileName(""); // Limpar o nome do arquivo selecionado
+    setSelectedFileName("");
+    setFileURL("");
   };
 
   const handleDragOver = (e) => {
@@ -91,41 +93,43 @@ function Upload() {
   };
 
   return (
-
-
-    <form
-    onDragOver={handleDragOver}
-    onDragEnter={handleDragEnter}
-    onDragLeave={handleDragLeave}
-    onDrop={handleDrop}
-  >
-    <h1>Fazer Upload de Arquivo</h1>
-    {downloadURL ? (
-      <div>
-        <p>Upload Realizado com sucesso!</p>
-      </div>
-    ) : (
-      <>
-        <label
-          htmlFor="files"
-          onClick={() => inputRef.current.click()}
-          onDrop={handleDrop}
-        >
-          {selectedFileName || "Escolha ou arraste um arquivo aqui"}
-        </label>
-        <input
-          type="file"
-          id="files"
-          onChange={(files) => handleSelectFile(files.target.files)}
-          ref={inputRef}
-          accept=".mp3"
-          style={{ display: "none" }}
-        />
-        <button onClick={handleUploadFile}>Upload</button>
-      </>
-    )}
-  </form>
-
+    <div
+      onDragOver={handleDragOver}
+      onDragEnter={handleDragEnter}
+      onDragLeave={handleDragLeave}
+      onDrop={handleDrop}
+    >
+      <h1>Fazer Upload de Arquivo</h1>
+      {downloadURL ? (
+        <div>
+          <p>Upload Realizado com sucesso!</p>
+          {/* Exibe o URL do arquivo após o upload ser concluído */}
+          <p>Caminho do Arquivo: {fileURL}</p>
+          <button onClick={handleRemoveFile}>Remover Arquivo</button>
+        </div>
+      ) : (
+        <>
+          {isUploading && <progress value={uploadProgress} max={100} />}
+          
+          <label
+            htmlFor="files"
+            onClick={() => inputRef.current.click()}
+            onDrop={handleDrop}
+          >
+            {selectedFileName || "Escolha ou arraste um arquivo aqui"}
+          </label>
+          <input
+            type="file"
+            id="files"
+            onChange={(files) => handleSelectFile(files.target.files)}
+            ref={inputRef}
+            accept=".mp3"
+            style={{ display: "none" }}
+          />
+          <button onClick={handleUploadFile}>Upload</button>
+        </>
+      )}
+    </div>
   );
 }
 

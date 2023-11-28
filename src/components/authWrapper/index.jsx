@@ -4,6 +4,7 @@ import api from "../../services/api";
 import { useRouter } from "next/router";
 
 const AppContainer = ({ session, children }) => {
+ 
     const router = useRouter();
     const paginasLiberadas = ["/", "/rota-exemplo"] // Páginas não precisam de autenticação com o nosso banco de dados/google ("/" libera a página de login, necessário!)
     // "Valido" verifica se rota é automaticamente liberada, se não for, retorna falso e verifica validação do usuário
@@ -36,7 +37,7 @@ const AppContainer = ({ session, children }) => {
     if (valido) {
         return children;
     } else {
-        return <>Carregando...</>;
+        return <> Carregando...</>;
     }
 };
 
