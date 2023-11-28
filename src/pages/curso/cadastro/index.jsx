@@ -4,7 +4,6 @@ import useDrivePicker from "react-google-drive-picker";
 import React, { useState } from "react";
 import Lock from "@/assets/img/lock.png";
 import Image from "next/image";
-import UploadBox from "@/components/uploadBox";
 import { useRouter } from "next/router";
 import UploadCadastro from "@/components/Upload/UploadCadastro";
 import { ref, uploadBytesResumable } from "firebase/storage";
@@ -123,7 +122,7 @@ s
           Cadastro de <b>Curso</b>
         </h1>
         <form onSubmit={handleSaveCurso}>
-          <UploadCadastro handleOpenPicker={handleOpenPicker} />
+       
           <input
             type="text"
             placeholder="Nome do Curso"
