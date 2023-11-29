@@ -1,13 +1,17 @@
-import { useState } from "react";
-import React from 'react';
+import React, { useState } from "react";
 import UploadAula from "../Upload/UploadAula";
 
-export const AdicionarAula = ({handleOpenPicker}) => {
-  const [numAulas, setNumAulas] = useState(1);
+const AdicionarAula = ({ handleOpenPicker }) => {
+  const [aulas, setAulas] = useState([]);
 
   const adicionarAula = (e) => {
-    e.preventDefault();
-    setNumAulas(numAulas + 1);
+    e.preventDefault()
+    setAulas([...aulas, { id: aulas.length + 1 }]);
+  };
+
+  const removerAula = (e,aulaId) => {
+    e.preventDefault()
+    setAulas(aulas.filter((aula) => aula.id !== aulaId));
   };
 
   return (
@@ -17,21 +21,29 @@ export const AdicionarAula = ({handleOpenPicker}) => {
           Adicionar Aula +
         </button>
 
-        {[...Array(numAulas)].map((_, index) => (
-          <div key={index} className="aula-container">
-            <input type="text" placeholder={`Aula ${index + 1}`} />
-            <textarea placeholder="Descrição"></textarea>
+        {aulas.length === 0 ? (
+          <p>Clique em "Adicionar Aula" e registre uma nova aula.</p>
+        ) : (
+          aulas.map((aula) => (
+            <div key={aula.id} className="aula-container">
+              <input type="text" placeholder={`Aula ${aula.id}`} />
+              <textarea placeholder="Descrição"></textarea>
 
-            <span>Vídeo</span>
-            <UploadAula handleOpenPicker={handleOpenPicker}></UploadAula>
+              <span>Vídeo</span>
+              <UploadAula handleOpenPicker={handleOpenPicker}></UploadAula>
 
-            <span>Anexo</span>
-            <UploadAula handleOpenPicker={handleOpenPicker}></UploadAula>
-            <div className="button-box">
-              <button className="confirm-btn">Salvar Aula</button>
+              <span>Anexo</span>
+              <UploadAula handleOpenPicker={handleOpenPicker}></UploadAula>
+
+              <button
+                className="confirm-btn"
+                onClick={(e) => removerAula(e,aula.id)}
+              >
+                Remover Aula
+              </button>
             </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
     </div>
   );

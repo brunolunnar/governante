@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 const AppContainer = ({ session, children }) => {
  
     const router = useRouter();
-    const paginasLiberadas = ["/", "/rota-exemplo"] // Páginas não precisam de autenticação com o nosso banco de dados/google ("/" libera a página de login, necessário!)
+    const paginasLiberadas = ["/", "/rota-exemplo", ] // Páginas não precisam de autenticação com o nosso banco de dados/google ("/" libera a página de login, necessário!)
     // "Valido" verifica se rota é automaticamente liberada, se não for, retorna falso e verifica validação do usuário
     const [necessitaLogin, setNecessitaLogin] = useState(!(paginasLiberadas.includes(router.asPath.replace("/", "").includes("/") ? "/" + router.asPath.replace("/", "").split("/")[0] : router.asPath)))
     const [valido, setValido] = useState(!necessitaLogin);
@@ -20,7 +20,6 @@ const AppContainer = ({ session, children }) => {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
-                  // Add other headers as needed
                 },
                 body: JSON.stringify({
                   email: userEmail,

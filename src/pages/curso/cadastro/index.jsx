@@ -1,15 +1,11 @@
 import Header from "@/components/header";
 import { CadastroCursoContainer } from "@/styles/pages/cursos/cadastro";
-import useDrivePicker from "react-google-drive-picker";
 import React, { useState } from "react";
-import Lock from "@/assets/img/lock.png";
-import Image from "next/image";
 import { useRouter } from "next/router";
-import UploadCadastro from "@/components/Upload/UploadCadastro";
 import { ref, uploadBytesResumable } from "firebase/storage";
 import { storage } from "@/utils/firebase";
 import Upload from "@/components/Upload/Upload";
-import { toast } from 'react-toastify';
+import { gerarSlug } from "@/utils/slugGenerator";
 
 export default function CadastroCurso() {
   const [fileUrl, setFileUrl] = useState(null);
@@ -24,9 +20,11 @@ export default function CadastroCurso() {
     nome: "",
     descricao: "",
     categoria: "",
-    acessoCurso: "",
+    accessos: "",
     capa: "",
     slug:""
+
+   
   });
   const handleUploadComplete = (url) => {
     setFileUrl(url);
@@ -59,6 +57,8 @@ export default function CadastroCurso() {
     }));
   };
 
+const slugName = gerarSlug(cursodata.nome) 
+
   const handleSaveCurso = async (e) => {
     e.preventDefault();
 
@@ -70,14 +70,16 @@ export default function CadastroCurso() {
         },
         body: JSON.stringify({
           ...cursodata,
-          capa: fileUrl, // Defina o fileUrl no campo "capa"
-        }),
+          capa: fileUrl, 
+          slug: slugName
+        }), 
       });
 
       if (response.ok) {
-        console.log("Curso criado com sucesso!");
-        console.log(cursodata);
-        router.push(`/curso/editar/${slug}`);
+        const data = await response.json();
+        const { slug } = data; // Supondo que o slug é retornado pela API
+
+        router.push(`/curso/editar/${data.data.slug}`); 
       } else {
         console.error("Erro ao salvar o curso.");
       }
@@ -147,8 +149,8 @@ export default function CadastroCurso() {
             id="access"
             type="text"
             placeholder="Acesso ao curso"
-            name="acessoCurso"
-            value={cursodata.acessoCurso}
+            name="accessos"
+            value={cursodata.accessos}
             onChange={handleChange}
           />
 

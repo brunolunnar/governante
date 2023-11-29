@@ -16,7 +16,8 @@ export default async (req, res) => {
         nome,
         descricao,
         categoria,
-        accessos
+        accessos,
+        slug
       } = req.body;
 
       
@@ -33,7 +34,7 @@ export default async (req, res) => {
               accessos,
               modulos:[],
               publicado:true,
-              slug: gerarSlug(nome)
+              slug
             }
           
           }

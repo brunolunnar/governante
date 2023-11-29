@@ -1,19 +1,21 @@
-import { useState } from "react";
-import {AdicionarAula} from "../aula/AddAula"
+import React, { useState } from "react";
+import AdicionarAula from "../aula/AddAula";
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
 
+export const ModuleBox = ({ handleOpenPicker }) => {
+  const [modulos, setModulos] = useState([{ id: 1, numAulas: 1 }]);
+  const router = useRouter();
 
-export const ModuleBox = ({handleOpenPicker}) => {
-  const [numModulos, setNumModulos] = useState(1);
-  const router = useRouter()
-  const url = router.query
-
-    
-
-  //post da api
   const adicionarModulo = (e) => {
     e.preventDefault();
-    setNumModulos(numModulos + 1);
+    toast.success("Módulo adicionado.");
+    setModulos([...modulos, { id: modulos.length + 1, numAulas: 1 }]);
+  };
+
+  const removerModulo = (moduleId) => {
+    toast.error("Módulo removido.")
+    setModulos(modulos.filter((modulo) => modulo.id !== moduleId));
   };
 
   return (
@@ -21,15 +23,32 @@ export const ModuleBox = ({handleOpenPicker}) => {
       <button className="select-btn" onClick={adicionarModulo}>
         Adicionar Módulo +
       </button>
-      {[...Array(numModulos)].map((_, index) => (
-        <div className="container-modules">
-          <div key={index} className="add-modulo">
-            <input type="text" placeholder={`Módulo ${index + 1}`} />
+      {modulos.map((modulo) => (
+        <div key={modulo.id} className="container-modules">
+          <button onClick={() => removerModulo(modulo.id)}>
+            Remover Módulo
+          </button>
+          <div className="add-modulo">
+            <input type="text" placeholder={`Módulo ${modulo.id}`} />
             <AdicionarAula handleOpenPicker={handleOpenPicker} />
           </div>
         </div>
       ))}
-
     </>
   );
+};
+
+export const getServerSideProps = async (context) => {
+  
+  const { query } = context;
+  const response = await fetch(
+    `https://governante.app/api/modulos/create/${query.slug}`
+  );
+  const data = await response.json();
+  console.log(data)
+  return {
+    props: {
+      modulo: data,
+    },
+  };
 };
