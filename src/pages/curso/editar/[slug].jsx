@@ -5,7 +5,8 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 
 export const EditarCurso = ({ curso, error }) => {
-  const data = curso.data[0];
+  const data = curso.data[0]
+  console.log(data)
   const [formData, setFormData] = useState({
     nome: data.nome,
     descricao: data.descricao,
@@ -24,7 +25,7 @@ const router = useRouter()
     const queryUrl = router.query
     console.log("aqui é  query do userouter", queryUrl.slug)
     try {
-      const response = await fetch(`https://governante.app/api/cursos/update/${queryUrl.slug}`, {
+      const response = await fetch(`https://governante.app/api/curso/update/${queryUrl.slug}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

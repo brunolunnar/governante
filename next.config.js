@@ -1,4 +1,3 @@
-// next.config.js
 module.exports = {
   async headers() {
     return [
@@ -19,6 +18,15 @@ module.exports = {
             value: 'Content-Type, Authorization',
           },
         ],
+      },
+    ];
+  },
+
+  async rewrites() {
+    return [
+      {
+        source: '/api/cursos/update/:slug*',
+        destination: 'https://governante.app/api/curso/update/:slug*', // Roteamento direto para o servidor
       },
     ];
   },
