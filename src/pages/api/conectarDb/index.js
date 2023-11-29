@@ -9,7 +9,7 @@ const corsOptions = {
 export default async function handler(req, res) {
   req.body = JSON.parse(req.body)
   function retornarResposta({ res, resposta, status }) {
-    status = status ?? 200;
+    status = status ?? 400;
     return res.status(status).send(resposta);
   }
   cors(corsOptions)(req, res, async () => {
@@ -47,7 +47,7 @@ export default async function handler(req, res) {
         matchValue: email,
         dataRefOnly: true,
       });
-      if (!dbTenant) return retornarResposta({ res, resposta, status: 400 });
+      if (!dbTenant || dbTenant.length == 0) return retornarResposta({ res, resposta, status: 400 });
 
       resposta = { ...resposta, tenantValido: !!dbTenant[0] };
       let dadosUsuario = dbTenant[0] ?? [];
