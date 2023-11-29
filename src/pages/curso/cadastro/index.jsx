@@ -11,10 +11,8 @@ import { storage } from "@/utils/firebase";
 import Upload from "@/components/Upload/Upload";
 import { toast } from 'react-toastify';
 
-
 export default function CadastroCurso() {
-  const [openPicker, authResponse] = useDrivePicker();
-  const [videoUrlDrive, setVideoUrlDrive] = useState();
+  const [fileUrl, setFileUrl] = useState(null);
   const [file, setFile] = useState(null);
 
   const onFileChange = (files) => {
@@ -25,39 +23,15 @@ export default function CadastroCurso() {
   const [cursodata, setCursoData] = useState({
     nome: "",
     descricao: "",
-    trilha: "",
+    categoria: "",
     acessoCurso: "",
     capa: "",
     slug:""
   });
+  const handleUploadComplete = (url) => {
+    setFileUrl(url);
+  };
 
-  // const handleOpenPicker = () => {
-  //   openPicker({
-  //     clientId:
-  //       "759422105899-28m1on4lrvdold5uk4g5tlhkeh6b5fkg.apps.googleusercontent.com",
-  //     developerKey: "AIzaSyDWw3b7z9PFneSaT6eCNk8wfJbik-yRgHY",
-  //     viewId: "DOCS",
-  //     showUploadView: true,
-  //     showUploadFolders: true,
-  //     supportDrives: true,
-  //     multiselect: true,
-
-  //     setOrigin: "http://localhost:3000",
-  //     // customViews: customViewsArray, // custom view
-  //     callbackFunction: (data) => {
-  //       if (data.action === "cancel") {
-  //         console.log("User clicked cancel/close button");
-  //       }
-  //       if (data.docs && data.docs.length > 0) {
-  //         //aqui para capturar o url do video
-  //         console.log(data.docs[0].url);
-  //         setVideoUrlDrive(data.docs[0].url);
-  //       } else {
-  //         console.error("O array data.docs está vazio ou indefinido.");
-  //       }
-  //     },
-  //   });
-  // };
   const handleClick = () => {
   
     if (file === null) return;
@@ -87,7 +61,6 @@ export default function CadastroCurso() {
 
   const handleSaveCurso = async (e) => {
     e.preventDefault();
- 
 
     try {
       const response = await fetch("/api/curso/create", {
@@ -97,14 +70,13 @@ export default function CadastroCurso() {
         },
         body: JSON.stringify({
           ...cursodata,
-
+          capa: fileUrl, // Defina o fileUrl no campo "capa"
         }),
       });
 
       if (response.ok) {
         console.log("Curso criado com sucesso!");
-        console.log(cursodata)
-s
+        console.log(cursodata);
         router.push(`/curso/editar/${slug}`);
       } else {
         console.error("Erro ao salvar o curso.");
@@ -116,11 +88,12 @@ s
   return (
     <>
       <Header></Header>
-          <Upload/>
       <CadastroCursoContainer>
         <h1>
           Cadastro de <b>Curso</b>
         </h1>
+        <Upload onUploadComplete={handleUploadComplete} />
+  
         <form onSubmit={handleSaveCurso}>
        
           <input
@@ -147,7 +120,7 @@ s
                   type="radio"
                   name="trilha"
                   value="Profissional"
-                  checked={cursodata.trilha === "Profissional"}
+                  checked={cursodata.categoria === "Profissional"}
                   onChange={handleChange}
                 />
                 <span>Profissional</span>
@@ -161,7 +134,7 @@ s
                   type="radio"
                   name="trilha"
                   value="Estratégica"
-                  checked={cursodata.trilha === "Estratégica"}
+                  checked={cursodata.categoria === "Estratégica"}
                   onChange={handleChange}
                 />
                 <span>Estratégica</span>

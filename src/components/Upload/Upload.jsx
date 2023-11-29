@@ -1,9 +1,8 @@
 import React, { useState, useRef } from "react";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "@/utils/firebase";
-import { Loading } from "@/components/loading";
 
-function Upload() {
+function Upload({ onUploadComplete }) {
   const [imageFile, setImageFile] = useState();
   const [downloadURL, setDownloadURL] = useState("");
   const [isUploading, setIsUploading] = useState(false);
@@ -11,6 +10,7 @@ function Upload() {
   const [uploadProgress, setUploadProgress] = useState(0);
   const [fileURL, setFileURL] = useState("");
   const inputRef = useRef(null);
+
 
   const handleSelectFile = (files) => {
     if (files && files[0] && files[0].size < 10000000) {
@@ -48,9 +48,10 @@ function Upload() {
           setImageFile(null);
           setSelectedFileName("");
           setUploadProgress(0);
-          
-          // Atualiza o estado com o URL do arquivo após o upload ser concluído
           setFileURL(url);
+
+          // Chama a função de callback com o fileURL após o upload
+          onUploadComplete(url);
         }
       );
     } else {
@@ -103,7 +104,6 @@ function Upload() {
       {downloadURL ? (
         <div>
           <p>Upload Realizado com sucesso!</p>
-          {/* Exibe o URL do arquivo após o upload ser concluído */}
           <p>Caminho do Arquivo: {fileURL}</p>
           <button onClick={handleRemoveFile}>Remover Arquivo</button>
         </div>
@@ -123,8 +123,8 @@ function Upload() {
             id="files"
             onChange={(files) => handleSelectFile(files.target.files)}
             ref={inputRef}
-            accept=".mp3"
             style={{ display: "none" }}
+            value={fileURL}
           />
           <button onClick={handleUploadFile}>Upload</button>
         </>

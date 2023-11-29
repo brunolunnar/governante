@@ -22,7 +22,7 @@ export const EditarCurso = () => {
       supportDrives: true,
       multiselect: true,
       setOrigin: "http://localhost:3000",
-      // customViews: customViewsArray, // custom view
+
       callbackFunction: (data) => {
         if (data.action === "cancel") {
           console.log("User clicked cancel/close button");

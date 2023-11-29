@@ -32,7 +32,7 @@ function Home({ cursos }) {
     return trilha.categoria === "Estratégica";
   });
 
-
+console.log(FilterEstrategica)
 
   return (
     <>

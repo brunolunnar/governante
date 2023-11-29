@@ -24,7 +24,9 @@ function Header() {
       setIsMenuVisible(false);
     }
   };
-
+  const handleHome = () =>{
+    return router.push('/home')
+  }
   useEffect(() => {
     document.addEventListener("click", closeMenuOnOutsideClick);
 
@@ -61,7 +63,7 @@ function Header() {
           Minha <b>Carreira</b>
         </a>
       </div>
-      <Image className="logo" src={Logo} alt="Logotipo da empresa"></Image>
+      <Image className="logo" src={Logo} alt="Logotipo da empresa" onClick={handleHome}></Image>
 
       {isMenuVisible && <NavMenu isVisible={isMenuVisible} />}
     </HeaderContainer>
