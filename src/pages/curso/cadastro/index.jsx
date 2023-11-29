@@ -118,7 +118,7 @@ export default function CadastroCurso() {
                   id="prof"
                   className="trilha-check"
                   type="radio"
-                  name="trilha"
+                  name="categoria"
                   value="Profissional"
                   checked={cursodata.categoria === "Profissional"}
                   onChange={handleChange}
@@ -132,7 +132,7 @@ export default function CadastroCurso() {
                   id="estrategia"
                   className="trilha-check"
                   type="radio"
-                  name="trilha"
+                  name="categoria"
                   value="Estratégica"
                   checked={cursodata.categoria === "Estratégica"}
                   onChange={handleChange}
