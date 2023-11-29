@@ -54,7 +54,7 @@ export default async function handler(req, res) {
       if (retornarDados) {
         resposta = { ...resposta, dadosUsuario };
       }
-      return retornarResposta({ res, resposta });
+      return retornarResposta({ res, resposta, status: 200 });
     } catch (e) {
       return retornarResposta({ res, resposta, status: 400 });
     }
