@@ -16,13 +16,30 @@ const AppContainer = ({ session, children }) => {
         try {
             let userEmail = session?.user?.email ?? ""
             // userEmail = "bruno@lunnar.team" // -> Pode trocar valor pra testar permissão de outros usuários, não esqueça de comentar em produção!
-            const apiResponse = await api.post("/api/conectarDb", {
-                email: userEmail,
-                retonarDados: true,
-            });
-            const response = apiResponse?.data?.tenantValido ?? false
-            if (response) setValido(true)
-            if (!response) await signOut({ redirect: true, callbackUrl: 'https://www.youtube.com/' });
+            const response = await fetch('/api/conectarDb', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  // Add other headers as needed
+                },
+                body: JSON.stringify({
+                  email: userEmail,
+                  retonarDados: true,
+                }),
+                mode: 'no-cors',
+              });
+              if(response.status != 200){
+                await signOut({ redirect: true, callbackUrl: 'https://www.youtube.com/' });
+              }else {
+                setValido(true)
+              }
+            // const apiResponse = await api.post("/api/conectarDb", {
+            //     email: userEmail,
+            //     retonarDados: true,
+            // });
+            // const response = apiResponse?.data?.tenantValido ?? false
+            // if (response) setValido(true)
+            // if (!response) await signOut({ redirect: true, callbackUrl: 'https://www.youtube.com/' });
         } catch (error) {
             console.error("validarUsuario()-> Erro ao processar a requisição para a API:", error?.message ?? error);
         } finally {

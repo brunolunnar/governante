@@ -9,7 +9,7 @@ const corsOptions = {
 export default async function handler(req, res) {
   function retornarResposta({ res, resposta, status }) {
     status = status ?? 200;
-    return res.status(200).send(resposta);
+    return res.status(status).send(resposta);
   }
   cors(corsOptions)(req, res, async () => {
     let resposta = { tenantValido: false };
