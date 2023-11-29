@@ -7,6 +7,7 @@ const corsOptions = {
 };
 
 export default async function handler(req, res) {
+  req.body = JSON.parse(req.body)
   function retornarResposta({ res, resposta, status }) {
     status = status ?? 200;
     return res.status(status).send(resposta);
