@@ -29,17 +29,10 @@ const AppContainer = ({ session, children }) => {
                 mode: 'no-cors',
               });
               if(response.status != 200){
-                await signOut({ redirect: true, callbackUrl: 'https://www.youtube.com/' });
+                await signOut({ redirect: true, callbackUrl: '/' });
               }else {
                 setValido(true)
               }
-            // const apiResponse = await api.post("/api/conectarDb", {
-            //     email: userEmail,
-            //     retonarDados: true,
-            // });
-            // const response = apiResponse?.data?.tenantValido ?? false
-            // if (response) setValido(true)
-            // if (!response) await signOut({ redirect: true, callbackUrl: 'https://www.youtube.com/' });
         } catch (error) {
             console.error("validarUsuario()-> Erro ao processar a requisição para a API:", error?.message ?? error);
         } finally {
