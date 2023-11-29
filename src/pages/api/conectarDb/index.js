@@ -2,7 +2,7 @@ import { paginateIndex } from "@/utils/connections";
 
 const cors = require("cors");
 const corsOptions = {
-  origin: "https://www.governante.app/",
+  origin: "https://www.governante.app",
   methods: ["GET", "POST","OPTIONS"],
 };
 
