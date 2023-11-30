@@ -10,7 +10,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ message: "Método não permitido" }).end();
   }
 
-  const { email, slug } = req.query;
+  const { email, slugCurso, slug } = req.query;
 
   try {
     const userCursoResult = await client.query(
@@ -35,7 +35,9 @@ export default async function handler(req, res) {
         query.Update(userCursoRef, {
           data: {
             modulos: query.Append(
-              [query.Merge({ slug: slug, clear: false }, {})],
+              [
+                query.Merge({ slug: slug, clear: false, slugCurso }, {}),
+              ],
               query.Select(["modulos"], userCursoData)
             ),
           },
@@ -45,7 +47,13 @@ export default async function handler(req, res) {
       )
     );
 
-    return res.status(200).json({ data: userCursoResponse.data });
+    // Adicionando slugCurso à resposta
+    const responseData = {
+      data: userCursoResponse.data,
+      slugCurso: slugCurso,
+    };
+
+    return res.status(200).json(responseData);
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: "Erro ao processar a solicitação." });

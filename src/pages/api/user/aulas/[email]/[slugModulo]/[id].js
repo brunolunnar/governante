@@ -7,7 +7,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Método não permitido' });
   }
 
-  const { email, id } = req.query;
+  const { email, slugModulo,id } = req.query;
 
   try {
     // Buscar a aula pelo ID usando o índice "aulas_by_id"
@@ -41,7 +41,8 @@ export default async function handler(req, res) {
             {
               id: id,
               titulo_aula: q.Select(['titulo_aula'], aulaData, ''),
-              clear:false
+              clear:false,
+              slugModulo
           
         
             },
