@@ -37,9 +37,8 @@ export const Container = styled.div`
 
 export const Content = styled.div`
   margin-top: 100px;
-  height: 90%;
   display: flex;
-  width: 54%; 
+
 `;
 
 export const OpacityContainer = styled.div`

@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { ref, uploadBytesResumable } from "firebase/storage";
 import { storage } from "@/utils/firebase";
-import Upload from "@/components/Upload/Upload";
+import Upload from "@/components/Upload/Upload/index.js";
 import { gerarSlug } from "@/utils/slugGenerator";
 
 export default function CadastroCurso() {

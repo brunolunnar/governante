@@ -46,10 +46,10 @@ export const SideBarList = () => {
         <Link className="link" href="#">
           Gerenciar <b> Tenants</b>
         </Link>
+        <Link className="exit" href="#">
+          Sair
+        </Link>
       </div>
-      <Link className="exit" href="#">
-        Sair
-      </Link>
     </SideBarListContainer>
   );
 };
