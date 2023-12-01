@@ -1,5 +1,5 @@
 
-import Header from "@/components/header";
+import Header from "@/components/Header/header";
 import Logo from "@/assets/img/logo-governante-academy.png";
 import Image from "next/image";
 import { TenantContainer } from "@/styles/pages/tenants/index";

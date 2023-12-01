@@ -1,6 +1,5 @@
-import Header from "@/components/header";
-
-import { TenantCadastroContainer } from "@/styles/pages/tenants/cadastro";
+import Header from "@/components/Header/header";
+import { TenantCadastroContainer } from "./styles";
 import { useRouter } from "next/router";
 
 

@@ -1,5 +1,5 @@
-import Header from "@/components/header";
-import { CadastroCursoContainer } from "@/styles/pages/cursos/cadastro";
+import Header from "@/components/Header/header";
+import { CadastroCursoContainer } from "@/pages/curso/cadastro/styles";
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { ref, uploadBytesResumable } from "firebase/storage";

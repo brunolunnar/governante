@@ -21,7 +21,7 @@ export const CustomCard = styled('div',{
       'transition':'all 0.3s',
     },
   
-    '&:hover img': {
+    '& img:hover ': {
         '-moz:transform':'scale(1.1)',
         '-webkit-transform':'scale(1.1)',
         'transform':'scale(1.1)',  

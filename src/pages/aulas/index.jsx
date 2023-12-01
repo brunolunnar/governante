@@ -1,4 +1,4 @@
-import Header from "@/components/header";
+import Header from "@/components/Header/header";
 import Arrow from "@/assets/img/arrow.png";
 import Image from "next/image";
 import { SlArrowLeft } from "react-icons/sl";

@@ -15,15 +15,16 @@ export const globalStyle = globalCss({
     },
   body: {
     lineHeight: 1,
-    background: ' rgb(36,44,72)',
-    background: 'radial-gradient(circle, rgba(36,44,72,1) 55%, rgba(28,34,54,1) 70%, rgba(18,20,31,1) 90%)',
-    height:'100vh',
-    fontFamily: 'Montserrat',
+    position:'relative',
+    background:
+      "transparent radial-gradient(closest-side at 50% 50%, rgba(36, 44, 72, 1) 0%, rgba(18, 20, 31, 1) 100%) 0% 0% no-repeat padding-box;",
+    opacity: "1",
+    minHeight:'100vh',
+    fontFamily: "$montserrat",
     color: "white",
     margin: "0 auto",
     maxWidth: "1400px",
     fontWeight: "normal",
-    opacity: 1,
   },
   input: {
     color: "white",
@@ -46,6 +47,6 @@ export const globalStyle = globalCss({
   },
   button: {
     cursor: "pointer",
-    fontFamily:"'Montserrat', sans-serif",
+    fontFamily: "'Montserrat', sans-serif",
   },
 });

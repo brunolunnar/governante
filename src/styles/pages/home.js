@@ -39,6 +39,10 @@ export const HomePageContainer = styled('section',{
         width:'247px',
         height:'335px',
     },
+    span:{
+        color:'LightGrey',
+        fontWeight:100  
+    },
     '.time-box':{
         display:'flex',
         gap:'1.5rem',

@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import Header from "../components/header";
+import Header from "../components/Header/header";
 import { signOut, useSession, getSession } from "next-auth/react";
 import Image from "next/image";
 import Perfil from "../assets/img/foto-tumb.png";

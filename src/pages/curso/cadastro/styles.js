@@ -12,7 +12,6 @@ export const CadastroCursoContainer = styled("section", {
 
   form: {
     display: "flex",
-    flexDirection: "column",
     gap: "2rem",
     width: "80%",
     maxWidth: "60%",

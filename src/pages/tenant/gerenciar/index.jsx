@@ -1,9 +1,10 @@
 import Logo from "@/assets/img/logo.png";
-import Header from "@/components/header";
+import Header from "@/components/Header/header";
 import Image from "next/image";
-
-import { GerenciarTenantsContainer } from "@/styles/pages/tenants/gerenciar";
+import { GerenciarTenantsContainer } from "./styles";
 import { useState } from "react";
+
+
 export const GerenciarTenant = () => {
   const[isOpen, setIsOpen] = useState(false)
   const toggleAccordion = ()=>{
