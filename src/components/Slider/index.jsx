@@ -4,9 +4,11 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
+import { Container } from "./styles";
 
 export const Carrousel = ({ filter }) => {
   const carousel = useRef();
+  const innerContainer = useRef();
   const [width, setWidth] = useState(0);
   const router = useRouter();
 
@@ -19,18 +21,37 @@ export const Carrousel = ({ filter }) => {
     setWidth(carousel.current?.scrollWidth - carousel.current?.offsetWidth);
   }, []);
 
+  const moveInnerContainer = (direction) => {
+    const currentX = innerContainer.current.style.transform
+      ? parseInt(innerContainer.current.style.transform.split("(")[1].split("px")[0])
+      : 0;
+
+    const step = 300; //Avanço do carrosel
+
+    const newX = direction === "left" ? currentX + step : currentX - step;
+
+    const leftLimit = 0;
+    const rightLimit = -width;
+
+    if (newX > leftLimit) {
+      innerContainer.current.style.transform = `translateX(${leftLimit}px)`;
+    } else if (newX < rightLimit) {
+      innerContainer.current.style.transform = `translateX(${rightLimit}px)`;
+    } else {
+      innerContainer.current.style.transform = `translateX(${newX}px)`;
+    }
+  };
+
   return (
-    <div className="container-carousel">
-      <MdArrowBackIos />
+    <Container className="container-carousel">
+      <MdArrowBackIos onClick={() => moveInnerContainer("left")} />
       <motion.div
         ref={carousel}
         className="carousel"
         whileTap={{ cursor: "grabbing" }}
-        initial={{ x: 100 }}
-        animate={{ x: 0 }}
-        transition={{ duration: 0.8 }}
       >
         <motion.div
+          ref={innerContainer}
           className="inner"
           drag="x"
           dragConstraints={{ right: 0, left: -width }}
@@ -46,6 +67,7 @@ export const Carrousel = ({ filter }) => {
           ))}
         </motion.div>
       </motion.div>
-    </div>
+      <MdArrowForwardIos onClick={() => moveInnerContainer("right")} />
+    </Container>
   );
 };

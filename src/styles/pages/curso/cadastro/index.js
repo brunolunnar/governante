@@ -16,6 +16,7 @@ export const CadastroCursoContainer = styled("section", {
     width: "80%",
     maxWidth: "60%",
     marginTop: "4rem",
+    flexDirection:'column'
   },
   ".confirm-btn": {
     background: "$green",

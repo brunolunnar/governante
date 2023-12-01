@@ -26,7 +26,7 @@ const Header = () => {
           <span> Meu</span> <b>Time</b>
         </Link>
         <Link className="link" href={"/carteira"}>
-          <span> Minha</span> <b>Carteira</b>
+          <span> Minha</span> <b>Carreira</b>
         </Link>
       </div>
       <Image
