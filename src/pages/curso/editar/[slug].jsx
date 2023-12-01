@@ -1,5 +1,5 @@
 import Header from "@/components/Header/header";
-import { EditarContainer } from "@/pages/curso/editar/styles";
+import { EditarContainer } from "@/styles/pages/curso/editar";
 import { ModuleBox } from "@/components/module-box/Module";
 import { useState } from "react";
 import { useRouter } from "next/router";

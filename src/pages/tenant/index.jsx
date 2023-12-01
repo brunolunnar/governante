@@ -1,12 +1,11 @@
 
 import Header from "@/components/Header/header";
-import Logo from "@/assets/img/logo-governante-academy.png";
-import Image from "next/image";
-import { TenantContainer } from "@/styles/pages/tenants/index";
+import { TenantContainer } from "@/styles/pages/tenants/tenants";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SlArrowRight } from "react-icons/sl";
 import Link from 'next/link'
+
 
 export const Tenant = () => {
     const [filteredLeads, setFilteredLeads] = useState([]);
