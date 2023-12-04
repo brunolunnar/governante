@@ -16,17 +16,25 @@ export const EditarCurso = ({ curso, error }) => {
     accessos: data.accessos,
     categoria: data.categoria,
     capa: data.capa,
-    publiacdo: data.publicado
+    publicado: data.publicado,
 
   });
   console.log(formData)
   console.log('formData')
 
   const router = useRouter()
+
   const handleInputChange = (e, fieldName) => {
     setFormData({
       ...formData,
       [fieldName]: e.target.value,
+    });
+  };
+
+  const handleCheckboxChange = (e, fieldName) => {
+    setFormData({
+      ...formData,
+      [fieldName]: ![fieldName],
     });
   };
 
@@ -73,19 +81,17 @@ export const EditarCurso = ({ curso, error }) => {
       <Header></Header>
       <EditarContainer>
 
-
-
         <h1>Editando <b>{data.nome}</b></h1>
         <form>
           {formData.capa ?
             <div className='Image-holder'>
               <div className="Image-Box">
-                
-                  <img src={formData.capa} alt="" />
-                  <button onClick={handleRemoveCapa}>
-                    <Image src={Pen}></Image>
-                  </button>
-                
+
+                <img src={formData.capa} alt="" />
+                <button onClick={handleRemoveCapa}>
+                  <Image src={Pen}></Image>
+                </button>
+
               </div>
             </div>
             :
@@ -94,9 +100,10 @@ export const EditarCurso = ({ curso, error }) => {
             </div>
           }
           <div className="img-box"></div>
-          <input type="text" placeholder={data.nome} onChange={(e) => handleInputChange(e, "nome")} />
+          <input type="text" placeholder='Nome do Curso' value={formData.nome} onChange={(e) => handleInputChange(e, "nome")} />
           <textarea
-            placeholder={data.descricao}
+            placeholder='descrição'
+            value={formData.descricao}
             onChange={(e) => handleInputChange(e, "descricao")}
           />
 
@@ -154,7 +161,23 @@ export const EditarCurso = ({ curso, error }) => {
             <h3>Módulos</h3>
           </div>
           <ModuleBox handleOpenPicker={() => { }} modulo={null} />
+
+          <div className="publicar-box">
+            <div className='publicar-text'>
+              <label htmlFor="publicar" >Publicar o Curso</label>
+              <div>(Se marcar essa opção o acesso ao curso estará disponível)</div>
+            </div>
+            <input
+             type="checkbox" 
+             id="publicado" 
+             nome='publicado'
+             value={false}
+             checked={formData.publicado == true}
+             onChange={(e) => handleCheckboxChange(e, "publicado")}/>
+          </div>
+
         </form>
+
         <button className="confirm-curso-btn" onClick={handleSaveCurso}>
           Salvar Curso
         </button>

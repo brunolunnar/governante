@@ -10,6 +10,9 @@ export const EditarContainer = styled('section',{
       marginTop: "2rem",
       fontWeight: "100",
     },
+    p: {
+      fontSize: "1.3rem",
+    },
     form:{
         display: "flex",
         flexDirection: "column",
@@ -34,7 +37,7 @@ export const EditarContainer = styled('section',{
         fontSize:'1.3rem'
     },
     'input::placeholder':{
-      color:'white',
+      color:'light-gray',
 
     },
     '.modules-layout':{
@@ -194,5 +197,32 @@ export const EditarContainer = styled('section',{
         borderRadius:'100px',
         background:'#C63737'
       },
-     
+      ".publicar-box":{
+        background: "$main",
+        border: "2px $white ridge",
+        padding: "14px",
+        borderRadius: "2rem",
+        fontFamily: "$montserrat",
+        display:'flex',
+        justifyContent:'space-between',
+
+      },
+      ".publicar-box label":{
+        fontSize:'1.3rem',
+        lineHeight:'1.8rem'
+      },
+      ".publicar-box input":{
+        marginRight:'.5rem'
+      },
+      '.publicar-text':{
+        display:'flex',
+        alignContent:'end',
+        gap:'.5rem'
+      },
+      '.publicar-text div':{
+        fontSize:'.8rem',
+        lineHeight:'1.7rem',
+        display: 'flex',
+        alignItems: 'end',
+      },
 })
