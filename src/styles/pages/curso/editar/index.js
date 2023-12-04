@@ -5,6 +5,11 @@ export const EditarContainer = styled('section',{
     flexDirection:'column',
     alignItems:'center',
     justifyContent:'center',
+    h1: {
+      fontSize: "3rem",
+      marginTop: "2rem",
+      fontWeight: "100",
+    },
     form:{
         display: "flex",
         flexDirection: "column",
@@ -99,6 +104,13 @@ export const EditarContainer = styled('section',{
         boxShadow: "0 0 0 0",
         outline: 0,
       },
+      "input[type=radio], input[type=checkbox] ": {
+        border: 0,
+        width: "25px",
+        height: "30px",
+        verticalAlign: "middle",
+        color: "$green",
+      },
       ".confirm-btn": {
         background: "$green",
         color: "$white",
@@ -162,5 +174,25 @@ export const EditarContainer = styled('section',{
         display:'flex',
         justifyContent:'end'
 
-      }
+      },
+      ".Image-holder":{
+        display:'flex',
+        width:'100%',
+        justifyContent:'center'
+      },
+      ".Image-Box":{
+        display:'flex',
+        position:'relative',
+        width:'fit-content'
+      },
+      ".Image-Box button":{
+        display:'flex',
+        position:'absolute',
+        right: '5px',
+        top: '5px',
+        padding:'5px',
+        borderRadius:'100px',
+        background:'#C63737'
+      },
+     
 })

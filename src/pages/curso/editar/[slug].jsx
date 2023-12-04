@@ -1,24 +1,27 @@
 import Header from "@/components/Header/header";
-import { EditarContainer } from "@/styles/pages/curso/editar";
+import { EditarContainer, ImageBox } from "@/styles/pages/curso/editar";
 import { ModuleBox } from "@/components/module-box/Module";
 import { useState } from "react";
 import { useRouter } from "next/router";
 
+import Image from "next/image";
+import Pen from '@/assets/img/pen.svg';
+
 export const EditarCurso = ({ curso, error }) => {
-  // const [cursodata, setCursoData] = useState(curso.data[0]);
   const data = curso.data[0]
 
-  console.log(data)
-  // console.log(cursodata)
   const [formData, setFormData] = useState({
     nome: data.nome,
     descricao: data.descricao,
     accessos: data.accessos,
-    categoria: data.categoria
+    categoria: data.categoria,
+    capa: data.capa,
+    publiacdo: data.publicado
 
   });
   console.log(formData)
   console.log('formData')
+
   const router = useRouter()
   const handleInputChange = (e, fieldName) => {
     setFormData({
@@ -32,13 +35,13 @@ export const EditarCurso = ({ curso, error }) => {
     console.log("aqui é  query do userouter", queryUrl.slug)
     try {
       const response = await fetch(`/api/curso/update/${queryUrl.slug}`
-      ,{
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+        , {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
 
       const updateData = await response.json();
       console.log(updateData);
@@ -58,12 +61,38 @@ export const EditarCurso = ({ curso, error }) => {
     }));
   };
 
+  function handleRemoveCapa() {
+    setFormData((prevData) => ({
+      ...prevData,
+      capa: ""
+    }));
+  }
+
   return (
     <>
       <Header></Header>
       <EditarContainer>
-        <h1>Editar curso</h1>
+
+
+
+        <h1>Editando <b>{data.nome}</b></h1>
         <form>
+          {formData.capa ?
+            <div className='Image-holder'>
+              <div className="Image-Box">
+                
+                  <img src={formData.capa} alt="" />
+                  <button onClick={handleRemoveCapa}>
+                    <Image src={Pen}></Image>
+                  </button>
+                
+              </div>
+            </div>
+            :
+            <div className='Image-holder'>
+              <div>sem capa :\</div>
+            </div>
+          }
           <div className="img-box"></div>
           <input type="text" placeholder={data.nome} onChange={(e) => handleInputChange(e, "nome")} />
           <textarea
@@ -81,7 +110,7 @@ export const EditarCurso = ({ curso, error }) => {
                   type="radio"
                   name="categoria"
                   value="Profissional"
-                  checked=""
+                  checked={formData.categoria === 'Profissional'}
                   onChange={handleChange}
                 />
                 <span>Profissional</span>
@@ -95,7 +124,7 @@ export const EditarCurso = ({ curso, error }) => {
                   type="radio"
                   name="categoria"
                   value="Estratégica"
-                  checked=""
+                  checked={formData.categoria === 'Estratégica'}
                   onChange={handleChange}
                 />
                 <span>Estratégica</span>
@@ -104,7 +133,7 @@ export const EditarCurso = ({ curso, error }) => {
           </div>
 
 
-          <div className="trilha-box">
+          {/* <div className="trilha-box">
             <p>Trilha</p>
             <label htmlFor="prof">Profissional</label>
             <input type="checkbox" id="prof" />
@@ -117,7 +146,7 @@ export const EditarCurso = ({ curso, error }) => {
             id="access"
             placeholder={data.accessos}
             onChange={(e) => handleInputChange(e, "accessos")}
-          />
+          /> */}
 
 
 

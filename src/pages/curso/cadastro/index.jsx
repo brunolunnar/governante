@@ -22,7 +22,7 @@ export default function CadastroCurso() {
     categoria: "",
     accessos: "",
     capa: "",
-    slug:""
+    slug: ""
 
    
   });
