@@ -5,15 +5,21 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 
 export const EditarCurso = ({ curso, error }) => {
+  // const [cursodata, setCursoData] = useState(curso.data[0]);
   const data = curso.data[0]
+
   console.log(data)
+  // console.log(cursodata)
   const [formData, setFormData] = useState({
     nome: data.nome,
     descricao: data.descricao,
     accessos: data.accessos,
+    categoria: data.categoria
 
   });
-const router = useRouter()
+  console.log(formData)
+  console.log('formData')
+  const router = useRouter()
   const handleInputChange = (e, fieldName) => {
     setFormData({
       ...formData,
@@ -25,7 +31,8 @@ const router = useRouter()
     const queryUrl = router.query
     console.log("aqui é  query do userouter", queryUrl.slug)
     try {
-      const response = await fetch(`https://governante.app/api/curso/update/${queryUrl.slug}`, {
+      const response = await fetch(`/api/curso/update/${queryUrl.slug}`
+      ,{
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -35,9 +42,20 @@ const router = useRouter()
 
       const updateData = await response.json();
       console.log(updateData);
+      console.log(response);
     } catch (error) {
       console.error("Erro ao salvar curso:", error);
     }
+    console.log('teste')
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   return (
@@ -52,6 +70,40 @@ const router = useRouter()
             placeholder={data.descricao}
             onChange={(e) => handleInputChange(e, "descricao")}
           />
+
+          <div className="trilha">
+            <p>Trilha</p>
+            <div className="radio">
+              <label htmlFor="prof">
+                <input
+                  id="prof"
+                  className="trilha-check"
+                  type="radio"
+                  name="categoria"
+                  value="Profissional"
+                  checked=""
+                  onChange={handleChange}
+                />
+                <span>Profissional</span>
+              </label>
+            </div>
+            <div className="radio">
+              <label htmlFor="estrategia">
+                <input
+                  id="estrategia"
+                  className="trilha-check"
+                  type="radio"
+                  name="categoria"
+                  value="Estratégica"
+                  checked=""
+                  onChange={handleChange}
+                />
+                <span>Estratégica</span>
+              </label>
+            </div>
+          </div>
+
+
           <div className="trilha-box">
             <p>Trilha</p>
             <label htmlFor="prof">Profissional</label>
@@ -66,10 +118,13 @@ const router = useRouter()
             placeholder={data.accessos}
             onChange={(e) => handleInputChange(e, "accessos")}
           />
+
+
+
           <div className="modules-layout">
             <h3>Módulos</h3>
           </div>
-          <ModuleBox handleOpenPicker={() => {}} modulo={null} />
+          <ModuleBox handleOpenPicker={() => { }} modulo={null} />
         </form>
         <button className="confirm-curso-btn" onClick={handleSaveCurso}>
           Salvar Curso
