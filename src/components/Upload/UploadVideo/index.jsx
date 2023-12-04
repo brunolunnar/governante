@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "@/utils/firebase";
 
-function Upload({ onUploadComplete }) {
+function UploadVideo({ onUploadComplete }) {
   const [imageFile, setImageFile] = useState();
   const [downloadURL, setDownloadURL] = useState("");
   const [isUploading, setIsUploading] = useState(false);
@@ -133,4 +133,4 @@ function Upload({ onUploadComplete }) {
   );
 }
 
-export default Upload;
+export default UploadVideo;

@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { ref, uploadBytesResumable } from "firebase/storage";
 import { storage } from "@/utils/firebase";
-import Upload from "@/components/Upload/Upload";
+import UploadImage from "@/components/Upload/UploadImage";
 import { gerarSlug } from "@/utils/slugGenerator";
 
 export default function CadastroCurso() {
@@ -94,7 +94,7 @@ const slugName = gerarSlug(cursodata.nome)
         <h1>
           Cadastro de <b>Curso</b>
         </h1>
-        <Upload onUploadComplete={handleUploadComplete} />
+        <UploadImage onUploadComplete={handleUploadComplete} />
   
         <form onSubmit={handleSaveCurso}>
        
