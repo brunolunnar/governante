@@ -2,8 +2,15 @@ import Link from "next/link";
 import { SideBarListContainer } from "./styles";
 import Image from "next/image";
 import Logo from "@/assets/img/logo.png";
+import { useSession, signOut } from "next-auth/react";
 
 export const SideBarList = () => {
+  const { data: session } = useSession();
+
+  const handleLogout = async () => {
+    await signOut();
+  };
+
   return (
     <SideBarListContainer>
       <div className="logo-box">
@@ -12,7 +19,7 @@ export const SideBarList = () => {
         </div>
         <div className="welcome-box">
           <span>Olá,</span>
-          <p>Fulano</p>
+          <p>{session?.user?.name || "Usuário"}</p>
         </div>
       </div>
       <div className="recurses-box">
@@ -46,9 +53,7 @@ export const SideBarList = () => {
         <Link className="link" href="#">
           Gerenciar <b> Tenants</b>
         </Link>
-        <Link className="exit" href="#">
-          Sair
-        </Link>
+        <Link onClick={handleLogout} href={'/'} className="exit">Sair</Link>
       </div>
     </SideBarListContainer>
   );

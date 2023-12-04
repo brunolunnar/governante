@@ -56,14 +56,14 @@ export const getServerSideProps = async (context) => {
     console.error(`Erro ao obter dados da API: ${response.statusText}`);
     return { props: { cursos: [] } };
   }
-  // if (!session) {
-  //   return {
-  //     redirect: {
-  //       destination: "/",
-  //       permanent: false,
-  //     },
-  //   };
-  // }
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
   const data = await response.json();
   return {
     props: {
