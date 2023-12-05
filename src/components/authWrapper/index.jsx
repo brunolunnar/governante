@@ -24,8 +24,7 @@ const AppContainer = ({ session, children }) => {
                 body: JSON.stringify({
                   email: userEmail,
                   retonarDados: true,
-                }),
-                mode: 'no-cors',
+                })
               });
               if(response.status != 200){
                 await signOut({ redirect: true, callbackUrl: '/' });
