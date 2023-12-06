@@ -42,15 +42,17 @@ export const EditarCurso = ({ curso, error }) => {
     const queryUrl = router.query
     console.log("aqui é  query do userouter", queryUrl.slug)
     try {
+      console.log('tonotry')
       const response = await fetch(`/api/curso/update/${queryUrl.slug}`
-        , {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        });
-
+      , {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      console.log('tonotry depois do response')
+      
       const updateData = await response.json();
       console.log(updateData);
       console.log(response);
@@ -74,6 +76,17 @@ export const EditarCurso = ({ curso, error }) => {
       ...prevData,
       capa: ""
     }));
+  }
+
+  const CheckboxExample = () => {
+    const [isChecked, setChecked] = useState(false);
+
+    const handleCheckboxChange = () => {
+      // Altera o estado da caixa de seleção
+      setChecked(!isChecked);
+      // Exibe o valor atual no console
+      console.log('Checkbox está marcado:', !isChecked);
+    };
   }
 
   return (
@@ -167,13 +180,15 @@ export const EditarCurso = ({ curso, error }) => {
               <label htmlFor="publicar" >Publicar o Curso</label>
               <div>(Se marcar essa opção o acesso ao curso estará disponível)</div>
             </div>
-            <input
+            {/* <input
              type="checkbox" 
              id="publicado" 
              nome='publicado'
              value={false}
              checked={formData.publicado == true}
-             onChange={(e) => handleCheckboxChange(e, "publicado")}/>
+             onChange={(e) => handleCheckboxChange(e, "publicado")}/> */}
+            
+            
           </div>
 
         </form>

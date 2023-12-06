@@ -56,10 +56,13 @@ export const EditarContainer = styled('section',{
         minHeight:'83px',
         maxWidth:'97%',
         maxHeight:"100px",
-        minWidth:'97%'
+        minWidth:'97%',
+        color:'white',
+        fontFamily: "$montserrat",
       },
       "textarea::placeholder":{
-        color:'white'
+        fontFamily: "$montserrat",
+        color:'light-gray'
       },
       ".trilha": {
         display: "flex",

@@ -9,7 +9,7 @@ import UploadImage from "../../assets/img/upload-cloud.png";
       <div className="capa-box">
         <label htmlFor="capa" className="up-box">
           <Image src={UploadImage} alt="upload image"></Image>
-          <span>Upload da capa</span>
+          <span>Upload da vapo</span>
         </label>
         <input type="file" id="capa" />
       </div>
