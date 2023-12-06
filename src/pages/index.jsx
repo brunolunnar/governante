@@ -4,6 +4,14 @@ import LogoGov from "../assets/img/logo-governante-academy.png";
 import { LoginContainer } from "../styles/pages/login";
 import { getSession, useSession, signIn, signOut } from "next-auth/react";
 import api from "../services/api";
+import { Metadata } from "next";
+
+export const metadata = {
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/favicon.ico",
+  },
+};
 
 function Index() {
 

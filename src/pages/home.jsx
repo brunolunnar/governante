@@ -6,12 +6,6 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Carrousel } from "@/components/Slider";
 
-
-
-
-
-
-
 function Home({ cursos }) {
   const { data: session } = useSession();
   const carousel = useRef();
