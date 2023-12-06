@@ -3,9 +3,13 @@ import { EditarContainer, ImageBox } from "@/styles/pages/curso/editar";
 import { ModuleBox } from "@/components/module-box/Module";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import { UploadEditar } from "@/components/Upload/UploadEditar";
+import UploadImage from "@/assets/img/upload-cloud.png";
 
 import Image from "next/image";
 import Pen from '@/assets/img/pen.svg';
+
+import { UploadContainer } from "@/styles/components/uploadBox";
 
 export const getServerSideProps = async (context) => {
   try {
@@ -113,7 +117,7 @@ export const EditarCurso = ({ curso, error }) => {
       // Exibe o valor atual no console
       console.log('Checkbox está marcado:', !isChecked);
     };
-    
+
   }
 
   return (
@@ -136,7 +140,24 @@ export const EditarCurso = ({ curso, error }) => {
             </div>
             :
             <div className='Image-holder'>
-              <div>sem capa :\</div>
+
+              <UploadContainer className="upload-box">
+                <div className="capa-box">
+                  <label htmlFor="capa" className="up-box">
+                    <Image src={UploadImage} alt="upload image"></Image>
+                    <span>Upload da capa</span>
+                  </label>
+                  <input type="file" id="capa" />
+                </div>
+                <div className="drive-box">
+                  <label htmlFor="drive" className="drive-description">
+                    Buscar no Drive
+                  </label>
+                  <input
+                    type="file"
+                  />
+                </div>
+              </UploadContainer>
             </div>
           }
           <div className="img-box"></div>
@@ -200,7 +221,7 @@ export const EditarCurso = ({ curso, error }) => {
           <div className="modules-layout">
             <h3>Módulos</h3>
           </div>
-          <ModuleBox handleOpenPicker={() => { }} modulo={null} />
+          <ModuleBox ></ModuleBox>
 
           <div className="publicar-box">
             <div className='publicar-text'>

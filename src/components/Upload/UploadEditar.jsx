@@ -3,13 +3,14 @@ import Image from "next/image";
 import UploadImage from "../../assets/img/upload-cloud.png";
 
 
- const UploadEditar = ({handleOpenPicker}) => {
+//  const UploadEditar = ({handleOpenPicker}) => {
+ const UploadEditar = () => {
   return (
     <UploadContainer className="upload-box">
       <div className="capa-box">
         <label htmlFor="capa" className="up-box">
           <Image src={UploadImage} alt="upload image"></Image>
-          <span>Upload da vapo</span>
+          <span>Upload da capa</span>
         </label>
         <input type="file" id="capa" />
       </div>
@@ -19,11 +20,6 @@ import UploadImage from "../../assets/img/upload-cloud.png";
         </label>
         <input
           type="file"
-          id="drive"
-          onClick={(e) => {
-            e.preventDefault();
-            handleOpenPicker();
-          }}
         />
       </div>
     </UploadContainer>
