@@ -7,8 +7,36 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import Pen from '@/assets/img/pen.svg';
 
+export const getServerSideProps = async (context) => {
+  try {
+    const { query } = context;
+
+    console.log(query)
+    const responseCurso = await fetch(`https://governante.app/api/relations/list/${query.slug}`);
+    const curso = await responseCurso.json();
+    console.log(curso.data)
+    console.log("curso")
+
+    return {
+      props: {
+        curso,
+      },
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      props: {
+        error: "Ocorreu um erro ao carregar o curso.",
+      },
+    };
+  }
+};
 export const EditarCurso = ({ curso, error }) => {
-  const data = curso.data[0]
+  const data = curso.data
+  console.log(curso)
+  console.log("curso")
+
+  const [pubIsChecked, setPubChecked] = useState(false);
 
   const [formData, setFormData] = useState({
     nome: data.nome,
@@ -17,7 +45,7 @@ export const EditarCurso = ({ curso, error }) => {
     categoria: data.categoria,
     capa: data.capa,
     publicado: data.publicado,
-
+    modulos: data.modulos
   });
   console.log(formData)
   console.log('formData')
@@ -32,9 +60,10 @@ export const EditarCurso = ({ curso, error }) => {
   };
 
   const handleCheckboxChange = (e, fieldName) => {
+    setPubChecked(!pubIsChecked)
     setFormData({
       ...formData,
-      [fieldName]: ![fieldName],
+      publicado: pubIsChecked
     });
   };
 
@@ -42,17 +71,15 @@ export const EditarCurso = ({ curso, error }) => {
     const queryUrl = router.query
     console.log("aqui é  query do userouter", queryUrl.slug)
     try {
-      console.log('tonotry')
       const response = await fetch(`/api/curso/update/${queryUrl.slug}`
-      , {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-      console.log('tonotry depois do response')
-      
+        , {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+
       const updateData = await response.json();
       console.log(updateData);
       console.log(response);
@@ -79,7 +106,6 @@ export const EditarCurso = ({ curso, error }) => {
   }
 
   const CheckboxExample = () => {
-    const [isChecked, setChecked] = useState(false);
 
     const handleCheckboxChange = () => {
       // Altera o estado da caixa de seleção
@@ -87,6 +113,7 @@ export const EditarCurso = ({ curso, error }) => {
       // Exibe o valor atual no console
       console.log('Checkbox está marcado:', !isChecked);
     };
+    
   }
 
   return (
@@ -180,15 +207,14 @@ export const EditarCurso = ({ curso, error }) => {
               <label htmlFor="publicar" >Publicar o Curso</label>
               <div>(Se marcar essa opção o acesso ao curso estará disponível)</div>
             </div>
-            {/* <input
-             type="checkbox" 
-             id="publicado" 
-             nome='publicado'
-             value={false}
-             checked={formData.publicado == true}
-             onChange={(e) => handleCheckboxChange(e, "publicado")}/> */}
-            
-            
+            <input
+              type="checkbox"
+              id="publicado"
+              nome='publicado'
+              value={false}
+              checked={formData.publicado == true}
+              onChange={(e) => handleCheckboxChange(e, "publicado")} />
+
           </div>
 
         </form>
@@ -201,28 +227,4 @@ export const EditarCurso = ({ curso, error }) => {
     </>
   );
 };
-
-export const getServerSideProps = async (context) => {
-  try {
-    const { query } = context;
-
-    console.log(query)
-    const responseCurso = await fetch(`https://governante.app/api/curso/list/${query.slug}`);
-    const curso = await responseCurso.json();
-
-    return {
-      props: {
-        curso,
-      },
-    };
-  } catch (error) {
-    console.error(error);
-    return {
-      props: {
-        error: "Ocorreu um erro ao carregar o curso.",
-      },
-    };
-  }
-};
-
 export default EditarCurso;

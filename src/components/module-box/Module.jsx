@@ -3,9 +3,18 @@ import AdicionarAula from "../aula/AddAula";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 
-export const ModuleBox = ({ handleOpenPicker }) => {
+function handleModulosInfo({dataModulos}){
+    console.log(dataModulos)
+    console.log('dataModulos')
+}
+
+// export const ModuleBox = ({ handleOpenPicker, dataModulos }) => {
+export const ModuleBox = ({ handleOpenPicker}) => {
+
   const [modulos, setModulos] = useState([{ id: 1, numAulas: 1 }]);
   const router = useRouter();
+  
+  handleModulosInfo({modulos})
 
   const adicionarModulo = (e) => {
     e.preventDefault();

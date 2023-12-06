@@ -10,19 +10,24 @@ export default async function update(req, res) {
   try {
     console.log(process.env.FAUNA_MAIN_KEY)
     console.log('process.env.FAUNA_MAIN_KEY')
-    let dadoCurso = await paginateIndex({ key: process.env.FAUNA_MAIN_KEY, index: "cursos_by_slug", matchValue: slug, refOnly: true}).then(resp => {return resp[0]})
+    let refCurso = await paginateIndex({ key: process.env.FAUNA_MAIN_KEY, index: "cursos_by_slug", matchValue: slug, refOnly: true}).then(resp => {return resp[0]})
 
-  
-    let update = await updateRef({
+    let dataCursoGeral = data 
+    delete data.modulos
+    let dataUpdateSemModulo = data
+    console.log(dataCursoGeral)
+    console.log("dataCursoGeral")
+    console.log(dataUpdateSemModulo)
+    console.log("dataUpdateSemModulo")
+    let updateSemModulo = await updateRef({
       key: process.env.FAUNA_MAIN_KEY,
       collection: "cursos",
       data: data,
-      ref: dadoCurso,
+      ref: refCurso,
       returnInfo: 'data'
     });
-    console.log(update)
-    console.log('update')
-    return res.json({ data: update });
+    console.log(updateSemModulo)
+    return res.json({ data: updateSemModulo });
   } catch (error) {
     console.log("erro:", error.message);
   }
