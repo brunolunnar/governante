@@ -1,17 +1,22 @@
 import Header from "@/components/Header/header";
 import { EditarContainer, ImageBox } from "@/styles/pages/curso/editar";
 import { ModuleBox } from "@/components/module-box/Module";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { UploadEditar } from "@/components/Upload/UploadEditar";
-import UploadImage from "@/assets/img/upload-cloud.png";
+
+//upload image
+import { storage } from "@/utils/firebase";
+import UploadImage from "@/components/Upload/UploadImage";
 
 import Image from "next/image";
 import Pen from '@/assets/img/pen.svg';
 
 import { UploadContainer } from "@/styles/components/uploadBox";
 
+
+
 export const getServerSideProps = async (context) => {
+
   try {
     const { query } = context;
 
@@ -39,6 +44,8 @@ export const EditarCurso = ({ curso, error }) => {
   const data = curso.data
   console.log(curso)
   console.log("curso")
+
+  const [fileUrl, setFileUrl] = useState(null);
 
   const [pubIsChecked, setPubChecked] = useState(false);
 
@@ -120,6 +127,19 @@ export const EditarCurso = ({ curso, error }) => {
 
   }
 
+  const handleUploadComplete = (url) => {
+    setFileUrl(url);
+  };
+
+  useEffect(() => {
+    // Código a ser executado quando a variável 'algumaPropriedade' for alterada
+    console.log('fileUrl foi alterada:', fileUrl);
+    setFormData((prevData) => ({
+      ...prevData,
+      capa: fileUrl
+    }));
+  }, [fileUrl]);
+
   return (
     <>
       <Header></Header>
@@ -158,6 +178,7 @@ export const EditarCurso = ({ curso, error }) => {
                   />
                 </div>
               </UploadContainer>
+              <UploadImage onUploadComplete={handleUploadComplete} />
             </div>
           }
           <div className="img-box"></div>

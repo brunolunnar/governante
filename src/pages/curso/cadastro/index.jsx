@@ -94,6 +94,7 @@ export default function CadastroCurso() {
           Cadastro de <b>Curso</b>
         </h1>
         <UploadImage onUploadComplete={handleUploadComplete} />
+        
 
         <form onSubmit={handleSaveCurso}>
 
