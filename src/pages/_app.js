@@ -12,7 +12,7 @@ export default function App({
 }) {
   return (
     <SessionProvider session={session}>
-      {/* <AppContainer session={session}> */}
+      <AppContainer session={session}>
         <Component {...pageProps} />
         <ToastContainer
           position="top-right"
@@ -26,7 +26,7 @@ export default function App({
           pauseOnHover
           the
         />
-      {/* </AppContainer> */}
+      </AppContainer>
 
     </SessionProvider>
   );
