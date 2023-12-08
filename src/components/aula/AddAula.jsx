@@ -9,14 +9,9 @@ const AdicionarAula = ({ handleOpenPicker, estadoAulas }) => {
     setAulas(
       [...aulas, 
         { 
-          id: aulas.length + 1 ,
           descricao: "",
-          moduloRef
-          : 
-          "382283152003956800",
-          slugModulo
-          : 
-          "liminha-liminha-38354",
+          moduloRef: "382283152003956800",
+          slugModulo: "liminha-liminha-38354",
           titulo_aula: ""
 
         }
@@ -28,6 +23,19 @@ const AdicionarAula = ({ handleOpenPicker, estadoAulas }) => {
     console.log(e)
     e.preventDefault()
     setAulas(aulas.filter((aula,i) => i !== index));
+  };
+
+  const handleChange = (e, index) => {
+    const { name, value } = e.target;
+    
+    const arrayPivot = [...aulas];
+
+    // Altera o título do módulo para o índice específico
+    arrayPivot[index][name] = value;
+
+    // Atualiza o estado com o novo array
+    setAulas(arrayPivot);
+    // setModulos(modulos.filter());
   };
 
   return (
@@ -42,9 +50,20 @@ const AdicionarAula = ({ handleOpenPicker, estadoAulas }) => {
         ) : (
           aulas.map((aula, index) => (
             <div key={index} className="aula-container">
-              <input type="text" placeholder={`Aula ${index}`} value={aula.titulo_aula}/>
+              <input 
+                type="text" 
+                placeholder={`Aula ${index}`} 
+                value={aula.titulo_aula}
+                name="titulo_aula"
+                onChange={(e) => handleChange(e, index)}
+              />
 
-              <textarea placeholder="Descrição" value={aula.descricao}></textarea>
+              <textarea 
+                placeholder="Descrição" 
+                value={aula.descricao}
+                name="descricao"
+                onChange={(e) => handleChange(e, index)}
+              ></textarea>
 
               <span>Vídeo</span>
               <input type="text" placeholder={`link do vídeo (google drive ou youtube)`} value={aula.video}/>
