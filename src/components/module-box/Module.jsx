@@ -12,13 +12,15 @@ import { gerarSlug } from "@/utils/slugGenerator";
 // export const ModuleBox = ({ handleOpenPicker, dataModulos }) => {
 export const ModuleBox = ({ handleOpenPicker, estadoModulos}) => {
 
-  try{
-    console.log(estadoModulos)
-    console.log('TÁ CHEGANDO estadoModulos')
-  } catch(erro){
-    console.error("chegou foi nada", erro)
-  }
-  
+  // try{
+  //   console.log(estadoModulos)
+  //   console.log('TÁ CHEGANDO estadoModulos')
+  //   console.log(estadoModulos[0].aulas)
+
+  // } catch(erro){
+  //   console.error("Não chegou", erro)
+
+  // }
 
   const [modulos, setModulos] = useState(estadoModulos);
   const router = useRouter();
@@ -29,31 +31,51 @@ export const ModuleBox = ({ handleOpenPicker, estadoModulos}) => {
     e.preventDefault();
     toast.success("Módulo adicionado.");
     setModulos([...modulos,{
-      titulo_modulo: `Módulo ${modulos.length}`,
+      titulo_modulo: `Título do Módulo`,
       aulas: [],
-      id: modulos.length
-
     }]);
   };
 
-  // const removerModulo = (moduleId) => {
-  //   toast.error("Módulo removido.")
-  //   setModulos(modulos.filter((modulo) => modulo.id !== moduleId));
-  // };
+  const removerModulo = (e, index) => {
+    e.preventDefault()
+    toast.error("Módulo removido.")
+    setModulos(modulos.filter((modulo, i) => i !== index));
+  };
+
+  const handleChange = (e, index) => {
+    const { name, value } = e.target;
+    
+    const arrayPivot = [...modulos];
+
+    // Altera o título do módulo para o índice específico
+    arrayPivot[index][name] = value;
+
+    // Atualiza o estado com o novo array
+    setModulos(arrayPivot);
+    // setModulos(modulos.filter());
+  };
 
   return (
     <>
       <button className="select-btn" onClick={adicionarModulo}>
         Adicionar Módulo +
       </button>
-      {modulos.map((modulo) => (
-        <div key={modulo.titulo_modulo} className="container-modules">
-          <button onClick={() => removerModulo(modulo.id)}>
+      {modulos.map((modulo, index) => (
+        <div key={index} className="container-modules">
+          <button onClick={(e) => removerModulo(e, index)}>
             Remover Módulo
           </button>
+          {console.log(index)}
           <div className="add-modulo">
-            <input type="text" placeholder={`Nome do módulo`} value={modulo.titulo_modulo}/>
-            <AdicionarAula handleOpenPicker={handleOpenPicker} />
+            <input
+              type="text"
+              placeholder={`Nome do módulo`} 
+              value={modulo.titulo_modulo}
+              name="titulo_modulo"
+              onChange={(e) => handleChange(e, index)}
+            />
+
+            <AdicionarAula handleOpenPicker={handleOpenPicker} estadoAulas={modulo.aulas}/>
           </div>
         </div>
       ))}
