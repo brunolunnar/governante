@@ -7,15 +7,13 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Método não permitido" });
   }
 
-  const { slugModulo } = req.query; 
-  
+  const { slugModulo } = req.query;
+
   try {
     const moduloResult = await client.query(
       q.Get(q.Match(q.Index("modulos_by_slug"), slugModulo))
-      );
-     
-  
-    
+    );
+
     const aulaAdicionada = await client.query(
       q.Create(q.Collection("aulas"), {
         data: {
@@ -23,30 +21,43 @@ export default async function handler(req, res) {
           descricao: req.body.descricao,
           video: req.body.video,
           moduloRef: moduloResult.ref.id,
-          slugModulo:slugModulo
+          slugModulo: slugModulo
         },
       })
-      );
+    );
 
+    const idAulaAdicionada = aulaAdicionada.ref.id
+    let updatedAulas = moduloResult?.data?.aulas ?? []
+    updatedAulas.push(idAulaAdicionada)
 
     const moduloAtualizado = await client.query(
       q.Update(moduloResult.ref, {
         data: {
-          aulas: q.Append(
-            q.Select(["ref"], aulaAdicionada),
-            q.Select(["data", "aulas"], q.Get(moduloResult.ref))
-          ),
+          aulas: updatedAulas
         },
       })
     );
 
-    
-    const aulasCompletas = await client.query(
-      q.Map(
-        moduloAtualizado.data.aulas,
-        q.Lambda("aulaRef", q.Get(q.Var("aulaRef")))
-      )
-    );
+    const aulasCompletas = []
+    await Promise.all(
+      updatedAulas.map(async refAula => {
+        try {
+          await client.query(
+            q.Get(q.Ref(q.Collection("aulas"), refAula))
+          ).then(resp => {
+            let aulaMontada = {
+              id: resp.ref.id,
+              ...resp.data
+            }
+            aulasCompletas.push(aulaMontada)
+          })
+        } catch (e) {
+          console.log(e.message)
+          console.log("updatedAulas map error, e.message")
+        }
+
+      })
+    )
 
     const respostaFormatada = {
       data: {
@@ -54,17 +65,16 @@ export default async function handler(req, res) {
         titulo_modulo: moduloAtualizado.data.titulo_modulo,
         descricao: moduloAtualizado.data.descricao,
         aulas: aulasCompletas.map((aula) => ({
-          id:moduloAtualizado.ref.id,
-          titulo_aula: aula.data.titulo_aula,
-          descricao: aula.data.descricao,
-          img: aula.data.img,
-          video: aula.data.video,
-          moduloRef: moduloResult.ref.id,
-          slugModulo:slugModulo
-        })),
+          id: moduloAtualizado?.ref?.id ?? "",
+          titulo_aula: aula?.data?.titulo_aula ?? "",
+          descricao: aula?.data?.descricao ?? "",
+          img: aula?.data?.img ?? "",
+          video: aula?.data?.video ?? "",
+          moduloRef: moduloResult?.ref?.id ?? "",
+          slugModulo: slugModulo
+        }))
       },
     };
-
     res.status(200).json(respostaFormatada);
   } catch (error) {
     console.error(error);

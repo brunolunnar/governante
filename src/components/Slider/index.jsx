@@ -5,6 +5,8 @@ import "slick-carousel/slick/slick-theme.css";
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 import { Container } from "./styles";
+import Pen from '@/assets/img/pen.svg';
+import Image from "next/image";
 
 export const Carrousel = ({ filter }) => {
   const carousel = useRef();
@@ -15,6 +17,11 @@ export const Carrousel = ({ filter }) => {
   const handleRouter = (nome) => {
     const nomeDaAula = nome.replace(/\s+/g, "-");
     return router.push(`/curso/iniciar-curso/${nomeDaAula}`);
+  };
+
+  const handleEditRouter = (nome) => {
+    const nomeDaAula = nome.replace(/\s+/g, "-");
+    return router.push(`/curso/editar/${nomeDaAula}`);
   };
 
   useEffect(() => {
@@ -62,7 +69,13 @@ export const Carrousel = ({ filter }) => {
               key={curso.id}
               onClick={() => handleRouter(curso.slug)}
             >
-              <img src={curso.capa} alt={curso.nome} />
+              <div className="homecapa">
+                <img src={curso.capa} alt={curso.nome} />
+                <div>{curso.nome}</div>
+                <div className='edit-icon' onClick={() => handleEditRouter(curso.slug)}>
+                  <Image src={Pen}></Image>
+                </div>
+              </div>
             </motion.div>
           ))}
         </motion.div>

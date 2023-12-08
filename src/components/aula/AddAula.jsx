@@ -30,7 +30,7 @@ const AdicionarAula = ({ handleOpenPicker }) => {
               <textarea placeholder="Descrição"></textarea>
 
               <span>Vídeo</span>
-              <UploadAula handleOpenPicker={handleOpenPicker}></UploadAula>
+              <input type="text" placeholder={`link do vídeo (google drive ou youtube)`} />
 
               <span>Anexo</span>
               <UploadAula handleOpenPicker={handleOpenPicker}></UploadAula>

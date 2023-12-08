@@ -1,8 +1,8 @@
 import { styled } from "@stitches/react";
 
 export const Container = styled("div", {
-    display:'flex',
-    alignItems:'center',
+  display: 'flex',
+  alignItems: 'center',
 
   ".inner": {
     display: "flex",
@@ -36,4 +36,17 @@ export const Container = styled("div", {
     width: "100%",
     height: "100%",
   },
+  ".homecapa": {
+    position: "relative",
+  },
+  ".homecapa .edit-icon": {
+    display: 'flex',
+    position: 'absolute',
+    right: '5px',
+    top: '5px',
+    padding: '5px',
+    borderRadius: '100px',
+    background: '#C63737',
+  },
+
 });

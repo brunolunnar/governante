@@ -22,16 +22,16 @@ export default function CadastroCurso() {
     categoria: "",
     accessos: "",
     capa: "",
-    slug:""
+    slug: ""
 
-   
+
   });
   const handleUploadComplete = (url) => {
     setFileUrl(url);
   };
 
   const handleClick = () => {
-  
+
     if (file === null) return;
     const fileRef = ref(storage, `videos/${file.name}`);
     const uploadTask = uploadBytesResumable(fileRef, file);
@@ -43,21 +43,20 @@ export default function CadastroCurso() {
         progress = Math.trunc(progress);
         console.log(progress);
       },
-      (error) => {console.log(`error :${error}`)},
-      () => {console.log('sucess')}
+      (error) => { console.log(`error :${error}`) },
+      () => { console.log('sucess') }
     );
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
     setCursoData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
   };
 
-const slugName = gerarSlug(cursodata.nome) 
+  const slugName = gerarSlug(cursodata.nome)
 
   const handleSaveCurso = async (e) => {
     e.preventDefault();
@@ -70,16 +69,16 @@ const slugName = gerarSlug(cursodata.nome)
         },
         body: JSON.stringify({
           ...cursodata,
-          capa: fileUrl, 
+          capa: fileUrl,
           slug: slugName
-        }), 
+        }),
       });
 
       if (response.ok) {
         const data = await response.json();
         const { slug } = data; // Supondo que o slug é retornado pela API
 
-        router.push(`/curso/editar/${data.data.slug}`); 
+        router.push(`/curso/editar/${data.data.slug}`);
       } else {
         console.error("Erro ao salvar o curso.");
       }
@@ -95,9 +94,10 @@ const slugName = gerarSlug(cursodata.nome)
           Cadastro de <b>Curso</b>
         </h1>
         <UploadImage onUploadComplete={handleUploadComplete} />
-  
+        
+
         <form onSubmit={handleSaveCurso}>
-       
+
           <input
             type="text"
             placeholder="Nome do Curso"
