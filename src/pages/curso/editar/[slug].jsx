@@ -116,17 +116,6 @@ export const EditarCurso = ({ curso, error }) => {
     }));
   }
 
-  const CheckboxExample = () => {
-
-    const handleCheckboxChange = () => {
-      // Altera o estado da caixa de seleção
-      setChecked(!isChecked);
-      // Exibe o valor atual no console
-      console.log('Checkbox está marcado:', !isChecked);
-    };
-
-  }
-
   const handleUploadComplete = (url) => {
     setFileUrl(url);
   };
@@ -242,7 +231,7 @@ export const EditarCurso = ({ curso, error }) => {
           <div className="modules-layout">
             <h3>Módulos</h3>
           </div>
-          <ModuleBox ></ModuleBox>
+          <ModuleBox estadoModulos={formData.modulos}></ModuleBox>
 
           <div className="publicar-box">
             <div className='publicar-text'>
