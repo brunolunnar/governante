@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import AdicionarAula from "../aula/AddAula";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
+import { gerarSlug } from "@/utils/slugGenerator";
 
 // function handleModulosInfo({dataModulos}){
 //     console.log(dataModulos)
@@ -19,25 +20,26 @@ export const ModuleBox = ({ handleOpenPicker, estadoModulos}) => {
   }
   
 
-  const [modulos, setModulos] = useState([{ id: 1, numAulas: 1 }]);
+  const [modulos, setModulos] = useState(estadoModulos);
   const router = useRouter();
   
-  handleModulosInfo({modulos})
+  // handleModulosInfo({modulos})
 
   const adicionarModulo = (e) => {
     e.preventDefault();
     toast.success("Módulo adicionado.");
     setModulos([...modulos,{
-      titulo_modulo: 'TITULO 03',
+      titulo_modulo: `Módulo ${modulos.length}`,
       aulas: [],
-      slugModulo: 'titulo-03-13216'
+      id: modulos.length
+
     }]);
   };
 
-  const removerModulo = (moduleId) => {
-    toast.error("Módulo removido.")
-    setModulos(modulos.filter((modulo) => modulo.id !== moduleId));
-  };
+  // const removerModulo = (moduleId) => {
+  //   toast.error("Módulo removido.")
+  //   setModulos(modulos.filter((modulo) => modulo.id !== moduleId));
+  // };
 
   return (
     <>
@@ -45,12 +47,12 @@ export const ModuleBox = ({ handleOpenPicker, estadoModulos}) => {
         Adicionar Módulo +
       </button>
       {modulos.map((modulo) => (
-        <div key={modulo.id} className="container-modules">
+        <div key={modulo.titulo_modulo} className="container-modules">
           <button onClick={() => removerModulo(modulo.id)}>
             Remover Módulo
           </button>
           <div className="add-modulo">
-            <input type="text" placeholder={`Módulo ${modulo.id}`} />
+            <input type="text" placeholder={`Nome do módulo`} value={modulo.titulo_modulo}/>
             <AdicionarAula handleOpenPicker={handleOpenPicker} />
           </div>
         </div>
