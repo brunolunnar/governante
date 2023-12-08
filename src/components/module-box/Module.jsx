@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import AdicionarAula from "../aula/AddAula";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
+import { gerarSlug } from "@/utils/slugGenerator";
 
 // function handleModulosInfo({dataModulos}){
 //     console.log(dataModulos)
@@ -11,32 +12,47 @@ import { toast } from "react-toastify";
 // export const ModuleBox = ({ handleOpenPicker, dataModulos }) => {
 export const ModuleBox = ({ handleOpenPicker, estadoModulos}) => {
 
-  try{
-    console.log(estadoModulos)
-    console.log('TÁ CHEGANDO estadoModulos')
-  } catch(erro){
-    console.error("chegou foi nada", erro)
-  }
-  
+  // try{
+  //   console.log(estadoModulos)
+  //   console.log('TÁ CHEGANDO estadoModulos')
+  //   console.log(estadoModulos[0].aulas)
 
-  const [modulos, setModulos] = useState([{ id: 1, numAulas: 1 }]);
+  // } catch(erro){
+  //   console.error("Não chegou", erro)
+
+  // }
+
+  const [modulos, setModulos] = useState(estadoModulos);
   const router = useRouter();
   
-  handleModulosInfo({modulos})
+  // handleModulosInfo({modulos})
 
   const adicionarModulo = (e) => {
     e.preventDefault();
     toast.success("Módulo adicionado.");
     setModulos([...modulos,{
-      titulo_modulo: 'TITULO 03',
+      titulo_modulo: `Título do Módulo`,
       aulas: [],
-      slugModulo: 'titulo-03-13216'
     }]);
   };
 
-  const removerModulo = (moduleId) => {
+  const removerModulo = (e, index) => {
+    e.preventDefault()
     toast.error("Módulo removido.")
-    setModulos(modulos.filter((modulo) => modulo.id !== moduleId));
+    setModulos(modulos.filter((modulo, i) => i !== index));
+  };
+
+  const handleChange = (e, index) => {
+    const { name, value } = e.target;
+    
+    const arrayPivot = [...modulos];
+
+    // Altera o título do módulo para o índice específico
+    arrayPivot[index][name] = value;
+
+    // Atualiza o estado com o novo array
+    setModulos(arrayPivot);
+    // setModulos(modulos.filter());
   };
 
   return (
@@ -44,14 +60,22 @@ export const ModuleBox = ({ handleOpenPicker, estadoModulos}) => {
       <button className="select-btn" onClick={adicionarModulo}>
         Adicionar Módulo +
       </button>
-      {modulos.map((modulo) => (
-        <div key={modulo.id} className="container-modules">
-          <button onClick={() => removerModulo(modulo.id)}>
+      {modulos.map((modulo, index) => (
+        <div key={index} className="container-modules">
+          <button onClick={(e) => removerModulo(e, index)}>
             Remover Módulo
           </button>
+          {console.log(index)}
           <div className="add-modulo">
-            <input type="text" placeholder={`Módulo ${modulo.id}`} />
-            <AdicionarAula handleOpenPicker={handleOpenPicker} />
+            <input
+              type="text"
+              placeholder={`Nome do módulo`} 
+              value={modulo.titulo_modulo}
+              name="titulo_modulo"
+              onChange={(e) => handleChange(e, index)}
+            />
+
+            <AdicionarAula handleOpenPicker={handleOpenPicker} estadoAulas={modulo.aulas}/>
           </div>
         </div>
       ))}

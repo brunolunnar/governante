@@ -1,3 +1,5 @@
+import { paginateIndex, getRefData } from "./connections";
+
 // - > Não implementada
 export const pegarParcelaGrupoHistoricoPadrao = () => {
     return [1, 0.0, "linear", 0.0, { loja: 0.0, owner: 0.0, bonus: 0.0 }]
@@ -18,6 +20,14 @@ export const getCurrentDate = () => {
     let dataAtual = `${dia}/${mes}/${ano}`
     return dataAtual
 }
+
+export const limparNomeAulas = (aulas) => {
+    return aulas.map(aula => {
+        if (typeof aula === "object") if ((aula + "").includes("Ref(Collection")) { aula = (aula + "").replace(`Ref(Collection("aulas"), "`, "").replace(`")`, "") } else { console.log("ERRO AO FORMATAR AULA"); return aula }
+        return aula
+    })
+}
+
 // - > Não implementada
 export const criarHistoricoGrupo = (email) => {
     const data = new Date();
