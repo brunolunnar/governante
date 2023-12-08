@@ -2,6 +2,7 @@
 import { Client } from "faunadb";
 import { query } from "faunadb";
 import { withPageAuthRequired, getSession } from "@auth0/nextjs-auth0";
+import { limparNomeAulas } from "./functions";
 
 export const paginateCollection = async ({ key, pageSize, collectionName, dataOnly }) => {
     let q = query
@@ -140,8 +141,8 @@ export const createData = async ({ key, collection, data, returnInfo }) => {
             q.Create(
                 q.Collection(collection),
                 {
-                    data: { ...data, modulos: [], publicado:false }
-                   
+                    data: { ...data, modulos: [], publicado: false }
+
                 },
             )
         )
@@ -173,7 +174,9 @@ export const updateRef = async ({ key, collection, ref, data, returnInfo }) => {
     }
     return retorno;
 }
-export const getRefData = async ({ key, collection, ref, returnInfo }) => {
+export const getRefData = async ({ key, collection, ref, returnInfo, dataRefOnly, dataOnly, refOnly }) => {
+    if (dataOnly) returnInfo == "data"
+    if (refOnly) returnInfo == "ref"
     let q = query
     let fauna = key
     if (typeof fauna === "string") {
@@ -188,7 +191,7 @@ export const getRefData = async ({ key, collection, ref, returnInfo }) => {
             q.Ref(q.Collection(collection), ref)
         )
     )
-    retorno = returnInfo === "data" ? getData.data : returnInfo === "ref" ? getData.ref.id : getData
+    retorno = dataRefOnly ? { refFauna: getData.ref.id, ...getData.data } : returnInfo === "data" ? getData.data : returnInfo === "ref" ? getData.ref.id : getData
     return retorno;
 }
 
@@ -261,3 +264,52 @@ export const deleteByRef = async ({ key, email, pageSize, collection, ref, retur
     return retorno;
 }
 
+export const montarCurso = async (cursoRecebido) => {
+    try {
+        const key = process.env.FAUNA_MAIN_KEY
+        let modulosAdicionar = cursoRecebido.modulos.filter(modulo => typeof modulo === "object" && !modulo.refFauna)
+        let cursoFormatado = { ...cursoRecebido, modulos: [] }
+        const oldModulos = await paginateIndex({ key, index: "modulos_by_slugCurso", matchValue: cursoRecebido.slug, dataRefOnly: true })
+        const oldModulosMontados = []
+        await Promise.all(
+            await oldModulos.map(async oldModulo => {
+                oldModulo.aulas = limparNomeAulas(oldModulo.aulas)
+                let newOldModuloAulas = []
+                await Promise.all(
+                    oldModulo.aulas.map(async oldAulaRef => {
+                        newOldModuloAulas.push(await getRefData({ key, collection: "aulas", ref: oldAulaRef, dataRefOnly: true }))
+                    })
+                )
+                oldModulo.aulas = newOldModuloAulas
+                oldModulosMontados.push(oldModulo)
+            })
+        )
+        cursoFormatado.modulos = oldModulosMontados
+        cursoFormatado.modulos.push(...modulosAdicionar)
+        return cursoFormatado
+    } catch (e) {
+        console.log("Erro ao montar curso, msg:", e.message)
+        return cursoRecebido
+    }
+}
+
+export const montarCursoPorSlug = async (slugCurso) => {
+    return await montarCurso(await paginateIndex({ key: process.env.FAUNA_MAIN_KEY, index: "cursos_by_slug", matchValue: slugCurso, dataRefOnly: true }).then(resp => { return resp[0] ?? [] }))
+}
+
+export const modulosDeletar = async ({ modulos, deletarAulas }) => {
+    const key = process.env.FAUNA_MAIN_KEY
+    await Promise.all(
+        modulos.map(async (modulo) => {
+            if (deletarAulas) {
+                console.log("Deletar Aulas")
+                await Promise.all(
+                    modulo.aulas.map(async aula => {
+                        await deleteByRef({ key, collection: "aulas", ref: aula.refFauna })
+                    })
+                )
+            }
+            await deleteByRef({ key, collection: "modulos", ref: modulo.refFauna })
+        })
+    )
+}
