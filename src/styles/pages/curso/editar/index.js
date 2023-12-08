@@ -5,6 +5,14 @@ export const EditarContainer = styled('section',{
     flexDirection:'column',
     alignItems:'center',
     justifyContent:'center',
+    h1: {
+      fontSize: "3rem",
+      marginTop: "2rem",
+      fontWeight: "100",
+    },
+    p: {
+      fontSize: "1.3rem",
+    },
     form:{
         display: "flex",
         flexDirection: "column",
@@ -29,7 +37,7 @@ export const EditarContainer = styled('section',{
         fontSize:'1.3rem'
     },
     'input::placeholder':{
-      color:'white',
+      color:'light-gray',
 
     },
     '.modules-layout':{
@@ -48,10 +56,13 @@ export const EditarContainer = styled('section',{
         minHeight:'83px',
         maxWidth:'97%',
         maxHeight:"100px",
-        minWidth:'97%'
+        minWidth:'97%',
+        color:'white',
+        fontFamily: "$montserrat",
       },
       "textarea::placeholder":{
-        color:'white'
+        fontFamily: "$montserrat",
+        color:'light-gray'
       },
       ".trilha": {
         display: "flex",
@@ -98,6 +109,13 @@ export const EditarContainer = styled('section',{
       "textarea:focus": {
         boxShadow: "0 0 0 0",
         outline: 0,
+      },
+      "input[type=radio], input[type=checkbox] ": {
+        border: 0,
+        width: "25px",
+        height: "30px",
+        verticalAlign: "middle",
+        color: "$green",
       },
       ".confirm-btn": {
         background: "$green",
@@ -162,5 +180,52 @@ export const EditarContainer = styled('section',{
         display:'flex',
         justifyContent:'end'
 
-      }
+      },
+      ".Image-holder":{
+        display:'flex',
+        width:'100%',
+        justifyContent:'center'
+      },
+      ".Image-Box":{
+        display:'flex',
+        position:'relative',
+        width:'fit-content'
+      },
+      ".Image-Box button":{
+        display:'flex',
+        position:'absolute',
+        right: '5px',
+        top: '5px',
+        padding:'5px',
+        borderRadius:'100px',
+        background:'#C63737'
+      },
+      ".publicar-box":{
+        background: "$main",
+        border: "2px $white ridge",
+        padding: "14px",
+        borderRadius: "2rem",
+        fontFamily: "$montserrat",
+        display:'flex',
+        justifyContent:'space-between',
+
+      },
+      ".publicar-box label":{
+        fontSize:'1.3rem',
+        lineHeight:'1.8rem'
+      },
+      ".publicar-box input":{
+        marginRight:'.5rem'
+      },
+      '.publicar-text':{
+        display:'flex',
+        alignContent:'end',
+        gap:'.5rem'
+      },
+      '.publicar-text div':{
+        fontSize:'.8rem',
+        lineHeight:'1.7rem',
+        display: 'flex',
+        alignItems: 'end',
+      },
 })

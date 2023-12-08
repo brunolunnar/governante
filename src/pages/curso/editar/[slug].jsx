@@ -1,29 +1,80 @@
 import Header from "@/components/Header/header";
-import { EditarContainer } from "@/styles/pages/curso/editar";
+import { EditarContainer, ImageBox } from "@/styles/pages/curso/editar";
 import { ModuleBox } from "@/components/module-box/Module";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
-export const EditarCurso = ({ curso, error }) => {
-  // const [cursodata, setCursoData] = useState(curso.data[0]);
-  const data = curso.data[0]
+//upload image
+import { storage } from "@/utils/firebase";
+import UploadImage from "@/components/Upload/UploadImage";
 
-  console.log(data)
-  // console.log(cursodata)
+import Image from "next/image";
+import Pen from '@/assets/img/pen.svg';
+
+import { UploadContainer } from "@/styles/components/uploadBox";
+
+
+
+export const getServerSideProps = async (context) => {
+
+  try {
+    const { query } = context;
+
+    console.log(query)
+    const responseCurso = await fetch(`https://governante.app/api/relations/list/${query.slug}`);
+    const curso = await responseCurso.json();
+    console.log(curso.data)
+    console.log("curso")
+
+    return {
+      props: {
+        curso,
+      },
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      props: {
+        error: "Ocorreu um erro ao carregar o curso.",
+      },
+    };
+  }
+};
+export const EditarCurso = ({ curso, error }) => {
+  const data = curso.data
+  console.log(curso)
+  console.log("curso")
+
+  const [fileUrl, setFileUrl] = useState(null);
+
+  const [pubIsChecked, setPubChecked] = useState(false);
+
   const [formData, setFormData] = useState({
     nome: data.nome,
     descricao: data.descricao,
     accessos: data.accessos,
-    categoria: data.categoria
-
+    categoria: data.categoria,
+    capa: data.capa,
+    publicado: data.publicado,
+    modulos: data.modulos
   });
   console.log(formData)
   console.log('formData')
+
   const router = useRouter()
+
   const handleInputChange = (e, fieldName) => {
     setFormData({
       ...formData,
       [fieldName]: e.target.value,
+    });
+  };
+
+  const handleCheckboxChange = (e, fieldName) => {
+    setPubChecked(!pubIsChecked)
+    setFormData({
+      ...formData,
+      publicado: pubIsChecked
     });
   };
 
@@ -32,13 +83,13 @@ export const EditarCurso = ({ curso, error }) => {
     console.log("aqui é  query do userouter", queryUrl.slug)
     try {
       const response = await fetch(`/api/curso/update/${queryUrl.slug}`
-      ,{
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+        , {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
 
       const updateData = await response.json();
       console.log(updateData);
@@ -58,16 +109,72 @@ export const EditarCurso = ({ curso, error }) => {
     }));
   };
 
+  function handleRemoveCapa() {
+    setFormData((prevData) => ({
+      ...prevData,
+      capa: ""
+    }));
+  }
+
+  const handleUploadComplete = (url) => {
+    setFileUrl(url);
+  };
+
+  useEffect(() => {
+    // Código a ser executado quando a variável 'algumaPropriedade' for alterada
+    console.log('fileUrl foi alterada:', fileUrl);
+    setFormData((prevData) => ({
+      ...prevData,
+      capa: fileUrl
+    }));
+  }, [fileUrl]);
+
   return (
     <>
       <Header></Header>
       <EditarContainer>
-        <h1>Editar curso</h1>
+
+        <h1>Editando <b>{data.nome}</b></h1>
         <form>
+          {formData.capa ?
+            <div className='Image-holder'>
+              <div className="Image-Box">
+
+                <img src={formData.capa} alt="" />
+                <button onClick={handleRemoveCapa}>
+                  <Image src={Pen}></Image>
+                </button>
+
+              </div>
+            </div>
+            :
+            <div className='Image-holder'>
+
+              <UploadContainer className="upload-box">
+                <div className="capa-box">
+                  <label htmlFor="capa" className="up-box">
+                    <Image src={UploadImage} alt="upload image"></Image>
+                    <span>Upload da capa</span>
+                  </label>
+                  <input type="file" id="capa" />
+                </div>
+                <div className="drive-box">
+                  <label htmlFor="drive" className="drive-description">
+                    Buscar no Drive
+                  </label>
+                  <input
+                    type="file"
+                  />
+                </div>
+              </UploadContainer>
+              <UploadImage onUploadComplete={handleUploadComplete} />
+            </div>
+          }
           <div className="img-box"></div>
-          <input type="text" placeholder={data.nome} onChange={(e) => handleInputChange(e, "nome")} />
+          <input type="text" placeholder='Nome do Curso' value={formData.nome} onChange={(e) => handleInputChange(e, "nome")} />
           <textarea
-            placeholder={data.descricao}
+            placeholder='descrição'
+            value={formData.descricao}
             onChange={(e) => handleInputChange(e, "descricao")}
           />
 
@@ -81,7 +188,7 @@ export const EditarCurso = ({ curso, error }) => {
                   type="radio"
                   name="categoria"
                   value="Profissional"
-                  checked=""
+                  checked={formData.categoria === 'Profissional'}
                   onChange={handleChange}
                 />
                 <span>Profissional</span>
@@ -95,7 +202,7 @@ export const EditarCurso = ({ curso, error }) => {
                   type="radio"
                   name="categoria"
                   value="Estratégica"
-                  checked=""
+                  checked={formData.categoria === 'Estratégica'}
                   onChange={handleChange}
                 />
                 <span>Estratégica</span>
@@ -104,7 +211,7 @@ export const EditarCurso = ({ curso, error }) => {
           </div>
 
 
-          <div className="trilha-box">
+          {/* <div className="trilha-box">
             <p>Trilha</p>
             <label htmlFor="prof">Profissional</label>
             <input type="checkbox" id="prof" />
@@ -117,15 +224,32 @@ export const EditarCurso = ({ curso, error }) => {
             id="access"
             placeholder={data.accessos}
             onChange={(e) => handleInputChange(e, "accessos")}
-          />
+          /> */}
 
 
 
           <div className="modules-layout">
             <h3>Módulos</h3>
           </div>
-          <ModuleBox handleOpenPicker={() => { }} modulo={null} />
+          <ModuleBox estadoModulos={formData.modulos}></ModuleBox>
+
+          <div className="publicar-box">
+            <div className='publicar-text'>
+              <label htmlFor="publicar" >Publicar o Curso</label>
+              <div>(Se marcar essa opção o acesso ao curso estará disponível)</div>
+            </div>
+            <input
+              type="checkbox"
+              id="publicado"
+              nome='publicado'
+              value={false}
+              checked={formData.publicado == true}
+              onChange={(e) => handleCheckboxChange(e, "publicado")} />
+
+          </div>
+
         </form>
+
         <button className="confirm-curso-btn" onClick={handleSaveCurso}>
           Salvar Curso
         </button>
@@ -134,28 +258,4 @@ export const EditarCurso = ({ curso, error }) => {
     </>
   );
 };
-
-export const getServerSideProps = async (context) => {
-  try {
-    const { query } = context;
-
-    console.log(query)
-    const responseCurso = await fetch(`https://governante.app/api/curso/list/${query.slug}`);
-    const curso = await responseCurso.json();
-
-    return {
-      props: {
-        curso,
-      },
-    };
-  } catch (error) {
-    console.error(error);
-    return {
-      props: {
-        error: "Ocorreu um erro ao carregar o curso.",
-      },
-    };
-  }
-};
-
 export default EditarCurso;
