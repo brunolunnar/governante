@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AdicionarAula from "../aula/AddAula";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
@@ -10,7 +10,7 @@ import { gerarSlug } from "@/utils/slugGenerator";
 // }
 
 // export const ModuleBox = ({ handleOpenPicker, dataModulos }) => {
-export const ModuleBox = ({ handleOpenPicker, estadoModulos}) => {
+export const ModuleBox = ({ handleOpenPicker, estadoModulos, onUpdateTodosModulos}) => {
 
   // try{
   //   console.log(estadoModulos)
@@ -24,22 +24,31 @@ export const ModuleBox = ({ handleOpenPicker, estadoModulos}) => {
 
   const [modulos, setModulos] = useState(estadoModulos);
   const router = useRouter();
+
+  const updateCursoModulos = () => {
+    console.log("update de módulos iniciado")
+    console.log(modulos)
+    onUpdateTodosModulos(modulos)
+  }
   
   // handleModulosInfo({modulos})
 
   const adicionarModulo = (e) => {
     e.preventDefault();
     toast.success("Módulo adicionado.");
-    setModulos([...modulos,{
+    let newModulos = [...modulos,{
       titulo_modulo: `Título do Módulo`,
       aulas: [],
-    }]);
+    }]
+    setModulos(newModulos);
+    // updateCursoModulos(newModulos)
   };
 
   const removerModulo = (e, index) => {
     e.preventDefault()
     toast.error("Módulo removido.")
     setModulos(modulos.filter((modulo, i) => i !== index));
+    // updateCursoModulos()
   };
 
   const handleChange = (e, index) => {
@@ -53,7 +62,11 @@ export const ModuleBox = ({ handleOpenPicker, estadoModulos}) => {
     // Atualiza o estado com o novo array
     setModulos(arrayPivot);
     // setModulos(modulos.filter());
+    // updateCursoModulos()
   };
+  useEffect(()=>{
+    updateCursoModulos()
+  },[modulos])
 
   return (
     <>
@@ -65,7 +78,7 @@ export const ModuleBox = ({ handleOpenPicker, estadoModulos}) => {
           <button onClick={(e) => removerModulo(e, index)}>
             Remover Módulo
           </button>
-          {console.log(index)}
+          {/* {console.log(index)} */}
           <div className="add-modulo">
             <input
               type="text"

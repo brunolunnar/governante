@@ -39,7 +39,9 @@ export const getServerSideProps = async (context) => {
       },
     };
   }
+
 };
+
 export const EditarCurso = ({ curso, error }) => {
   const data = curso.data
   console.log(curso)
@@ -63,6 +65,14 @@ export const EditarCurso = ({ curso, error }) => {
 
   const router = useRouter()
 
+  const updateTodosModulos = (novosModulos) => {
+    setFormData({
+      ...formData,
+      modulos: novosModulos
+    });
+    console.log('mudança de módulos feita')
+  };
+
   const handleInputChange = (e, fieldName) => {
     setFormData({
       ...formData,
@@ -78,26 +88,28 @@ export const EditarCurso = ({ curso, error }) => {
     });
   };
 
+  // const handleSaveCurso = async () => {
   const handleSaveCurso = async () => {
-    const queryUrl = router.query
-    console.log("aqui é  query do userouter", queryUrl.slug)
-    try {
-      const response = await fetch(`/api/curso/update/${queryUrl.slug}`
-        , {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        });
+    console.log(formData.modulos)
+    // const queryUrl = router.query
+    // console.log("aqui é  query do userouter", queryUrl.slug)
+    // console.log(formData)
+    // try {
+    //   const response = await fetch(`/api/curso/update/${queryUrl.slug}`
+    //     , {
+    //       method: "POST",
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       },
+    //       body: JSON.stringify(formData),
+    //     });
 
-      const updateData = await response.json();
-      console.log(updateData);
-      console.log(response);
-    } catch (error) {
-      console.error("Erro ao salvar curso:", error);
-    }
-    console.log('teste')
+    //   const updateData = await response.json();
+    //   console.log(updateData);
+    //   console.log(response);
+    // } catch (error) {
+    //   console.error("Erro ao salvar curso:", error);
+    // }
   };
 
   const handleChange = (e) => {
@@ -170,6 +182,7 @@ export const EditarCurso = ({ curso, error }) => {
               <UploadImage onUploadComplete={handleUploadComplete} />
             </div>
           }
+
           <div className="img-box"></div>
           <input type="text" placeholder='Nome do Curso' value={formData.nome} onChange={(e) => handleInputChange(e, "nome")} />
           <textarea
@@ -209,29 +222,12 @@ export const EditarCurso = ({ curso, error }) => {
               </label>
             </div>
           </div>
-
-
-          {/* <div className="trilha-box">
-            <p>Trilha</p>
-            <label htmlFor="prof">Profissional</label>
-            <input type="checkbox" id="prof" />
-            <label htmlFor="estrategia">Estratégia</label>
-            <input type="checkbox" id="estrategia" />
-          </div>
-          <label htmlFor="access">Acesso ao Curso</label>
-          <input
-            type="text"
-            id="access"
-            placeholder={data.accessos}
-            onChange={(e) => handleInputChange(e, "accessos")}
-          /> */}
-
-
+          
 
           <div className="modules-layout">
             <h3>Módulos</h3>
           </div>
-          <ModuleBox estadoModulos={formData.modulos}></ModuleBox>
+          <ModuleBox estadoModulos={formData.modulos} onUpdateTodosModulos={updateTodosModulos}></ModuleBox>
 
           <div className="publicar-box">
             <div className='publicar-text'>
