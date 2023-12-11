@@ -33,6 +33,7 @@ export const ModuleBox = ({ handleOpenPicker, estadoModulos, onUpdateTodosModulo
     toast.success("Módulo adicionado.");
     let newModulos = [...modulos,{
       titulo_modulo: `Título do Módulo`,
+      slugModulo:"",
       aulas: [],
     }]
     setModulos(newModulos);
@@ -82,7 +83,7 @@ export const ModuleBox = ({ handleOpenPicker, estadoModulos, onUpdateTodosModulo
     console.log(modulos)
     onUpdateTodosModulos(modulos)
   }
-  
+
   useEffect(()=>{
     updateCursoModulos()
   },[modulos])

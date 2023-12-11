@@ -91,28 +91,45 @@ export const EditarCurso = ({ curso, error }) => {
     });
   };
 
+  const handleSlugAulas = () => {
+    const modulosComSlug = formData.modulos.map((modulo) => {
+      const aulasComSlug = modulo.aulas.map(aula => {
+        if (!aula.slugModulo) {
+          return { ...aula, slugModulo: modulo.slugModulo }
+        }
+        return aula;
+      });
+      return { ...modulo, aulas: aulasComSlug }
+    })
+    setFormData({ ...formData, modulos: modulosComSlug });
+  }
+
   const handleSlugModulos = () => {
     console.log('rodou handleSlugModulos')
     console.log(formData)
 
-    const moduloscomSlug = formData.modulos.map((modulo) => {
+    const modulosComSlug = formData.modulos.map((modulo) => {
 
       if (!modulo.slugModulo) {
         console.log('atribuindo slugModulo')
-        return { ...modulo, slugModulo: gerarSlug(modulo.titulo_modulo) };
-      } 
+        // console.log(modulo.aulas)
+        // console.log('modulo.aulas')
+        let slugGerada = { ...modulo, slugModulo: gerarSlug(modulo.titulo_modulo) };
+        return slugGerada
+      }
+      
       return modulo;
       
 
     })
     // resposta para a API
-    console.log(moduloscomSlug)
-    console.log('moduloscomSlug')
-    setFormData({ ...formData, modulos: moduloscomSlug });
+    console.log(modulosComSlug)
+    console.log('modulosComSlug')
+    setFormData({ ...formData, modulos: modulosComSlug });
+    handleSlugAulas()
   }
 
 
-  // const handleSaveCurso = async () => {
   const handleSaveCurso = async () => {
     console.log(formData.modulos)
     console.log('formData.modulos do salvamento')
