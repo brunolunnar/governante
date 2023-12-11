@@ -10,8 +10,8 @@ const AdicionarAula = ({ handleOpenPicker, estadoAulas, indexModulo, onUpdateTod
       [...aulas, 
         { 
           descricao: "",
-          moduloRef: "382283152003956800",
-          slugModulo: "liminha-liminha-38354",
+          moduloRef: "",
+          slugModulo: "",
           titulo_aula: ""
 
         }
@@ -78,7 +78,13 @@ const AdicionarAula = ({ handleOpenPicker, estadoAulas, indexModulo, onUpdateTod
               ></textarea>
 
               <span>Vídeo</span>
-              <input type="text" placeholder={`link do vídeo (google drive ou youtube)`} value={aula.video}/>
+              <input
+               type="text" 
+               placeholder={`link do vídeo (google drive ou youtube)`} 
+               value={aula.video}
+               name="video"
+               onChange={(e) => handleChange(e, index)}
+              />
 
               <span>Anexo</span>
               <UploadAula handleOpenPicker={handleOpenPicker}></UploadAula>

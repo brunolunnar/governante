@@ -25,14 +25,9 @@ export const ModuleBox = ({ handleOpenPicker, estadoModulos, onUpdateTodosModulo
   const [modulos, setModulos] = useState(estadoModulos);
   const router = useRouter();
 
-  const updateCursoModulos = () => {
-    console.log("update de módulos iniciado")
-    console.log(modulos)
-    onUpdateTodosModulos(modulos)
-  }
   
   // handleModulosInfo({modulos})
-
+  
   const adicionarModulo = (e) => {
     e.preventDefault();
     toast.success("Módulo adicionado.");
@@ -50,41 +45,48 @@ export const ModuleBox = ({ handleOpenPicker, estadoModulos, onUpdateTodosModulo
     setModulos(modulos.filter((modulo, i) => i !== index));
     // updateCursoModulos()
   };
-
+  
   const updateTodasAulas = (novosAulas, indexModulo) => {
     // setModulos({
     //   ...modulos,
     //   aulas: novosAulas
     // });
     const arrayPivot = [...modulos];
-
+    
     arrayPivot[indexModulo].aulas = novosAulas
-
+    
     setModulos(arrayPivot)
-
+    
     // console.log(arrayPivot[indexModulo].aulas)
     // console.log(indexModulo)
     // console.log(novosAulas)
     // console.log('========= Novas aulas chegando =========')
   };
-
+  
   const handleChange = (e, index) => {
     const { name, value } = e.target;
     
     const arrayPivot = [...modulos];
-
+    
     // Altera o título do módulo para o índice específico
     arrayPivot[index][name] = value;
-
+    
     // Atualiza o estado com o novo array
     setModulos(arrayPivot);
     // setModulos(modulos.filter());
     // updateCursoModulos()
   };
+
+  const updateCursoModulos = () => {
+    console.log("update de módulos iniciado")
+    console.log(modulos)
+    onUpdateTodosModulos(modulos)
+  }
+  
   useEffect(()=>{
     updateCursoModulos()
   },[modulos])
-
+  
   return (
     <>
       <button className="select-btn" onClick={adicionarModulo}>

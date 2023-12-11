@@ -4,6 +4,8 @@ import { ModuleBox } from "@/components/module-box/Module";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
+import { gerarSlug } from "@/utils/slugGenerator";
+
 //upload image
 import { storage } from "@/utils/firebase";
 import UploadImage from "@/components/Upload/UploadImage";
@@ -43,13 +45,13 @@ export const getServerSideProps = async (context) => {
 };
 
 export const EditarCurso = ({ curso, error }) => {
+  const [fileUrl, setFileUrl] = useState(curso.data.capa);
+
+  const [pubIsChecked, setPubChecked] = useState(false);
+
   const data = curso.data
   console.log(curso)
   console.log("curso")
-
-  const [fileUrl, setFileUrl] = useState(null);
-
-  const [pubIsChecked, setPubChecked] = useState(false);
 
   const [formData, setFormData] = useState({
     nome: data.nome,
@@ -60,6 +62,7 @@ export const EditarCurso = ({ curso, error }) => {
     publicado: data.publicado,
     modulos: data.modulos
   });
+
   console.log(formData)
   console.log('formData')
 
@@ -88,9 +91,32 @@ export const EditarCurso = ({ curso, error }) => {
     });
   };
 
+  const handleSlugModulos = () => {
+    console.log('rodou handleSlugModulos')
+    console.log(formData)
+
+    const moduloscomSlug = formData.modulos.map((modulo) => {
+
+      if (!modulo.slugModulo) {
+        console.log('atribuindo slugModulo')
+        return { ...modulo, slugModulo: gerarSlug(modulo.titulo_modulo) };
+      } 
+      return modulo;
+      
+
+    })
+    // resposta para a API
+    console.log(moduloscomSlug)
+    console.log('moduloscomSlug')
+    setFormData({ ...formData, modulos: moduloscomSlug });
+  }
+
+
   // const handleSaveCurso = async () => {
   const handleSaveCurso = async () => {
     console.log(formData.modulos)
+    console.log('formData.modulos do salvamento')
+    handleSlugModulos()
     // const queryUrl = router.query
     // console.log("aqui é  query do userouter", queryUrl.slug)
     // console.log(formData)
@@ -172,7 +198,7 @@ export const EditarCurso = ({ curso, error }) => {
                 </div>
                 <div className="drive-box">
                   <label htmlFor="drive" className="drive-description">
-                    Buscar no Drive
+                    Buscar no Drive 
                   </label>
                   <input
                     type="file"
@@ -222,7 +248,7 @@ export const EditarCurso = ({ curso, error }) => {
               </label>
             </div>
           </div>
-          
+
 
           <div className="modules-layout">
             <h3>Módulos</h3>
