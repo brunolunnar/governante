@@ -51,6 +51,23 @@ export const ModuleBox = ({ handleOpenPicker, estadoModulos, onUpdateTodosModulo
     // updateCursoModulos()
   };
 
+  const updateTodasAulas = (novosAulas, indexModulo) => {
+    // setModulos({
+    //   ...modulos,
+    //   aulas: novosAulas
+    // });
+    const arrayPivot = [...modulos];
+
+    arrayPivot[indexModulo].aulas = novosAulas
+
+    setModulos(arrayPivot)
+
+    // console.log(arrayPivot[indexModulo].aulas)
+    // console.log(indexModulo)
+    // console.log(novosAulas)
+    // console.log('========= Novas aulas chegando =========')
+  };
+
   const handleChange = (e, index) => {
     const { name, value } = e.target;
     
@@ -88,7 +105,7 @@ export const ModuleBox = ({ handleOpenPicker, estadoModulos, onUpdateTodosModulo
               onChange={(e) => handleChange(e, index)}
             />
 
-            <AdicionarAula handleOpenPicker={handleOpenPicker} estadoAulas={modulo.aulas}/>
+            <AdicionarAula handleOpenPicker={handleOpenPicker} estadoAulas={modulo.aulas} indexModulo={index} onUpdateTodasAulas={updateTodasAulas}/>
           </div>
         </div>
       ))}

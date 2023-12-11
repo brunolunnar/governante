@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import UploadAula from "../Upload/UploadAula";
 
-const AdicionarAula = ({ handleOpenPicker, estadoAulas }) => {
+const AdicionarAula = ({ handleOpenPicker, estadoAulas, indexModulo, onUpdateTodasAulas }) => {
   const [aulas, setAulas] = useState(estadoAulas);
 
   const adicionarAula = (e) => {
@@ -37,6 +37,18 @@ const AdicionarAula = ({ handleOpenPicker, estadoAulas }) => {
     setAulas(arrayPivot);
     // setModulos(modulos.filter());
   };
+
+  const updateTodasAulas = (indexModulo) => {
+    console.log("update de aulas iniciado")
+    console.log(aulas)
+    console.log(indexModulo)
+    console.log('indexModulo')
+    onUpdateTodasAulas(aulas,indexModulo)
+  }
+
+  useEffect(()=>{
+    updateTodasAulas(indexModulo)
+  },[aulas])
 
   return (
     <div className="aula-container-add">
