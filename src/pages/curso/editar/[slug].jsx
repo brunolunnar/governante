@@ -93,18 +93,6 @@ export const EditarCurso = ({ curso, error }) => {
     });
   };
 
-  const handleSlugAulas = () => {
-    const modulosComSlug = formData.modulos.map((modulo) => {
-      const aulasComSlug = modulo.aulas.map(aula => {
-        if (!aula.slugModulo) {
-          return { ...aula, slugModulo: modulo.slugModulo }
-        }
-        return aula;
-      });
-      return { ...modulo, aulas: aulasComSlug }
-    })
-    setFormData({ ...formData, modulos: modulosComSlug });
-  }
 
   const handleSlugModulos = () => {
     console.log('rodou handleSlugModulos')
@@ -127,7 +115,7 @@ export const EditarCurso = ({ curso, error }) => {
         console.log("slugModulo ||||||||||||||||||||||||||||||")
         console.log("|||||||||||||||||||||||||||||||||||||||||")
   
-        let slugGerada = { ...modulo, slugModulo: gerarSlug(modulo.titulo_modulo) };
+        let slugGerada = { ...modulo, slugModulo };
        
         return slugGerada
       } else {

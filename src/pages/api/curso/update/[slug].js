@@ -20,17 +20,23 @@ export default async function update(req, res) {
 
     await Promise.all(
       modulos.map(async modulo => {
+        let newModuloRef = ""
         let newAulas = []
         if (!modulo.refFauna) {
           console.log("criar modulo")
           // CRIAR MODULO COM AS AULAS VAZIAS, DADOS CRIAR = {...modulo,aulas:[]}, RETORNAR DADOS DO MODULO NOVO
           let moduloquefoicriado = await createData({ key: process.env.FAUNA_MAIN_KEY, collection: "modulos", data: { ...modulo, aulas: [] } }).then(resp => { return { refFauna: resp.ref.id, ...resp.data } })
+          newModuloRef = moduloquefoicriado.refFauna
           modulo = { ...moduloquefoicriado, aulas: modulo.aulas }
         } else {
-          console.log("atualizar modulo")
+          console.log("nÃ£o criar modulo")
         }
         await Promise.all(
           modulo.aulas.map(async aula => {
+            if (!aula.moduloRef) {
+              aula.moduloRef = newModuloRef
+              console.log("Adicionando moduloRef:", newModuloRef)
+            }
             console.log("aula:", aula)
             if (!aula.refFauna) {
               console.log("criar aula")
@@ -47,8 +53,7 @@ export default async function update(req, res) {
 
         let newModulo = { ...modulo, aulas: newAulas }
         // UPDATE PELO modulo.refFauna, DADOS ATUALIZAR = {...newModulo}
-
-        console.log("atualziar modulo")
+        console.log("atualizar modulo")
         let updatedModulo = await updateRef({ key: process.env.FAUNA_MAIN_KEY, collection: "modulos", ref: modulo.refFauna, data: { ...newModulo } })
         console.log(updatedModulo)
         console.log("updatedModulo")
