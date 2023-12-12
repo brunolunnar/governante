@@ -14,6 +14,7 @@ import Image from "next/image";
 import Pen from '@/assets/img/pen.svg';
 
 import { UploadContainer } from "@/styles/components/uploadBox";
+import { montarCursoPorSlug } from "@/utils/connections";
 
 
 
@@ -24,8 +25,9 @@ export const getServerSideProps = async (context) => {
 
     console.log(query)
     const responseCurso = await fetch(`https://governante.app/api/relations/list/${query.slug}`);
-    const curso = await responseCurso.json();
-    console.log(curso.data)
+    // const curso = await responseCurso.json();
+    const curso = await montarCursoPorSlug(query.slug)
+    console.log(curso)
     console.log("curso")
 
     return {
@@ -45,11 +47,11 @@ export const getServerSideProps = async (context) => {
 };
 
 export const EditarCurso = ({ curso, error }) => {
-  const [fileUrl, setFileUrl] = useState(curso.data.capa);
+  const [fileUrl, setFileUrl] = useState(curso.capa);
 
   const [pubIsChecked, setPubChecked] = useState(false);
 
-  const data = curso.data
+  const data = curso
   console.log(curso)
   console.log("curso")
 
@@ -107,26 +109,36 @@ export const EditarCurso = ({ curso, error }) => {
   const handleSlugModulos = () => {
     console.log('rodou handleSlugModulos')
     console.log(formData)
-
+  
     const modulosComSlug = formData.modulos.map((modulo) => {
-
+      let slugModulo = gerarSlug(modulo.titulo_modulo)
+      modulo.aulas = modulo.aulas.map(aula => {
+        if(!!aula.slugModulo) {
+          return aula
+        }else {
+          return { ...aula, slugModulo}
+        }
+      })
       if (!modulo.slugModulo) {
         console.log('atribuindo slugModulo')
-        // console.log(modulo.aulas)
-        // console.log('modulo.aulas')
+        console.log(modulo.titulo_modulo)
+        console.log('######## modulo titulo')
+        console.log(slugModulo)
+        console.log("slugModulo ||||||||||||||||||||||||||||||")
+        console.log("|||||||||||||||||||||||||||||||||||||||||")
+  
         let slugGerada = { ...modulo, slugModulo: gerarSlug(modulo.titulo_modulo) };
+       
         return slugGerada
+      } else {
+        return modulo;
       }
-      
-      return modulo;
-      
-
+  
     })
     // resposta para a API
     console.log(modulosComSlug)
     console.log('modulosComSlug')
     setFormData({ ...formData, modulos: modulosComSlug });
-    handleSlugAulas()
   }
 
 
@@ -134,25 +146,27 @@ export const EditarCurso = ({ curso, error }) => {
     console.log(formData.modulos)
     console.log('formData.modulos do salvamento')
     handleSlugModulos()
-    // const queryUrl = router.query
-    // console.log("aqui é  query do userouter", queryUrl.slug)
-    // console.log(formData)
-    // try {
-    //   const response = await fetch(`/api/curso/update/${queryUrl.slug}`
-    //     , {
-    //       method: "POST",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //       body: JSON.stringify(formData),
-    //     });
+    // handleSlugAulas()
 
-    //   const updateData = await response.json();
-    //   console.log(updateData);
-    //   console.log(response);
-    // } catch (error) {
-    //   console.error("Erro ao salvar curso:", error);
-    // }
+    const queryUrl = router.query
+    console.log("aqui é  query do userouter", queryUrl.slug)
+    console.log(formData)
+    try {
+      const response = await fetch(`/api/curso/update/${queryUrl.slug}`
+        , {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+
+      const updateData = await response.json();
+      console.log(updateData);
+      console.log(response);
+    } catch (error) {
+      console.error("Erro ao salvar curso:", error);
+    }
   };
 
   const handleChange = (e) => {
