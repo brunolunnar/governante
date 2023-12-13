@@ -62,7 +62,8 @@ export const EditarCurso = ({ curso, error }) => {
     categoria: data.categoria,
     capa: data.capa,
     publicado: data.publicado,
-    modulos: data.modulos
+    modulos: data.modulos,
+    slugCurso: data.slug
   });
 
   console.log(formData)
@@ -272,7 +273,7 @@ export const EditarCurso = ({ curso, error }) => {
           <div className="modules-layout">
             <h3>Módulos</h3>
           </div>
-          <ModuleBox estadoModulos={formData.modulos} onUpdateTodosModulos={updateTodosModulos}></ModuleBox>
+          <ModuleBox formData={formData} estadoModulos={formData.modulos} onUpdateTodosModulos={updateTodosModulos}></ModuleBox>
 
           <div className="publicar-box">
             <div className='publicar-text'>

@@ -10,6 +10,7 @@ const AdicionarAula = ({ handleOpenPicker, estadoAulas, indexModulo, onUpdateTod
       [...aulas, 
         { 
           descricao: "",
+          order: aulas.lenght,
           moduloRef: "",
           slugModulo: "",
           titulo_aula: ""

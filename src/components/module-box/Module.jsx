@@ -10,7 +10,7 @@ import { gerarSlug } from "@/utils/slugGenerator";
 // }
 
 // export const ModuleBox = ({ handleOpenPicker, dataModulos }) => {
-export const ModuleBox = ({ handleOpenPicker, estadoModulos, onUpdateTodosModulos}) => {
+export const ModuleBox = ({ handleOpenPicker, estadoModulos, onUpdateTodosModulos, formData}) => {
 
   // try{
   //   console.log(estadoModulos)
@@ -32,8 +32,10 @@ export const ModuleBox = ({ handleOpenPicker, estadoModulos, onUpdateTodosModulo
     e.preventDefault();
     toast.success("Módulo adicionado.");
     let newModulos = [...modulos,{
+      slugCurso: formData.slugCurso,
       titulo_modulo: `Título do Módulo`,
       slugModulo:"",
+      order: modulos.length,
       aulas: [],
     }]
     setModulos(newModulos);
