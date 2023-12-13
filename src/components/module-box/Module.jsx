@@ -7,6 +7,8 @@ import { gerarSlug } from "@/utils/slugGenerator";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
+import Typography from "@mui/material/Typography";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 // function handleModulosInfo({dataModulos}){
 //     console.log(dataModulos)
@@ -85,35 +87,48 @@ export const ModuleBox = ({ handleOpenPicker, estadoModulos, onUpdateTodosModulo
     <>
 
       {modulos.map((modulo, index) => (
+
         <div key={index} className="container-modules">
           {/* {console.log(index)} */}
-          <div className="add-modulo">
-            <input
-              type="text"
-              placeholder={`Nome do módulo`}
-              value={modulo.titulo_modulo}
-              name="titulo_modulo"
-              onChange={(e) => handleChange(e, index)}
-            />
-            <div className="container-flex-end">
-              <button className="remove-btn" onClick={(e) => {
-                let confirma = confirm(`Deseja mesmo excluir o modulo: ${modulo.titulo_modulo}`);
-                if (confirma) {
-                  removerModulo(e, index)
-                } else {
-                  console.log('cancelado');
-                  e.preventDefault()
-                }
-
-              }}>
-                Remover {modulo.titulo_modulo}
-              </button>
+          {/* <div className="add-modulo"> */}
+          <Accordion className="add-modulo">
+            <div className='cabecaAccordion'>
+              <input
+                type="text"
+                placeholder={`Nome do módulo`}
+                value={modulo.titulo_modulo}
+                name="titulo_modulo"
+                onChange={(e) => handleChange(e, index)}
+              />
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              >
+              </AccordionSummary>
             </div>
+            <AccordionDetails>
+              <div className="container-flex-end">
+                <button className="remove-btn" onClick={(e) => {
+                  let confirma = confirm(`Deseja mesmo excluir o modulo: ${modulo.titulo_modulo}`);
+                  if (confirma) {
+                    removerModulo(e, index)
+                  } else {
+                    console.log('cancelado');
+                    e.preventDefault()
+                  }
+
+                }}>
+                  Remover {modulo.titulo_modulo}
+                </button>
+              </div>
+            </AccordionDetails>
 
 
             <AdicionarAula handleOpenPicker={handleOpenPicker} estadoAulas={modulo.aulas} indexModulo={index} onUpdateTodasAulas={updateTodasAulas} />
 
-          </div>
+            {/* </div> */}
+          </Accordion>
 
         </div>
       ))}

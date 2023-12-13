@@ -171,13 +171,36 @@ export const EditarContainer = styled('section',{
         flexDirection:'column',
         width:'90%',
         justifyContent:'end',
-        gap:'22px'
+        gap:'22px',
+        background: 'none',
+      },
+      '.MuiAccordionDetails-root.css-15v22id-MuiAccordionDetails-root':{
+        display: 'flex',
+        flexDirection:'column',
+        gap:'20px',
+        paddingBottom: '20px;',
       },
       '.add-aula':{
         display:'flex',
         flexDirection:'column',
         width:"90%",
         gap:'22px'
+      },
+      '.cabecaAccordion':{
+        display:'flex',
+        width:'100%',
+        position:'relative'
+      },
+      '.cabecaAccordion input':{
+        display:'flex',
+        width:'100%',
+      },
+      '.MuiAccordionSummary-root':{
+        position:'absolute',
+        right:'10px',
+      },
+      '.MuiAccordionSummary-expandIconWrapper':{
+        color: 'white',
       },
       '.aula-container-add':{
         width:'100%',

@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
 import UploadAula from "../Upload/UploadAula";
 
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import Typography from "@mui/material/Typography";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+
 const AdicionarAula = ({ handleOpenPicker, estadoAulas, indexModulo, onUpdateTodasAulas }) => {
   const [aulas, setAulas] = useState(estadoAulas);
 
@@ -61,49 +67,60 @@ const AdicionarAula = ({ handleOpenPicker, estadoAulas, indexModulo, onUpdateTod
         ) : (
           aulas.map((aula, index) => (
             <div key={index} className="aula-container">
-              <input
-                type="text"
-                placeholder={`Aula ${index}`}
-                value={aula.titulo_aula}
-                name="titulo_aula"
-                onChange={(e) => handleChange(e, index)}
-              />
+              <Accordion className="add-modulo">
+                <div className='cabecaAccordion'>
+                  <input
+                    type="text"
+                    placeholder={`Aula ${index}`}
+                    value={aula.titulo_aula}
+                    name="titulo_aula"
+                    onChange={(e) => handleChange(e, index)}
+                  />
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                  >
+                  </AccordionSummary>
+                </div>
+                <AccordionDetails>
+                  <div className="container-flex-end">
+                    <button
+                      className="remove-btn"
+                      // onClick={(e) => removerAula(e, index)}
+                      onClick={(e) => {
+                        let confirma = confirm(`Deseja mesmo excluir a aula: ${aula.titulo_aula}`);
+                        if (confirma) {
+                          removerAula(e, index)
+                        } else {
+                          console.log('cancelado')
+                        }
+                      }}
+                    >
+                      Remover {aula.titulo_aula}
+                    </button>
+                  </div>
 
-              <div className="container-flex-end">
-                <button
-                  className="remove-btn"
-                  // onClick={(e) => removerAula(e, index)}
-                  onClick={(e) => {
-                    let confirma = confirm(`Deseja mesmo excluir a aula: ${aula.titulo_aula}`);
-                    if (confirma){
-                      removerAula(e, index)
-                    }else{
-                      console.log('cancelado')
-                    }
-                  }}
-                >
-                  Remover {aula.titulo_aula}
-                </button>
-              </div>
+                  <textarea
+                    placeholder="Descrição"
+                    value={aula.descricao}
+                    name="descricao"
+                    onChange={(e) => handleChange(e, index)}
+                  ></textarea>
 
-              <textarea
-                placeholder="Descrição"
-                value={aula.descricao}
-                name="descricao"
-                onChange={(e) => handleChange(e, index)}
-              ></textarea>
+                  <span>Vídeo</span>
+                  <input
+                    type="text"
+                    placeholder={`link do vídeo (google drive ou youtube)`}
+                    value={aula.video}
+                    name="video"
+                    onChange={(e) => handleChange(e, index)}
+                  />
 
-              <span>Vídeo</span>
-              <input
-                type="text"
-                placeholder={`link do vídeo (google drive ou youtube)`}
-                value={aula.video}
-                name="video"
-                onChange={(e) => handleChange(e, index)}
-              />
-
-              {/* <span>Anexo</span>
+                  {/* <span>Anexo</span>
               <UploadAula handleOpenPicker={handleOpenPicker}></UploadAula> */}
+                </AccordionDetails>
+              </Accordion>
             </div>
           ))
         )}
