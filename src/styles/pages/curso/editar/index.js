@@ -17,8 +17,9 @@ export const EditarContainer = styled('section',{
         display: "flex",
         flexDirection: "column",
         gap: "2rem",
-        width:'80%',
-        maxWidth:'60%',
+        width:'50%',
+        // maxWidth:'60%',
+        minWidth:'350px',
         marginTop:'4rem'
     },
     '.img-box':{
@@ -30,14 +31,14 @@ export const EditarContainer = styled('section',{
         height:'274px',
     },
     input:{
-        background:'$main',
+        background:'none',
         border:'2px $white ridge',
         padding:'14px',
         borderRadius:'2rem',
         fontSize:'1.3rem'
     },
     'input::placeholder':{
-      color:'light-gray',
+      color:'#ffffff50',
 
     },
     '.modules-layout':{
@@ -49,20 +50,19 @@ export const EditarContainer = styled('section',{
       fontWeight:'100'
     },
     textarea:{
-        background:"$main",
+        background:"none",
         border:'2px $white ridge',
         padding:'10px',
         borderRadius:'14px',
         minHeight:'83px',
         maxWidth:'97%',
         maxHeight:"100px",
-        minWidth:'97%',
         color:'white',
         fontFamily: "$montserrat",
       },
       "textarea::placeholder":{
         fontFamily: "$montserrat",
-        color:'light-gray'
+        color:'#ffffff50'
       },
       ".trilha": {
         display: "flex",
@@ -146,7 +146,21 @@ export const EditarContainer = styled('section',{
         padding:'8px',
         width:'13rem'
       },
+      '.remove-btn':{
+        background:'$red',
+        color: "$white",
+        border: "1px solid $white",
+        borderRadius: "34px",
+        padding:'8px',
+        width:'13rem',
+      },
       '.container-modules':{
+        width:'100%',
+        display:'flex',
+        justifyContent:'flex-end'
+
+      },
+      '.container-flex-end':{
         width:'100%',
         display:'flex',
         justifyContent:'flex-end'
@@ -155,14 +169,14 @@ export const EditarContainer = styled('section',{
       '.add-modulo':{
         display:'flex',
         flexDirection:'column',
-        width:'80%',
+        width:'90%',
         justifyContent:'end',
         gap:'22px'
       },
       '.add-aula':{
         display:'flex',
         flexDirection:'column',
-        width:"80%",
+        width:"90%",
         gap:'22px'
       },
       '.aula-container-add':{
@@ -190,6 +204,9 @@ export const EditarContainer = styled('section',{
         display:'flex',
         position:'relative',
         width:'fit-content'
+      },
+      ".Image-Box img":{
+        maxWidth:'300px'
       },
       ".Image-Box button":{
         display:'flex',

@@ -10,6 +10,8 @@ import Header from "@/components/Header/header";
 export const AulaCurso = ({ curso }) => {
   const data = curso.data;
   const emptyClasses = {};
+  console.log(data)
+  console.log('data')
   return (
     <>
       <Header></Header>

@@ -7,28 +7,28 @@ const AdicionarAula = ({ handleOpenPicker, estadoAulas, indexModulo, onUpdateTod
   const adicionarAula = (e) => {
     e.preventDefault()
     setAulas(
-      [...aulas, 
-        { 
-          descricao: "",
-          order: aulas.lenght,
-          moduloRef: "",
-          slugModulo: "",
-          titulo_aula: ""
+      [...aulas,
+      {
+        descricao: "",
+        order: aulas.lenght + 1,
+        moduloRef: "",
+        slugModulo: "",
+        titulo_aula: ""
 
-        }
+      }
       ]
     );
   };
 
-  const removerAula = (e,index) => {
+  const removerAula = (e, index) => {
     console.log(e)
     e.preventDefault()
-    setAulas(aulas.filter((aula,i) => i !== index));
+    setAulas(aulas.filter((aula, i) => i !== index));
   };
 
   const handleChange = (e, index) => {
     const { name, value } = e.target;
-    
+
     const arrayPivot = [...aulas];
 
     // Altera o título do módulo para o índice específico
@@ -44,35 +44,50 @@ const AdicionarAula = ({ handleOpenPicker, estadoAulas, indexModulo, onUpdateTod
     console.log(aulas)
     console.log(indexModulo)
     console.log('indexModulo')
-    onUpdateTodasAulas(aulas,indexModulo)
+    onUpdateTodasAulas(aulas, indexModulo)
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     updateTodasAulas(indexModulo)
-  },[aulas])
+  }, [aulas])
 
   return (
     <div className="aula-container-add">
       <div className="add-aula">
-        <button className="select-btn" onClick={adicionarAula}>
-          Adicionar Aula +
-        </button>
+
 
         {aulas.length === 0 ? (
           <p>Clique em "Adicionar Aula" e registre uma nova aula.</p>
         ) : (
           aulas.map((aula, index) => (
             <div key={index} className="aula-container">
-              <input 
-                type="text" 
-                placeholder={`Aula ${index}`} 
+              <input
+                type="text"
+                placeholder={`Aula ${index}`}
                 value={aula.titulo_aula}
                 name="titulo_aula"
                 onChange={(e) => handleChange(e, index)}
               />
 
-              <textarea 
-                placeholder="Descrição" 
+              <div className="container-flex-end">
+                <button
+                  className="remove-btn"
+                  // onClick={(e) => removerAula(e, index)}
+                  onClick={(e) => {
+                    let confirma = confirm(`Deseja mesmo excluir a aula: ${aula.titulo_aula}`);
+                    if (confirma){
+                      removerAula(e, index)
+                    }else{
+                      console.log('cancelado')
+                    }
+                  }}
+                >
+                  Remover {aula.titulo_aula}
+                </button>
+              </div>
+
+              <textarea
+                placeholder="Descrição"
                 value={aula.descricao}
                 name="descricao"
                 onChange={(e) => handleChange(e, index)}
@@ -80,25 +95,23 @@ const AdicionarAula = ({ handleOpenPicker, estadoAulas, indexModulo, onUpdateTod
 
               <span>Vídeo</span>
               <input
-               type="text" 
-               placeholder={`link do vídeo (google drive ou youtube)`} 
-               value={aula.video}
-               name="video"
-               onChange={(e) => handleChange(e, index)}
+                type="text"
+                placeholder={`link do vídeo (google drive ou youtube)`}
+                value={aula.video}
+                name="video"
+                onChange={(e) => handleChange(e, index)}
               />
 
-              <span>Anexo</span>
-              <UploadAula handleOpenPicker={handleOpenPicker}></UploadAula>
-
-              <button
-                className="confirm-btn"
-                onClick={(e) => removerAula(e,index)}
-              >
-                Remover Aula
-              </button>
+              {/* <span>Anexo</span>
+              <UploadAula handleOpenPicker={handleOpenPicker}></UploadAula> */}
             </div>
           ))
         )}
+
+        <button className="select-btn" onClick={adicionarAula}>
+          Adicionar Aula +
+        </button>
+
       </div>
     </div>
   );

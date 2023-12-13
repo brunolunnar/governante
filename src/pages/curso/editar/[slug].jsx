@@ -153,6 +153,7 @@ export const EditarCurso = ({ curso, error }) => {
       const updateData = await response.json();
       console.log(updateData);
       console.log(response);
+      location.reload()
     } catch (error) {
       console.error("Erro ao salvar curso:", error);
     }
