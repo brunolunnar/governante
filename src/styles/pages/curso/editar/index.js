@@ -169,7 +169,7 @@ export const EditarContainer = styled('section',{
       '.add-modulo':{
         display:'flex',
         flexDirection:'column',
-        width:'90%',
+        width:'100%',
         justifyContent:'end',
         gap:'22px',
         background: 'none',
@@ -178,17 +178,29 @@ export const EditarContainer = styled('section',{
         display: 'flex',
         flexDirection:'column',
         gap:'20px',
+        padding:'0',
         paddingBottom: '20px;',
+        color: 'white',
+        fontSize: '1.2rem',
+        fontWeight:'500',
+      },
+      '.MuiPaper-root':{
+        display: 'flex',
+        alignContent: 'flex-end',
+        flexWrap: 'wrap',
+      },
+      '.MuiCollapse-root':{
+
       },
       '.add-aula':{
         display:'flex',
         flexDirection:'column',
-        width:"90%",
+        width:"100%",
         gap:'22px'
       },
       '.cabecaAccordion':{
         display:'flex',
-        width:'100%',
+        width:'90%',
         position:'relative'
       },
       '.cabecaAccordion input':{
@@ -210,7 +222,9 @@ export const EditarContainer = styled('section',{
       '.aula-container':{
         display:'flex',
         flexDirection:'column',
-        gap:'30px'
+        gap:'30px',
+        alignContent: 'flex-end',
+        flexWrap: 'wrap',
       },
       ".button-box":{
         width:"100%",
@@ -268,4 +282,5 @@ export const EditarContainer = styled('section',{
         display: 'flex',
         alignItems: 'end',
       },
+
 })
