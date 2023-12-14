@@ -4,6 +4,8 @@ import { ModuleBox } from "@/components/module-box/Module";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
+import { gerarSlug } from "@/utils/slugGenerator";
+
 //upload image
 import { storage } from "@/utils/firebase";
 import UploadImage from "@/components/Upload/UploadImage";
@@ -12,6 +14,7 @@ import Image from "next/image";
 import Pen from '@/assets/img/pen.svg';
 
 import { UploadContainer } from "@/styles/components/uploadBox";
+import { montarCursoPorSlug } from "@/utils/connections";
 
 
 
@@ -22,8 +25,9 @@ export const getServerSideProps = async (context) => {
 
     console.log(query)
     const responseCurso = await fetch(`https://governante.app/api/relations/list/${query.slug}`);
-    const curso = await responseCurso.json();
-    console.log(curso.data)
+    // const curso = await responseCurso.json();
+    const curso = await montarCursoPorSlug(query.slug)
+    console.log(curso)
     console.log("curso")
 
     return {
@@ -39,15 +43,17 @@ export const getServerSideProps = async (context) => {
       },
     };
   }
-};
-export const EditarCurso = ({ curso, error }) => {
-  const data = curso.data
-  console.log(curso)
-  console.log("curso")
 
-  const [fileUrl, setFileUrl] = useState(null);
+};
+
+export const EditarCurso = ({ curso, error }) => {
+  const [fileUrl, setFileUrl] = useState(curso.capa);
 
   const [pubIsChecked, setPubChecked] = useState(false);
+
+  const data = curso
+  console.log(curso)
+  console.log("curso")
 
   const [formData, setFormData] = useState({
     nome: data.nome,
@@ -56,12 +62,22 @@ export const EditarCurso = ({ curso, error }) => {
     categoria: data.categoria,
     capa: data.capa,
     publicado: data.publicado,
-    modulos: data.modulos
+    modulos: data.modulos,
+    slugCurso: data.slug
   });
+
   console.log(formData)
   console.log('formData')
 
   const router = useRouter()
+
+  const updateTodosModulos = (novosModulos) => {
+    setFormData({
+      ...formData,
+      modulos: novosModulos
+    });
+    console.log('mudança de módulos feita')
+  };
 
   const handleInputChange = (e, fieldName) => {
     setFormData({
@@ -78,9 +94,52 @@ export const EditarCurso = ({ curso, error }) => {
     });
   };
 
+
+  const handleSlugModulos = () => {
+    console.log('rodou handleSlugModulos')
+    console.log(formData)
+  
+    const modulosComSlug = formData.modulos.map((modulo) => {
+      let slugModulo = gerarSlug(modulo.titulo_modulo)
+      modulo.aulas = modulo.aulas.map(aula => {
+        if(!!aula.slugModulo) {
+          return aula
+        }else {
+          return { ...aula, slugModulo}
+        }
+      })
+      if (!modulo.slugModulo) {
+        console.log('atribuindo slugModulo')
+        console.log(modulo.titulo_modulo)
+        console.log('######## modulo titulo')
+        console.log(slugModulo)
+        console.log("slugModulo ||||||||||||||||||||||||||||||")
+        console.log("|||||||||||||||||||||||||||||||||||||||||")
+  
+        let slugGerada = { ...modulo, slugModulo };
+       
+        return slugGerada
+      } else {
+        return modulo;
+      }
+  
+    })
+    // resposta para a API
+    console.log(modulosComSlug)
+    console.log('modulosComSlug')
+    setFormData({ ...formData, modulos: modulosComSlug });
+  }
+
+
   const handleSaveCurso = async () => {
+    console.log(formData.modulos)
+    console.log('formData.modulos do salvamento')
+    handleSlugModulos()
+    // handleSlugAulas()
+
     const queryUrl = router.query
     console.log("aqui é  query do userouter", queryUrl.slug)
+    console.log(formData)
     try {
       const response = await fetch(`/api/curso/update/${queryUrl.slug}`
         , {
@@ -94,10 +153,10 @@ export const EditarCurso = ({ curso, error }) => {
       const updateData = await response.json();
       console.log(updateData);
       console.log(response);
+      location.reload()
     } catch (error) {
       console.error("Erro ao salvar curso:", error);
     }
-    console.log('teste')
   };
 
   const handleChange = (e) => {
@@ -160,7 +219,7 @@ export const EditarCurso = ({ curso, error }) => {
                 </div>
                 <div className="drive-box">
                   <label htmlFor="drive" className="drive-description">
-                    Buscar no Drive
+                    Buscar no Drive 
                   </label>
                   <input
                     type="file"
@@ -170,6 +229,7 @@ export const EditarCurso = ({ curso, error }) => {
               <UploadImage onUploadComplete={handleUploadComplete} />
             </div>
           }
+
           <div className="img-box"></div>
           <input type="text" placeholder='Nome do Curso' value={formData.nome} onChange={(e) => handleInputChange(e, "nome")} />
           <textarea
@@ -211,27 +271,10 @@ export const EditarCurso = ({ curso, error }) => {
           </div>
 
 
-          {/* <div className="trilha-box">
-            <p>Trilha</p>
-            <label htmlFor="prof">Profissional</label>
-            <input type="checkbox" id="prof" />
-            <label htmlFor="estrategia">Estratégia</label>
-            <input type="checkbox" id="estrategia" />
-          </div>
-          <label htmlFor="access">Acesso ao Curso</label>
-          <input
-            type="text"
-            id="access"
-            placeholder={data.accessos}
-            onChange={(e) => handleInputChange(e, "accessos")}
-          /> */}
-
-
-
           <div className="modules-layout">
             <h3>Módulos</h3>
           </div>
-          <ModuleBox estadoModulos={formData.modulos}></ModuleBox>
+          <ModuleBox formData={formData} estadoModulos={formData.modulos} onUpdateTodosModulos={updateTodosModulos}></ModuleBox>
 
           <div className="publicar-box">
             <div className='publicar-text'>
