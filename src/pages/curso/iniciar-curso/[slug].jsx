@@ -1,4 +1,4 @@
-import { AulaInitialContianer } from "./style";
+import { AulaInitialContianer } from "@/styles/pages/curso/style";
 import { useEffect, useState } from "react";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -65,7 +65,7 @@ export const IniciarCurso = ({ curso }) => {
           height="450px"
           src="https://www.youtube.com/embed/vkDMs4BcbNU?si=aKvq-YzlJyEjEbTR"
           title="YouTube video player"
-          frameborder="0"
+          frameBorder="0"
         ></iframe>
 
 
@@ -110,9 +110,6 @@ export const IniciarCurso = ({ curso }) => {
                         <Typography className="conteudo-acordion">
 
                           {aula.titulo_aula}
-
-                          <CheckBox></CheckBox>
-
 
                         </Typography>
                         
