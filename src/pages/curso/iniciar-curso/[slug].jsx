@@ -7,6 +7,7 @@ import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Header from "@/components/Header/header";
 import { montarCursoPorSlug } from "@/utils/connections";
+import { CheckBox } from "@mui/icons-material";
 
 export const getServerSideProps = async (context) => {
   
@@ -107,7 +108,12 @@ export const AulaCurso = ({ curso }) => {
                         className="acordion-togle"
                       >
                         <Typography className="conteudo-acordion">
-                          {aula.titulo_aula}
+                          <div>
+                            {aula.titulo_aula}
+                          </div>
+                          <div>
+                            <CheckBox></CheckBox>
+                          </div>
                         </Typography>
                       </Accordion>
                     ))}
