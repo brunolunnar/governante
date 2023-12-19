@@ -11,7 +11,6 @@ export const AulaInitialContianer = styled("div", {
     margin: "1.2rem",
   },
   "#panel1a-header, #panel2a-header": {
-    background: "$main",
     borderRadius: "34px",
     border: "solid 2px white",
     color: "$white",
@@ -138,7 +137,7 @@ export const AulaInitialContianer = styled("div", {
   },
   '.acordion-title':{
     fontFamily:'$montserrat',
-    fontSize:'2rem',
+    fontSize:'1.2rem',
     marginLeft:'1rem'
   },
   svg:{
@@ -146,7 +145,11 @@ export const AulaInitialContianer = styled("div", {
     height:'3rem'
   },
   '.css-1elwnq4-MuiPaper-root-MuiAccordion-root':{
-    background:'$main'
+    borderRadius:'100px',
+    border: "solid 2px white",
+    background:'none',
+    color: 'white',
+    fontFamily: "$montserrat",
   },
   '.acordion-aula-box':{
 

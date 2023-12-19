@@ -2,6 +2,12 @@ import React, { useState, useRef } from "react";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "@/utils/firebase";
 
+// import UploadImage from "@/components/Upload/UploadImage";
+import { UploadContainer } from "@/styles/components/uploadBox";
+import Cloud from "@/assets/img/upload-cloud.png";
+
+import Image from "next/image";
+
 function UploadImage({ onUploadComplete }) {
   const [imageFile, setImageFile] = useState();
   const [downloadURL, setDownloadURL] = useState("");
@@ -25,7 +31,8 @@ function UploadImage({ onUploadComplete }) {
     e.preventDefault();
     if (imageFile) {
       const name = imageFile.name;
-      const storageRef = ref(storage, `gs://governante-9cb91.appspot.com/videos/${name}`);
+      // const storageRef = ref(storage, `gs://governante-9cb91.appspot.com/videos/${name}`);
+      const storageRef = ref(storage, `gs://governante-b9ff1.appspot.com/imagens/${name}`);
       const uploadTask = uploadBytesResumable(storageRef, imageFile);
 
       setIsUploading(true);
@@ -94,43 +101,102 @@ function UploadImage({ onUploadComplete }) {
   };
 
   return (
-    <div
-      onDragOver={handleDragOver}
-      onDragEnter={handleDragEnter}
-      onDragLeave={handleDragLeave}
-      onDrop={handleDrop}
-    >
-      <h1>Fazer Upload de Arquivo</h1>
-      {downloadURL ? (
-        <div>
-          <p>Upload Realizado com sucesso!</p>
-          <p>Caminho do Arquivo: {fileURL}</p>
-          <button onClick={handleRemoveFile}>Remover Arquivo</button>
-        </div>
-      ) : (
-        <>
-          {isUploading && <progress value={uploadProgress} max={100} />}
-          
-          <label
-            htmlFor="files"
-            onClick={() => inputRef.current.click()}
-            onDrop={handleDrop}
-          >
-            {selectedFileName || "Escolha ou arraste um arquivo aqui"}
+    <div>
+
+      <UploadContainer className="upload-box">
+        <div className="capa-box">
+          <label htmlFor="capa" className="up-box">
+            <div
+              onDragOver={handleDragOver}
+              onDragEnter={handleDragEnter}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
+            >
+
+              <Image src={Cloud} alt="upload image"></Image>
+              <span>Upload da capa</span>
+
+            </div>
           </label>
-          <input
-            type="file"
-            id="files"
-            onChange={(files) => handleSelectFile(files.target.files)}
-            ref={inputRef}
-            style={{ display: "none" }}
-            value={fileURL}
-            accept=".jpg,.png"
-          />
-          <button onClick={handleUploadFile}>Upload</button>
-        </>
-      )}
-    </div>
+          <input type="file" id="capa" />
+        </div>
+        <div className="drive-box">
+          {downloadURL ? (
+            <div>
+              <p>Upload Realizado com sucesso!</p>
+              <img src={fileURL} className="imageUplodead"></img>
+              <button onClick={handleRemoveFile}>Remover Arquivo</button>
+            </div>
+          ) : (
+            <>
+              {isUploading && <progress value={uploadProgress} max={100} />}
+
+              <label
+                htmlFor="files"
+                onClick={() => inputRef.current.click()}
+                onDrop={handleDrop}
+              >
+                {selectedFileName || "Escolha ou arraste um arquivo aqui"}
+              </label>
+              <input
+                type="file"
+                id="files"
+                onChange={(files) => handleSelectFile(files.target.files)}
+                ref={inputRef}
+                style={{ display: "none" }}
+                value={fileURL}
+                accept=".jpg,.png"
+              />
+              <img src={fileURL}></img>
+              <button onClick={handleUploadFile}>Upload</button>
+            </>
+          )}
+        </div>
+      </UploadContainer>
+
+
+
+
+
+
+      {/* <div
+        onDragOver={handleDragOver}
+        onDragEnter={handleDragEnter}
+        onDragLeave={handleDragLeave}
+        onDrop={handleDrop}
+      >
+        <h1>Fazer Upload de Arquivo</h1>
+        {downloadURL ? (
+          <div>
+            <p>Upload Realizado com sucesso!</p>
+            <p>Caminho do Arquivo: {fileURL}</p>
+            <button onClick={handleRemoveFile}>Remover Arquivo</button>
+          </div>
+        ) : (
+          <>
+            {isUploading && <progress value={uploadProgress} max={100} />}
+
+            <label
+              htmlFor="files"
+              onClick={() => inputRef.current.click()}
+              onDrop={handleDrop}
+            >
+              {selectedFileName || "Escolha ou arraste um arquivo aqui"}
+            </label>
+            <input
+              type="file"
+              id="files"
+              onChange={(files) => handleSelectFile(files.target.files)}
+              ref={inputRef}
+              style={{ display: "none" }}
+              value={fileURL}
+              accept=".jpg,.png"
+            />
+            <button onClick={handleUploadFile}>Upload</button>
+          </>
+        )}
+      </div> */}
+    </div >
   );
 }
 

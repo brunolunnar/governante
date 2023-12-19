@@ -38,8 +38,9 @@ export const Container = styled("div", {
   },
   ".homecapa": {
     position: "relative",
+    cursor:'pointer',
   },
-  ".homecapa .edit-icon": {
+  ".item .edit-icon": {
     display: 'flex',
     position: 'absolute',
     right: '5px',
@@ -47,6 +48,24 @@ export const Container = styled("div", {
     padding: '5px',
     borderRadius: '100px',
     background: '#C63737',
+    cursor:'pointer',
+  },
+  ".item .edit-icon img": {
+    width:'20px',
+    height:'20px',
+    borderRadius:'0',
+  },
+  ".capa-box":{
+    position:'relative'
+  },
+  ".cabecaAccordion div#panel1a-header":{
+    height:'100%'
+  },
+  ".cabecaAccordion .Mui-expanded":{
+    background:'#C63737'
+  },
+  ".imageUplodead":{
+    width:'200px'
   },
 
 });
