@@ -61,12 +61,18 @@ export const AulaCurso = ({ curso }) => {
 
     const [aulaData, setAulaData] = useState({})
 
-    function handleAulaData(){
+    function handleAulaData({ refAula }) {
+        if (!refAula) {
+            refAula = aulaId
+    
+        }
+        console.log(refAula)
+        console.log("refAula")
         try {
-
+    
             formData.modulos.some(modulo => {
                 // Filtrando as aulas dentro do módulo
-                const aulasFiltradas = modulo.aulas.filter(aula => aula.refFauna === aulaId);
+                const aulasFiltradas = modulo.aulas.filter(aula => aula.refFauna === refAula);
                 console.log(aulasFiltradas[0])
                 console.log('aulasFiltradas')
     
@@ -87,7 +93,7 @@ export const AulaCurso = ({ curso }) => {
             // console.log('########## aulaFiltrada')
     
     
-            
+    
     
         } catch (erro) {
             console.error('Aula não encontrada ' + erro)
@@ -97,7 +103,7 @@ export const AulaCurso = ({ curso }) => {
     
 
     useEffect(() => {
-        handleAulaData()
+        handleAulaData({refAula:aulaId})
     }, []);
 
     console.log(aulaData)
@@ -106,8 +112,8 @@ export const AulaCurso = ({ curso }) => {
     const emptyClasses = {};
 
     const handleRouter = (aula) => {
-        router.push(`/curso/${formData.slugCurso}/${aula}`)
-        handleAulaData()
+        router.replace(`/curso/${formData.slugCurso}/${aula}`)
+        handleAulaData({refAula:aula})
         return
       };
 
