@@ -10,7 +10,7 @@ import { montarCursoPorSlug } from "@/utils/connections";
 import { CheckBox } from "@mui/icons-material";
 
 export const getServerSideProps = async (context) => {
-  
+
   try {
     const { query } = context;
     const responseCurso = await fetch(`https://governante.app/api/relations/list/${query.slug}`);
@@ -18,7 +18,7 @@ export const getServerSideProps = async (context) => {
     const curso = await montarCursoPorSlug(query.slug)
     console.log(curso)
     console.log("curso")
-    
+
     return {
       props: {
         curso,
@@ -32,10 +32,10 @@ export const getServerSideProps = async (context) => {
       },
     };
   }
-  
+
 };
 
-export const AulaCurso = ({ curso }) => {
+export const IniciarCurso = ({ curso }) => {
   const data = curso;
   console.log(curso)
   console.log('curso')
@@ -68,7 +68,7 @@ export const AulaCurso = ({ curso }) => {
           frameborder="0"
         ></iframe>
 
-        
+
         <div className="acordions-box">
           <Accordion id="box">
             <AccordionSummary
@@ -108,13 +108,14 @@ export const AulaCurso = ({ curso }) => {
                         className="acordion-togle"
                       >
                         <Typography className="conteudo-acordion">
-                          <div>
-                            {aula.titulo_aula}
-                          </div>
-                          <div>
-                            <CheckBox></CheckBox>
-                          </div>
+
+                          {aula.titulo_aula}
+
+                          <CheckBox></CheckBox>
+
+
                         </Typography>
+                        
                       </Accordion>
                     ))}
                   </div>
@@ -145,4 +146,4 @@ export const AulaCurso = ({ curso }) => {
 // };
 
 
-export default AulaCurso;
+export default IniciarCurso;

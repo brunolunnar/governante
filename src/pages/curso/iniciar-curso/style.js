@@ -55,9 +55,6 @@ export const AulaInitialContianer = styled("div", {
   '.MuiAccordionDetails-root ': {
     padding: '10px 0',
     width: '90%',
-    gap: '10px',
-    display: 'flex',
-    flexDirection: 'column',
   },
   '.MuiButtonBase-root .MuiAccordionSummary': {
     background: 'green',

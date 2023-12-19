@@ -17,8 +17,6 @@ import Cloud from "@/assets/img/upload-cloud.png";
 import { UploadContainer } from "@/styles/components/uploadBox";
 import { montarCursoPorSlug } from "@/utils/connections";
 
-
-
 export const getServerSideProps = async (context) => {
 
   try {
