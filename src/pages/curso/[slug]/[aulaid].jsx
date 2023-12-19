@@ -9,6 +9,7 @@ import Header from "@/components/Header/header";
 import { montarCursoPorSlug } from "@/utils/connections";
 import { CheckBox } from "@mui/icons-material";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 export const getServerSideProps = async (context) => {
     try {
@@ -60,19 +61,61 @@ export const AulaCurso = ({ curso }) => {
 
     const [aulaData, setAulaData] = useState({})
 
-    const aulaFiltrada = formData.modulos.filter(modulo =>
-        modulo.aulas.some(aula => aula.refFauna === aulaId)
-    );
-    console.log(aulaFiltrada)
-    console.log('########## aulaFiltrada')
+    function handleAulaData(){
+        try {
+
+            formData.modulos.some(modulo => {
+                // Filtrando as aulas dentro do módulo
+                const aulasFiltradas = modulo.aulas.filter(aula => aula.refFauna === aulaId);
+                console.log(aulasFiltradas[0])
+                console.log('aulasFiltradas')
+    
+                if (aulasFiltradas.length > 0) {
+                    setAulaData(aulasFiltradas[0]);
+                    return true; // Para interromper a iteração
+                }
+    
+                return false
+            })
+    
+    
+            // const aulaFiltrada = formData.modulos.filter(modulo =>
+            //     modulo.aulas.some(aula => aula.refFauna === aulaId)
+            // );
+    
+            // console.log(aulaFiltrada)
+            // console.log('########## aulaFiltrada')
+    
+    
+            
+    
+        } catch (erro) {
+            console.error('Aula não encontrada ' + erro)
+    
+        }
+    }
+    
+
+    useEffect(() => {
+        handleAulaData()
+    }, []);
+
+    console.log(aulaData)
+    console.log('aulaData')
 
     const emptyClasses = {};
+
+    const handleRouter = (aula) => {
+        router.push(`/curso/${formData.slugCurso}/${aula}`)
+        handleAulaData()
+        return
+      };
 
     return (
         <>
             <Header></Header>
             <AulaInitialContianer>
-                <h1>{formData.nome} | {aulaId}</h1>
+                <h1>{formData.nome} | {aulaData.titulo_aula}</h1>
 
                 <iframe
                     width="80%"
@@ -121,14 +164,11 @@ export const AulaCurso = ({ curso }) => {
                                                 key={aula.slugAula}
                                                 className="acordion-togle"
                                             >
-                                                <Typography className="conteudo-acordion">
-
-                                                    {aula.titulo_aula}
+                                                <div className="conteudo-acordion">
+                                                    <div onClick={() => handleRouter(aula.refFauna)}>{aula.titulo_aula}</div>   
 
                                                     <CheckBox></CheckBox>
-
-
-                                                </Typography>
+                                                </div>
 
                                             </Accordion>
                                         ))}
@@ -137,8 +177,22 @@ export const AulaCurso = ({ curso }) => {
                             ))}
                         </AccordionDetails>
                     </Accordion>
+
+                    <Accordion id="box">
+                        <AccordionSummary
+                            expandIcon={<ExpandMoreIcon />}
+                            aria-controls="panel1a-content"
+                            id="panel1a-header"
+                        >
+                            <p className="acordion-title">Anexos</p>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                            <p className="acordion-text">{formData.descricao}</p>
+                        </AccordionDetails>
+                    </Accordion>
+
+
                 </div>
-                <button className="confirm-btn">Iniciar Curso</button>
             </AulaInitialContianer>
         </>
     );

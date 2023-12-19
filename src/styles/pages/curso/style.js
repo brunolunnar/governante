@@ -154,7 +154,7 @@ export const AulaInitialContianer = styled("div", {
 
     display: 'flex',
     flexDirection: 'column',
-    gap: "7px",
+    gap: "10px",
     padding: '10px'
   },
   '.MuiAccordionSummary-gutters': {
