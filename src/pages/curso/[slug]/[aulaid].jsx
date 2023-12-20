@@ -126,7 +126,7 @@ export const AulaCurso = ({ curso }) => {
                 <iframe
                     width="80%"
                     height="450px"
-                    src="https://www.youtube.com/embed/vkDMs4BcbNU?si=aKvq-YzlJyEjEbTR"
+                    src={aulaData.video}
                     title="YouTube video player"
                     frameBorder="0"
                 ></iframe>
@@ -142,7 +142,7 @@ export const AulaCurso = ({ curso }) => {
                             <p className="acordion-title">Descrição</p>
                         </AccordionSummary>
                         <AccordionDetails>
-                            <p className="acordion-text">{formData.descricao}</p>
+                            <p className="acordion-text">{aulaData.descricao}</p>
                         </AccordionDetails>
                     </Accordion>
 
