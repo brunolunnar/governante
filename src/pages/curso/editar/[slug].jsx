@@ -13,10 +13,9 @@ import UploadImage from "@/components/Upload/UploadImage";
 import Image from "next/image";
 import Pen from '@/assets/img/pen.svg';
 
+import Cloud from "@/assets/img/upload-cloud.png";
 import { UploadContainer } from "@/styles/components/uploadBox";
 import { montarCursoPorSlug } from "@/utils/connections";
-
-
 
 export const getServerSideProps = async (context) => {
 
@@ -209,23 +208,7 @@ export const EditarCurso = ({ curso, error }) => {
             :
             <div className='Image-holder'>
 
-              <UploadContainer className="upload-box">
-                <div className="capa-box">
-                  <label htmlFor="capa" className="up-box">
-                    <Image src={UploadImage} alt="upload image"></Image>
-                    <span>Upload da capa</span>
-                  </label>
-                  <input type="file" id="capa" />
-                </div>
-                <div className="drive-box">
-                  <label htmlFor="drive" className="drive-description">
-                    Buscar no Drive 
-                  </label>
-                  <input
-                    type="file"
-                  />
-                </div>
-              </UploadContainer>
+              
               <UploadImage onUploadComplete={handleUploadComplete} />
             </div>
           }

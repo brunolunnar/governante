@@ -67,10 +67,12 @@ export const Carrousel = ({ filter }) => {
             <motion.div
               className="item"
               key={curso.id}
-              onClick={() => handleRouter(curso.slug)}
+
             >
-              <div className="homecapa">
-                <img src={curso.capa} alt={curso.nome} />
+              <div className="capa-box">
+                <div className="homecapa" onClick={() => handleRouter(curso.slug)}>
+                  <img src={curso.capa} alt={curso.nome} />
+                </div>
                 <div>{curso.nome}</div>
                 <div className='edit-icon' onClick={() => handleEditRouter(curso.slug)}>
                   <Image src={Pen}></Image>

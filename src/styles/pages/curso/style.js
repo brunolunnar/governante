@@ -11,7 +11,6 @@ export const AulaInitialContianer = styled("div", {
     margin: "1.2rem",
   },
   "#panel1a-header, #panel2a-header": {
-    background: "$main",
     borderRadius: "34px",
     border: "solid 2px white",
     color: "$white",
@@ -33,7 +32,7 @@ export const AulaInitialContianer = styled("div", {
   ".confirm-btn": {
     background: "$green",
     color: "$white",
-    fontFamily:'$montserrat',
+    fontFamily: '$montserrat',
     border: "2px solid $green",
     borderRadius: "49px",
     padding: "20px",
@@ -48,21 +47,21 @@ export const AulaInitialContianer = styled("div", {
   ".module-acordion": {
     border: "2px solid #4189A6 !important",
     color: "#4189A6 !important",
-    fontSize:'25px'
+    fontSize: '25px'
   },
   // '.MuiPaper-root .MuiPaper-elevation .MuiPaper-rounded .MuiPaper-elevation1 .MuiAccordion-root .MuiAccordion-rounded .MuiAccordion-gutters .css-1elwnq4-MuiPaper-root-MuiAccordion-root':{
   //   width:'80%'
   // },
-  '.MuiAccordionDetails-root ':{
-     
-      width:'80%'
+  '.MuiAccordionDetails-root ': {
+    padding: '10px 0',
+    width: '90%',
   },
-  '.MuiButtonBase-root .MuiAccordionSummary':{
-    background:'green',
-    width:'100%'
+  '.MuiButtonBase-root .MuiAccordionSummary': {
+    background: 'green',
+    width: '100%'
   },
-  '.MuiButtonBase-root .MuiAccordionSummary-root .Mui-expanded .MuiAccordionSummary-gutters .css-sh22l5-MuiButtonBase-root-MuiAccordionSummary-root':{
-    width:'100%'
+  '.MuiButtonBase-root .MuiAccordionSummary-root .Mui-expanded .MuiAccordionSummary-gutters .css-sh22l5-MuiButtonBase-root-MuiAccordionSummary-root': {
+    width: '100%'
   },
   ".module-acordion path": {
     color: "$blue",
@@ -74,13 +73,13 @@ export const AulaInitialContianer = styled("div", {
     alignItems: "center",
     justifyContent: "space-between",
   },
-  "#panel1a-content":{
+  "#panel1a-content": {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
 
   },
-  '.testando':{
+  '.testando': {
     background: "$main",
     color: "$white",
     fontFamily: "$montserrat",
@@ -88,7 +87,7 @@ export const AulaInitialContianer = styled("div", {
     width: "100%",
 
   },
-  '.aula-box':{
+  '.aula-box': {
     background: "$main",
     borderRadius: "34px",
     border: "solid 2px white",
@@ -96,64 +95,72 @@ export const AulaInitialContianer = styled("div", {
     fontFamily: "$montserrat",
     fontSize: "27px",
     width: "100%",
-    alignItems:'center',
-    justifyContent:'space-between'
+    alignItems: 'center',
+    justifyContent: 'space-between'
   },
-  '.check':{
-    background:'green',
-    width:'30px',
-    height:'30px',
-    borderRadius:'50%',
+  '.check': {
+    background: 'green',
+    width: '30px',
+    height: '30px',
+    borderRadius: '50%',
   },
-  '.conteudo-acordion':{
-    display:'flex',
-    flexDirection:'column',
-    alignItems:'center',
-    width:'80%',
-    background:'$main',
-    border:'2px solid $white',
-    color:'white',
-    padding:'15px',
-    borderRadius:'34px'
+  '.conteudo-acordion': {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent:'space-between',
+    width: '80%',
+    background: 'none',
+    border: '2px solid $white',
+    color: 'white',
+    padding: '15px',
+    borderRadius: '34px'
   },
-  '.acordions-box':{
-    width:'100%',
-    display:"flex",
-    flexDirection:'column',
-    gap:'2rem',
-    justifyContent:'center',
-    alignItems:'center'
+  '.acordions-box': {
+    width: '100%',
+    display: "flex",
+    flexDirection: 'column',
+    gap: '2rem',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
-  '.acordion-togle':{
-    background:'$main',
-    display:'flex',
-    alignItems:'center',
-    justifyContent:'end',
+  '.acordion-togle': {
+    background: '$main',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
 
   },
-  '.acordion-text':{
-    color:'$white',
-    fontFamily:'$montserrat',
-    fontSize:'1.4rem'
+  '.acordion-text': {
+    color: '$white',
+    fontFamily: '$montserrat',
+    fontSize: '1.4rem'
   },
-  '.acordion-title':{
-    fontFamily:'$montserrat',
-    fontSize:'2rem',
-    marginLeft:'1rem'
+  '.acordion-title': {
+    fontFamily: '$montserrat',
+    fontSize: '1.2rem',
+    marginLeft: '1rem'
   },
-  svg:{
-    width:'5rem',
-    height:'3rem'
+  '.MuiAccordionSummary-gutters svg': {
+    width: '5rem',
+    height: '3rem'
   },
-  '.css-1elwnq4-MuiPaper-root-MuiAccordion-root':{
-    background:'$main'
+  '.css-1elwnq4-MuiPaper-root-MuiAccordion-root': {
+    background: 'none',
+    color: 'white',
+    fontFamily: "$montserrat",
   },
-  '.acordion-aula-box':{
+  '.acordion-aula-box': {
 
-    display:'flex',
-    flexDirection:'column',
-    gap:"7px",
-    padding:'10px'
-    }
+    display: 'flex',
+    flexDirection: 'column',
+    gap: "10px",
+    padding: '10px'
+  },
+  '.MuiAccordionSummary-gutters': {
+    border: '1px solid white',
+    borderRadius: '35px',
+  },
+
 });
 export default AulaInitialContianer;
