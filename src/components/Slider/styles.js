@@ -8,20 +8,22 @@ export const Container = styled("div", {
     display: "flex",
   },
   ".item": {
-    minWidth: "400px",
+    width: "300px",
+    minWidth: "300px",
     minHeight: "200px",
     padding: "5px",
-    width: "200px",
   },
 
   ".item img ": {
     width: "100%",
-    height: "100%",
+    height: "440px",
     borderRadius: "12px",
     pointerEvents: "none",
+    objectFit: 'cover',
   },
   ".carousel": {
     overflow: "hidden",
+    width: '100%',
   },
   ".container-carousel": {
     display: "flex",

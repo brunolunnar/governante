@@ -27,10 +27,27 @@ export const UploadContainer = styled('div',{
     cursor: "pointer",
   },
   '.drive-box':{
-    width:'50%',
+    width:'100%',
     display:'flex',
     alignItems:'center',
-    justifyContent:'center'
+    justifyContent:'center',
+    gap:'1rem',
+    
+    padding:'2rem',
+  },
+  // '.upload-box':{
+  //   width:'100%',
+  //   display:'flex',
+  //   alignItems:'center',
+  //   justifyContent:'center'
+  // },
+  '.upload-label':{
+    display:'flex',
+    flexDirection:'column',
+    justifyContent:'center',
+    alignItems:'center',
+    gap:'.25rem',
+    cursor:'pointer',
   },
   '.drive-description':{
     border:'1px solid $white',

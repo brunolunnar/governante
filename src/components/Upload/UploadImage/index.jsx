@@ -104,7 +104,7 @@ function UploadImage({ onUploadComplete }) {
     <div>
 
       <UploadContainer className="upload-box">
-        <div className="capa-box">
+        {/* <div className="capa-box">
           <label htmlFor="capa" className="up-box">
             <div
               onDragOver={handleDragOver}
@@ -119,7 +119,7 @@ function UploadImage({ onUploadComplete }) {
             </div>
           </label>
           <input type="file" id="capa" />
-        </div>
+        </div> */}
         <div className="drive-box">
           {downloadURL ? (
             <div>
@@ -135,8 +135,10 @@ function UploadImage({ onUploadComplete }) {
                 htmlFor="files"
                 onClick={() => inputRef.current.click()}
                 onDrop={handleDrop}
+                className="upload-label"
               >
-                {selectedFileName || "Escolha ou arraste um arquivo aqui"}
+                <Image src={Cloud} alt="upload image"></Image>
+                {selectedFileName || "Upload de Capa"}
               </label>
               <input
                 type="file"
