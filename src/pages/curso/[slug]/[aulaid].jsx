@@ -170,7 +170,9 @@ export const AulaCurso = ({ curso }) => {
                                                 key={aula.slugAula}
                                                 className="acordion-togle"
                                             >
-                                                <div className="conteudo-acordion">
+                                                <div className={aula.refFauna == aulaData.refFauna ? "conteudo-acordion current-aula" : "conteudo-acordion " }>
+                                                    {console.log(aula.refFauna)}
+                                                    {console.log('aulaData.refFauna')}
                                                     <div onClick={() => handleRouter(aula.refFauna)}>{aula.titulo_aula}</div>   
 
                                                     <CheckBox></CheckBox>

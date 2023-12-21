@@ -116,6 +116,9 @@ export const AulaInitialContianer = styled("div", {
     padding: '15px',
     borderRadius: '34px'
   },
+  '.current-aula':{
+    border: '2px solid $blue !important',
+  },
   '.acordions-box': {
     width: '100%',
     display: "flex",

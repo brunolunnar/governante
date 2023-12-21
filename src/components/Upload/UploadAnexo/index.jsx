@@ -8,7 +8,7 @@ import Cloud from "@/assets/img/upload-cloud.png";
 
 import Image from "next/image";
 
-function UploadImage({ onUploadComplete }) {
+function UploadAnexo({ onUploadComplete }) {
   const [imageFile, setImageFile] = useState();
   const [downloadURL, setDownloadURL] = useState("");
   const [isUploading, setIsUploading] = useState(false);
@@ -32,7 +32,7 @@ function UploadImage({ onUploadComplete }) {
     if (imageFile) {
       const name = imageFile.name;
       // const storageRef = ref(storage, `gs://governante-9cb91.appspot.com/videos/${name}`);
-      const storageRef = ref(storage, `gs://governante-b9ff1.appspot.com/imagens/${name}`);
+      const storageRef = ref(storage, `gs://governante-b9ff1.appspot.com/anexos/${name}`);
       const uploadTask = uploadBytesResumable(storageRef, imageFile);
 
       setIsUploading(true);
@@ -100,8 +100,6 @@ function UploadImage({ onUploadComplete }) {
     }
   };
 
-  
-
   return (
     <div>
 
@@ -140,7 +138,7 @@ function UploadImage({ onUploadComplete }) {
                 className="upload-label"
               >
                 <Image src={Cloud} alt="upload image"></Image>
-                {selectedFileName || "Selecione o arquivo de Capa"}
+                {selectedFileName || "Selecione o arquivo de Anexo"}
                 {isUploading && <progress value={uploadProgress} max={100} />}
               </label>
               <div className="styled-bar"></div>
@@ -159,11 +157,6 @@ function UploadImage({ onUploadComplete }) {
           )}
         </div>
       </UploadContainer>
-
-
-
-
-
 
       {/* <div
         onDragOver={handleDragOver}
@@ -206,4 +199,4 @@ function UploadImage({ onUploadComplete }) {
   );
 }
 
-export default UploadImage;
+export default UploadAnexo;

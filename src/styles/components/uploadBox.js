@@ -31,9 +31,19 @@ export const UploadContainer = styled('div',{
     display:'flex',
     alignItems:'center',
     justifyContent:'center',
-    gap:'1rem',
-    
-    padding:'2rem',
+    gap:'2rem',
+    padding:'1rem 2rem',
+  },
+  '.drive-box button':{
+    padding:'.25rem 1rem',
+    borderRadius:'35px',
+    background:'none',
+    border: 'solid 1px white',
+    color:'white',
+  },
+  '.styled-bar':{
+    borderLeft:'solid white 1px',
+    height:'100px'
   },
   // '.upload-box':{
   //   width:'100%',
