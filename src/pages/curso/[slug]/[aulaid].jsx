@@ -9,6 +9,7 @@ import Header from "@/components/Header/header";
 import { montarCursoPorSlug } from "@/utils/connections";
 import { CheckBox } from "@mui/icons-material";
 import { useRouter } from "next/router";
+import AulaPlayer from '@/components/AulaPlayer'
 import Link from "next/link";
 
 export const getServerSideProps = async (context) => {
@@ -123,13 +124,11 @@ export const AulaCurso = ({ curso }) => {
             <AulaInitialContianer>
                 <h1>{formData.nome} | {aulaData.titulo_aula}</h1>
 
-                <iframe
-                    width="80%"
-                    height="450px"
-                    src={aulaData.video}
-                    title="YouTube video player"
-                    frameBorder="0"
-                ></iframe>
+                <AulaPlayer video={aulaData.video}/>
+
+                
+                {console.log(aulaData)}
+                {console.log('aulaData.video')}
 
 
                 <div className="acordions-box">

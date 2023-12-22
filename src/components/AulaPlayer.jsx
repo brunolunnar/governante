@@ -1,4 +1,6 @@
-export function videoAula(video) {
+const AulaPlayer = ({ video }) => {
+    console.log(video)
+    console.log('video')
     return (
         <iframe
             width="80%"
@@ -9,3 +11,4 @@ export function videoAula(video) {
         ></iframe>
     )
 }
+ export default AulaPlayer
