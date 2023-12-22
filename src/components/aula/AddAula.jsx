@@ -7,6 +7,8 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
+import UploadAnexo from "@/components/Upload/UploadAnexo";
+
 const AdicionarAula = ({ handleOpenPicker, estadoAulas, indexModulo, onUpdateTodasAulas }) => {
   const [aulas, setAulas] = useState(estadoAulas);
 
@@ -52,6 +54,10 @@ const AdicionarAula = ({ handleOpenPicker, estadoAulas, indexModulo, onUpdateTod
     console.log('indexModulo')
     onUpdateTodasAulas(aulas, indexModulo)
   }
+
+  const handleUploadComplete = (url) => {
+    setFileUrl(url);
+  };
 
   useEffect(() => {
     updateTodasAulas(indexModulo)
@@ -117,8 +123,9 @@ const AdicionarAula = ({ handleOpenPicker, estadoAulas, indexModulo, onUpdateTod
                     onChange={(e) => handleChange(e, index)}
                   />
 
-                  {/* <span>Anexo</span>
-              <UploadAula handleOpenPicker={handleOpenPicker}></UploadAula> */}
+                  <span>Anexo</span>
+
+              <UploadAnexo onUploadComplete={handleUploadComplete}></UploadAnexo>
                 </AccordionDetails>
               </Accordion>
             </div>
