@@ -1,3 +1,4 @@
+import { montarCursoPorSlug } from "@/utils/connections";
 import { Client, query } from "faunadb";
 
 const faunaClient = new Client({
@@ -53,17 +54,19 @@ export default async function handler(req, res) {
       };
     });
 
-    const cursoFormatado = {
-      capa: cursoSelecionado.capa,
-      nome: cursoSelecionado.nome,
-      descricao: cursoSelecionado.descricao,
-      categoria: cursoSelecionado.categoria,
-      accessos: cursoSelecionado.accessos,
-      publicado: cursoSelecionado.publicado,
-      slug: cursoSelecionado.slug,
-      modulos: modulosComAulas,
-    };
+    const cursoFormatado = await montarCursoPorSlug(req.query.slug)
+    // const cursoFormatado = {
+    //   capa: cursoSelecionado.capa,
+    //   nome: cursoSelecionado.nome,
+    //   descricao: cursoSelecionado.descricao,
+    //   categoria: cursoSelecionado.categoria,
+    //   accessos: cursoSelecionado.accessos,
+    //   publicado: cursoSelecionado.publicado,
+    //   slug: cursoSelecionado.slug,
+    //   modulos: modulosComAulas,
+    // };
 
+    await montarCursoPorSlug(req.query.slug)
     res.status(200).json({ data: cursoFormatado });
   } catch (error) {
     console.error("Ocorreu um erro ao recuperar os detalhes do curso:", error);
