@@ -119,6 +119,22 @@ export const AulaInitialContianer = styled("div", {
   '.current-aula':{
     border: '2px solid $blue !important',
   },
+  '.view-icon':{
+    width:'30px',
+    height:'30px',
+    borderRadius:'100px',
+    background:'$red',
+    position:'absolute',
+    right:'-15px',
+    top:'-15px',
+  },
+  '.view-icon.checked':{
+    background:'$green',
+
+  },
+  '.video-box':{
+    position:'relative'
+  },
   '.acordions-box': {
     width: '100%',
     display: "flex",
