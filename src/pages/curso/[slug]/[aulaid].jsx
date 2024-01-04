@@ -11,6 +11,7 @@ import { CheckBox } from "@mui/icons-material";
 import { useRouter } from "next/router";
 import AulaPlayer from '@/components/AulaPlayer'
 import Link from "next/link";
+import { Loader } from "@/components/Loader";
 
 export const getServerSideProps = async (context) => {
     try {
@@ -37,6 +38,8 @@ export const getServerSideProps = async (context) => {
 };
 
 export const AulaCurso = ({ curso }) => {
+
+    const [loaded, setLoaded] = useState(false)
 
     const router = useRouter()
     const aulaId = router.query.aulaid
@@ -65,46 +68,44 @@ export const AulaCurso = ({ curso }) => {
     function handleAulaData({ refAula }) {
         if (!refAula) {
             refAula = aulaId
-    
+
         }
         console.log(refAula)
         console.log("refAula")
         try {
-    
+
             formData.modulos.some(modulo => {
                 // Filtrando as aulas dentro do módulo
                 const aulasFiltradas = modulo.aulas.filter(aula => aula.refFauna === refAula);
                 console.log(aulasFiltradas[0])
                 console.log('aulasFiltradas')
-    
+
                 if (aulasFiltradas.length > 0) {
                     setAulaData(aulasFiltradas[0]);
                     return true; // Para interromper a iteração
                 }
-    
+
                 return false
             })
-    
-    
+
             // const aulaFiltrada = formData.modulos.filter(modulo =>
             //     modulo.aulas.some(aula => aula.refFauna === aulaId)
             // );
-    
+
             // console.log(aulaFiltrada)
             // console.log('########## aulaFiltrada')
-    
-    
-    
-    
+
+
+
         } catch (erro) {
             console.error('Aula não encontrada ' + erro)
-    
+
         }
     }
-    
+
 
     useEffect(() => {
-        handleAulaData({refAula:aulaId})
+        handleAulaData({ refAula: aulaId })
     }, []);
 
     console.log(aulaData)
@@ -112,21 +113,29 @@ export const AulaCurso = ({ curso }) => {
 
     const emptyClasses = {};
 
-    const handleRouter = (aula) => {
-        router.replace(`/curso/${formData.slugCurso}/${aula}`)
-        handleAulaData({refAula:aula})
+    const handleRouter = async(aula) => {
+        await router.replace(`/curso/${formData.slugCurso}/${aula}`)
+        handleAulaData({ refAula: aula })
+        setLoaded(true)
         return
-      };
+    };
+
+    useEffect(() => {
+        setTimeout(() => {
+            setLoaded(true)
+        }, 800)
+    }, [])
 
     return (
         <>
+            <Loader loaded={loaded} />
             <Header></Header>
             <AulaInitialContianer>
                 <h1>{formData.nome} | {aulaData.titulo_aula}</h1>
 
-                <AulaPlayer video={aulaData.video}/>
+                <AulaPlayer video={aulaData.video} />
 
-                
+
                 {console.log(aulaData)}
                 {console.log('aulaData.video')}
 
@@ -169,10 +178,14 @@ export const AulaCurso = ({ curso }) => {
                                                 key={aula.slugAula}
                                                 className="acordion-togle"
                                             >
-                                                <div className={aula.refFauna == aulaData.refFauna ? "conteudo-acordion current-aula" : "conteudo-acordion " }>
+                                                <div className={aula.refFauna == aulaData.refFauna ? "conteudo-acordion current-aula" : "conteudo-acordion "}>
                                                     {console.log(aula.refFauna)}
                                                     {console.log('aulaData.refFauna')}
-                                                    <div onClick={() => handleRouter(aula.refFauna)}>{aula.titulo_aula}</div>   
+                                                    {/* <div onClick={() => handleRouter(aula.refFauna)}>{aula.titulo_aula}</div> */}
+                                                    <div onClick={() => {
+                                                        setLoaded(false)
+                                                        handleRouter(aula.refFauna)
+                                                    }}>{aula.titulo_aula}</div>
 
                                                     <CheckBox></CheckBox>
                                                 </div>
