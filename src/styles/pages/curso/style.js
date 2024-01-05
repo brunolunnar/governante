@@ -180,6 +180,29 @@ export const AulaInitialContianer = styled("div", {
     border: '1px solid white',
     borderRadius: '35px',
   },
+  ".MuiPaper-root.MuiPaper-elevation":{
+    background: '#ffffff00',
+    color: '#ffffff',
+  },
+  ".video-container":{
+    position:'relative',
+  },
+  "#aula-anterior":{
+    position:'absolute',
+    top:'50%',
+    left:'-40px',
+  },
+  "#aula-anterior svg":{
+    transform: 'rotate(90deg)',
+  },
+  "#proxima-aula":{
+    position:'absolute',
+    top:'50%',
+    right:'-40px',
+  },
+  "#proxima-aula svg":{
+    transform: 'rotate(-90deg)',
+  }
 
 });
 export default AulaInitialContianer;

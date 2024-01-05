@@ -77,8 +77,8 @@ export const AulaCurso = ({ curso }) => {
             formData.modulos.some(modulo => {
                 // Filtrando as aulas dentro do módulo
                 const aulasFiltradas = modulo.aulas.filter(aula => aula.refFauna === refAula);
-                console.log(aulasFiltradas[0])
-                console.log('aulasFiltradas')
+                // console.log(aulasFiltradas[0])
+                // console.log('aulasFiltradas')
 
                 if (aulasFiltradas.length > 0) {
                     setAulaData(aulasFiltradas[0]);
@@ -87,15 +87,6 @@ export const AulaCurso = ({ curso }) => {
 
                 return false
             })
-
-            // const aulaFiltrada = formData.modulos.filter(modulo =>
-            //     modulo.aulas.some(aula => aula.refFauna === aulaId)
-            // );
-
-            // console.log(aulaFiltrada)
-            // console.log('########## aulaFiltrada')
-
-
 
         } catch (erro) {
             console.error('Aula não encontrada ' + erro)
@@ -113,10 +104,13 @@ export const AulaCurso = ({ curso }) => {
 
     const emptyClasses = {};
 
-    const handleRouter = (aula) => {
-        router.replace(`/curso/${formData.slugCurso}/${aula}`)
+    const handleRouter = async (aula) => {
+        await router.replace(`/curso/${formData.slugCurso}/${aula}`)
         handleAulaData({ refAula: aula })
-        setLoaded(true)
+        setTimeout(() => {
+            setLoaded(true)
+        }, 500)
+
         return
     };
 
@@ -126,6 +120,29 @@ export const AulaCurso = ({ curso }) => {
         }, 800)
     }, [])
 
+    function nextAula() {
+        // formData.modulos.some(modulo => {
+        //     // Filtrando as aulas dentro do módulo
+
+        //     const aulasFiltradas = modulo.aulas.filter(aula => aula.refFauna === aulaId);
+        //     console.log(aulasFiltradas[0])
+        //     console.log('aulasFiltradas')
+
+
+        // })
+        const moduloComAulaDesejada = formData.modulos.find(modulo =>
+            modulo.aulas.some(aula => aula.refFauna === aulaId)
+        );
+        console.log(moduloComAulaDesejada)
+        console.log('moduloComAulaDesejada')
+
+
+    }
+
+    function prevAula() {
+
+    }
+
     return (
         <>
             <Loader loaded={loaded} />
@@ -133,8 +150,17 @@ export const AulaCurso = ({ curso }) => {
             <AulaInitialContianer>
                 <h1>{formData.nome} | {aulaData.titulo_aula}</h1>
 
-                <AulaPlayer video={aulaData.video} />
+                <div className="video-container">
+                    <AulaPlayer video={aulaData.video} />
 
+                    {/* <div id='aula-anterior'>
+                        <ExpandMoreIcon />
+                    </div>
+
+                    <div id='proxima-aula' onClick={nextAula}>
+                        <ExpandMoreIcon />
+                    </div> */}
+                </div>
 
                 {console.log(aulaData)}
                 {console.log('aulaData.video')}
