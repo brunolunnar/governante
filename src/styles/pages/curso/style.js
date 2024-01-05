@@ -180,6 +180,10 @@ export const AulaInitialContianer = styled("div", {
     border: '1px solid white',
     borderRadius: '35px',
   },
+  ".MuiPaper-root.MuiPaper-elevation":{
+    background: '#ffffff00',
+    color: '#ffffff',
+  },
 
 });
 export default AulaInitialContianer;
