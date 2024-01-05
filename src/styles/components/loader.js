@@ -10,7 +10,7 @@ export const LoaderContainer = styled("div", {
     overflow: 'hidden',
     width: '100%',
     height: '100%',
-    background: 'red',
+    background: 'rgba(36, 44, 72, 1)',
     display: 'flex',
     justifyContent: 'center',
     alignContent: 'center',
@@ -18,7 +18,7 @@ export const LoaderContainer = styled("div", {
     
   },
   ".loader-container.on": {
-    opacity:'0.5'
+    opacity:'1'
   },
   ".loader-container.off": {
     opacity:'0.0',

@@ -113,8 +113,8 @@ export const AulaCurso = ({ curso }) => {
 
     const emptyClasses = {};
 
-    const handleRouter = async(aula) => {
-        await router.replace(`/curso/${formData.slugCurso}/${aula}`)
+    const handleRouter = (aula) => {
+        router.replace(`/curso/${formData.slugCurso}/${aula}`)
         handleAulaData({ refAula: aula })
         setLoaded(true)
         return

@@ -17,7 +17,7 @@ function Home({ cursos }) {
   useEffect(() => {
     setTimeout(() => {
       setLoaded(true)
-    }, 1)
+    }, 100)
   }, [])
 
   useEffect(() => {
