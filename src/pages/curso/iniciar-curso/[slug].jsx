@@ -8,6 +8,8 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Header from "@/components/Header/header";
 import { montarCursoPorSlug } from "@/utils/connections";
 import { CheckBox } from "@mui/icons-material";
+import { useRouter } from 'next/router';
+
 
 export const getServerSideProps = async (context) => {
 
@@ -18,6 +20,17 @@ export const getServerSideProps = async (context) => {
     const curso = await montarCursoPorSlug(query.slug)
     console.log(curso)
     console.log("curso")
+
+    let redirecionar = !!curso.modulos[0].aulas[0].refFauna
+    if (redirecionar) {
+
+      return {
+        redirect: {
+          destination: `curso/${curso.slugCurso}/${curso.modulos[0].aulas[0].refFauna}`,
+          permanent: false,
+        },
+      };
+    }
 
     return {
       props: {
@@ -36,6 +49,9 @@ export const getServerSideProps = async (context) => {
 };
 
 export const IniciarCurso = ({ curso }) => {
+
+  const router = useRouter();
+
   const data = curso;
   console.log(curso)
   console.log('curso')
@@ -54,6 +70,18 @@ export const IniciarCurso = ({ curso }) => {
   const emptyClasses = {};
   console.log(data)
   console.log('data')
+
+  console.log(formData.modulos[0].aulas[0].refFauna)
+  console.log('formData.modulos[0]')
+
+  const redirecionarParaCurso = () => {
+    router.push(`/curso/${curso.slugCurso}/${formData.modulos[0].aulas[0].refFauna}`);
+  };
+
+  useEffect(() => {
+    redirecionarParaCurso();
+  }, []);
+
   return (
     <>
       <Header></Header>
@@ -112,7 +140,7 @@ export const IniciarCurso = ({ curso }) => {
                           {aula.titulo_aula}
 
                         </Typography>
-                        
+
                       </Accordion>
                     ))}
                   </div>

@@ -5,11 +5,20 @@ import { HomePageContainer } from "../styles/pages/home";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Carrousel } from "@/components/Slider";
+import { Loader } from "@/components/Loader";
+
 
 function Home({ cursos }) {
   const { data: session } = useSession();
   const carousel = useRef();
   const [width, setWidth] = useState(0);
+  const [loaded, setLoaded] = useState(false)
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoaded(true)
+    }, 100)
+  }, [])
 
   useEffect(() => {
     setWidth(carousel.current?.scrollWidth - carousel.current?.offsetWidth);
@@ -26,6 +35,7 @@ function Home({ cursos }) {
 
   return (
     <>
+      <Loader loaded={loaded}/>
       <Header />
       <HomePageContainer>
         <h1>
