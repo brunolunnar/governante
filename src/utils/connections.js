@@ -2,7 +2,7 @@
 import { Client } from "faunadb";
 import { query } from "faunadb";
 import { withPageAuthRequired, getSession } from "@auth0/nextjs-auth0";
-import { limparNomeAulas } from "./functions";
+import { limparNomeAulas, sortByOrder } from "./functions";
 
 export const paginateCollection = async ({ key, pageSize, collectionName, dataOnly }) => {
     let q = query
@@ -264,6 +264,17 @@ export const deleteByRef = async ({ key, email, pageSize, collection, ref, retur
     return retorno;
 }
 
+const ordenarModulos = (curso) => {
+    let newModulos = curso.modulos.map(modulo => {
+        modulo.aulas = sortByOrder(modulo.aulas)
+        return modulo
+    })
+    let sortedNewModulos = sortByOrder({ value: newModulos })
+    console.log(sortedNewModulos)
+    console.log('++++++++++++++++++ sortedNewModulos')
+    return sortedNewModulos
+}
+
 export const montarCurso = async (cursoRecebido) => {
     try {
         const key = process.env.FAUNA_MAIN_KEY
@@ -286,17 +297,19 @@ export const montarCurso = async (cursoRecebido) => {
         )
         cursoFormatado.modulos = oldModulosMontados
         cursoFormatado.modulos.push(...modulosAdicionar)
+
         return cursoFormatado
+        let cursoFormatadoOrdenado = ordenarModulos(cursoFormatado)
+        return cursoFormatadoOrdenado
+
     } catch (e) {
         console.log("Erro ao montar curso, msg:", e.message)
         return cursoRecebido
     }
 }
-
 export const montarCursoPorSlug = async (slugCurso) => {
     return await montarCurso(await paginateIndex({ key: process.env.FAUNA_MAIN_KEY, index: "cursos_by_slug", matchValue: slugCurso, dataRefOnly: true }).then(resp => { return resp[0] ?? [] }))
 }
-
 export const modulosDeletar = async ({ modulos, deletarAulas }) => {
     const key = process.env.FAUNA_MAIN_KEY
     await Promise.all(

@@ -11,6 +11,7 @@ import UploadAnexo from "@/components/Upload/UploadAnexo";
 
 const AdicionarAula = ({ handleOpenPicker, estadoAulas, indexModulo, onUpdateTodasAulas }) => {
   const [aulas, setAulas] = useState(estadoAulas);
+  const [numAulas, setNumAulas] = useState(0)
 
   const adicionarAula = (e) => {
     e.preventDefault()

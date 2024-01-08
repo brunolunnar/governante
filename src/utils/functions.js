@@ -233,3 +233,23 @@ export const dataParaMes = (dateString) => {
     const options = { month: 'long' };
     return date.toLocaleDateString('pt-BR', options);
 }
+
+export const sortByOrder = (dados) => {
+    let crescente = true
+    let value = []
+    if (Array.isArray(dados)) {
+        value = dados
+    } else {
+        value = dados.value
+        crescente = dados.crescente
+    }
+    console.log(value)
+    console.log('value dos sortByOrder')
+    if (typeof crescente == "undefined") { crescente = true }
+    let sorted = value.sort((a, b) => {
+        const orderA = a.order || 0;
+        const orderB = b.order || 0;
+        return crescente ? orderA - orderB : orderB - orderA;
+    });
+    return sorted
+}
